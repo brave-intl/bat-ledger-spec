@@ -1,0 +1,6 @@
+[submodule "browser-laptop"]
+	path = browser-laptop
+	url = https://github.com/brave/browser-laptop
+[submodule "bat-native-ledger"]
+	path = bat-native-ledger
+	url = https://github.com/brave-intl/bat-native-ledger

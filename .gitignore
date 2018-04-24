@@ -1,0 +1,11 @@
+# Dependency directory
+node_modules
+
+# Temp files
+.DS_Store
+.DS-Store
+
+# Editors
+*.swp
+.idea
+*.code-workspace

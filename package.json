@@ -1,0 +1,49 @@
+{
+  "name": "bat-ledger-spec",
+  "version": "0.0.1",
+  "description": "Spec for bat ledger",
+  "scripts": {
+    "test": "npm run test-js && npm run test-c",
+    "test-js": "cross-env NODE_ENV=test TYPE=\"js\" mocha \"test/**/*.js\"",
+    "test-c": "cross-env NODE_ENV=test TYPE=\"c\" mocha \"test/**/*.js\"",
+    "lint": "standard --verbose | snazzy"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brave-intl/bat-ledger-spec.git"
+  },
+  "keywords": [
+    "bat",
+    "ledger"
+  ],
+  "author": "Nejc Zdovc",
+  "license": "MPL-2.0",
+  "bugs": {
+    "url": "https://github.com/brave-intl/bat-ledger-spec/issues"
+  },
+  "homepage": "https://github.com/brave-intl/bat-ledger-spec#readme",
+  "devDependencies": {
+    "assert": "^1.4.1",
+    "babel-eslint": "^8.2.3",
+    "cross-env": "^5.1.4",
+    "mocha": "^5.1.1",
+    "pre-push": "^0.1.1",
+    "snazzy": "^7.1.1",
+    "standard": "^11.0.1"
+  },
+  "pre-push": {
+    "run": [
+      "lint"
+    ]
+  },
+  "engines": {
+    "node": ">= 9.11.0"
+  },
+  "standard": {
+    "ignore": [
+      "bat-native-ledger/**",
+      "browser-laptop/**"
+    ],
+    "parser": "babel-eslint"
+  }
+}
