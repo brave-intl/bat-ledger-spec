@@ -5,6 +5,18 @@
 'use strict'
 
 class Lib {
+  before () {
+    throw new Error('Function before is missing!')
+  }
+
+  beforeEach () {
+    throw new Error('Function beforeEach is missing!')
+  }
+
+  after () {
+    throw new Error('Function after is missing!')
+  }
+
   createWallet () {
     throw new Error('Function createWallet is missing!')
   }

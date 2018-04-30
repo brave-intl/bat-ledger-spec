@@ -4,15 +4,30 @@
 
 'use strict'
 
-/* global describe */
+/* global describe, before, beforeEach, after, it */
 
 // const assert = require('assert')
 const helper = require('../helper')
+const snapshot = require('snap-shot-it')
+const mockery = require('mockery')
 
 const lib = helper.getLib()
 
 describe('wallet', function () {
-  describe('create', function () {
-    lib.createWallet()
+  before(function () {
+    lib.before(mockery)
+  })
+
+  beforeEach(function () {
+    lib.beforeEach(mockery)
+  })
+
+  after(function () {
+    lib.after(mockery)
+  })
+
+  it('create', function () {
+    const result = lib.createWallet()
+    snapshot(this.test.fullTitle(), result)
   })
 })

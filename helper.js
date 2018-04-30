@@ -5,7 +5,6 @@
 'use strict'
 
 function getLib () {
-  console.log(process.env.TYPE)
   if (process.env.TYPE === 'js') {
     const JS = require('./js/index')
     return new JS()
@@ -15,6 +14,11 @@ function getLib () {
   }
 }
 
+function isJS () {
+  return process.env.TYPE === 'js'
+}
+
 module.exports = {
-  getLib
+  getLib,
+  isJS
 }

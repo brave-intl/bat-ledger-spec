@@ -4,10 +4,54 @@
 
 'use strict'
 
+const Immutable = require('immutable')
+
 const Lib = require('../abs')
-// const ledger = require('../browser-laptop/app/browser/api/ledger')
+
+const defaultAppState = Immutable.fromJS({
+  cache: {
+    ledgerVideos: {}
+  },
+  ledger: {}
+})
 
 class JS extends Lib {
+  constructor () {
+    super()
+    this.ledger = null
+  }
+
+  before (mockery) {
+    mockery.enable({
+      warnOnReplace: false,
+      warnOnUnregistered: false,
+      useCleanCache: true
+    })
+
+    const fakeElectron = require('../test/fixtures/fakeElectron')
+    const fakeAdBlock = require('../test/fixtures/fakeAdBlock')
+    const fakeLevel = require('../test/fixtures/fakeLevel')
+
+    mockery.registerMock('electron', fakeElectron)
+    mockery.registerMock('level', fakeLevel)
+    mockery.registerMock('ad-block', fakeAdBlock)
+
+    this.ledger = require('../browser-laptop/app/browser/api/ledger')
+  }
+
+  beforeEach (mockery) {
+    this.ledger.setSynopsis(null)
+  }
+
+  after (mockery) {
+    mockery.deregisterAll()
+    mockery.disable()
+  }
+
+  createWallet () {
+    this.ledger.enable(defaultAppState)
+    return this.ledger.getSynopsis()
+  }
 }
 
 module.exports = JS
