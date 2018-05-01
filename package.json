@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Spec for bat ledger",
   "scripts": {
+    "setup": "git submodule init && git submodule update && npm install-bl",
     "install-bl": "cd browser-laptop && npm install",
     "update": "git submodule foreach git pull",
     "test": "npm run test-js && npm run test-c",
@@ -53,5 +54,6 @@
       "__snapshots__/**"
     ],
     "parser": "babel-eslint"
-  }
+  },
+  "dependencies": {}
 }

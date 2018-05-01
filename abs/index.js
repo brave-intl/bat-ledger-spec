@@ -4,21 +4,24 @@
 
 'use strict'
 
-class Lib {
+const Lib = require('./index')
+const error = require('../error')
+
+class Contribution extends Lib {
   before () {
-    throw new Error('Function before is missing!')
+    error.setError('before')
   }
 
   beforeEach () {
-    throw new Error('Function beforeEach is missing!')
+    error.setError('beforeEach')
   }
 
   after () {
-    throw new Error('Function after is missing!')
+    error.setError('after')
   }
 
   afterEach () {
-    throw new Error('Function afterEach is missing!')
+    error.setError('afterEach')
   }
 }
 
