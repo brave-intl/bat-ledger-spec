@@ -5,20 +5,29 @@
 'use strict'
 
 class Lib {
+  setError (text) {
+    throw new Error(`Function ${text} is missing!`)
+  }
+
   before () {
-    throw new Error('Function before is missing!')
+    this.setError('before')
   }
 
   beforeEach () {
-    throw new Error('Function beforeEach is missing!')
+    this.setError('beforeEach')
   }
 
   after () {
-    throw new Error('Function after is missing!')
+    this.setError('after')
   }
 
+<<<<<<< HEAD:abs/index.js
   afterEach () {
     throw new Error('Function afterEach is missing!')
+=======
+  createWallet () {
+    this.setError('createWallet')
+>>>>>>> Added contribution:abs.js
   }
 }
 
