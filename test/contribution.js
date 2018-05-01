@@ -8,10 +8,18 @@
 
 // const assert = require('assert')
 const helper = require('../helper')
+<<<<<<< HEAD
 /* const snapshot = ommitted for now for lint */ require('snap-shot-it')
 const mockery = require('mockery')
 
 const lib = helper.getLib()
+=======
+const snapshot = require('snap-shot-it')
+const mockery = require('mockery')
+
+const lib = helper.getLib('contribution')
+
+>>>>>>> Added contribution
 
 describe('contribution', function () {
   before(function () {
@@ -27,6 +35,7 @@ describe('contribution', function () {
   })
 
   it('Tries to run contribution before time to reconcile', function () {
+<<<<<<< HEAD
 
   })
 
@@ -39,6 +48,17 @@ describe('contribution', function () {
   })
 
   it('Tries to run contribution at reconcile with not enough funds', function () {
+=======
+    const result = lib.contributionBeforeTime()
+    snapshot(this.test.fullTitle(), result)
+  })
+
+  it.skip('Tries to run contribution at reconcile with enough funds', function () {
+
+  })
+
+  it.skip('Tries to run contribution at reconcile with not enough funds', function () {
+>>>>>>> Added contribution
 
   })
 })

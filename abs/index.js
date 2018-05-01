@@ -4,6 +4,7 @@
 
 'use strict'
 
+<<<<<<< HEAD
 class Lib {
   setError (text) {
     throw new Error(`Function ${text} is missing!`)
@@ -19,15 +20,35 @@ class Lib {
 
   after () {
     this.setError('after')
+=======
+const Lib = require('./index')
+const error = require('../error')
+
+class Contribution extends Lib {
+  before () {
+    error.setError('before')
+  }
+
+  beforeEach () {
+    error.setError('beforeEach')
+  }
+
+  after () {
+    error.setError('after')
+>>>>>>> Added contribution
   }
 
 <<<<<<< HEAD:abs/index.js
   afterEach () {
+<<<<<<< HEAD
     throw new Error('Function afterEach is missing!')
 =======
   createWallet () {
     this.setError('createWallet')
 >>>>>>> Added contribution:abs.js
+=======
+    error.setError('afterEach')
+>>>>>>> Added contribution
   }
 }
 
