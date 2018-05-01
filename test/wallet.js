@@ -30,4 +30,65 @@ describe('wallet', function () {
     const result = lib.createWallet()
     snapshot(this.test.fullTitle(), result)
   })
+
+  describe('balance', function () {
+    it('wallet marked as funded with balance', function () {
+      const result = lib.setWalletProperties()
+      console.log(result.getIn(['ledger', 'info', 'userHasFunded']))
+    })
+
+    it('wallet is not marked as funded with no balance', function () {
+      const result = lib.setWalletProperties({balance: 0})
+      // should be undefined
+      console.log(result.getIn(['ledger', 'info', 'userHasFunded']))
+    })
+  })
+
+  describe('properties', function () {
+
+  })
+
+  describe('backup', function () {
+    it('generates back up key', function () {
+
+    })
+  })
+
+  describe('recovery', function () {
+    it('succeeds with valid key', function () {
+      const state = lib.corruptWallet()
+      lib.recoverWallet(state, 'test key')
+    })
+
+    it('fails with a key that is too short', function () {
+
+    })
+
+    it('fails with a key that is too short', function () {
+
+    })
+
+    it('fails with a key that is too long', function () {
+
+    })
+
+    it('fails with a non-string key', function () {
+      const state = lib.corruptWallet()
+      lib.recoverWallet(state, 2352)
+    })
+
+    it('fails with a key containing invalid words', function () {
+
+    })
+  })
+
+  describe('validation', function () {
+    it('verifies a valid seed', function () {
+
+    })
+
+    it('detects a corrupted seed', function () {
+
+    })
+  })
 })
