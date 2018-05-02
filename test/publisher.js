@@ -34,8 +34,16 @@ describe('publisher', function () {
 
   })
 
-  it('can update publisher info', function () {
+  describe('info', function () {
+    it('can set individual attributes', function () {
 
+    })
+    it('can get individual attributes', function () {
+
+    })
+    it('contains all required attributes', function () {
+
+    })
   })
 
   describe('vote', function () {
