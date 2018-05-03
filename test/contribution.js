@@ -26,59 +26,19 @@ describe('contribution', function () {
     lib.after(mockery)
   })
 
-  it('Get the contribution amount', function () {
+  it('Tries to run contribution before time to reconcile', function () {
 
   })
 
-  it('Set the contribution amount', function () {
+  it('Tries to run contribution at time of reconcile', function () {
 
   })
 
-  it('Lock in the contribution amount', function () {
+  it('Tries to run contribution at reconcile with enough funds', function () {
 
   })
 
-  it('Sets the time until the next reconciliation', function () {
-
-  })
-
-  it('After time to reconcile has been set', function () {
-
-  })
-
-  it('Checks to see if ready for reconciliation', function () {
-
-  })
-
-  it('Performs reconciliation', function () {
-
-  })
-
-  it('Checks for how much time until reconciliation', function () {
-
-  })
-
-  it('Checks for sufficient balance for reconciliation', function () {
-
-  })
-
-  it('Wallet has a reconcile timestamp', function () {
-
-  })
-
-  it('Gets the last reconcile date', function () {
-
-  })
-
-  it('Gets the next reconcile date', function () {
-
-  })
-
-  it('Gets last reconcile message', function () {
-
-  })
-
-  it('Gets the total contribution amount from a transaction', function () {
+  it('Tries to run contribution at reconcile with not enough funds', function () {
 
   })
 })
