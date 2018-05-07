@@ -6,7 +6,7 @@
 
 const Immutable = require('immutable')
 
-const Lib = require('../abs')
+const Wallet = require('../abs/wallet')
 
 const defaultAppState = Immutable.fromJS({
   cache: {
@@ -15,7 +15,7 @@ const defaultAppState = Immutable.fromJS({
   ledger: {}
 })
 
-class JS extends Lib {
+class JS extends Wallet {
   constructor () {
     super()
     this.ledger = null
