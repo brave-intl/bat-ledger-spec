@@ -4,22 +4,12 @@
 
 'use strict'
 
-class Lib {
-  before () {
-    throw new Error('Function before is missing!')
-  }
+const Lib = require('./index')
 
-  beforeEach () {
-    throw new Error('Function beforeEach is missing!')
-  }
-
-  after () {
-    throw new Error('Function after is missing!')
-  }
-
+class Wallet extends Lib {
   createWallet () {
     throw new Error('Function createWallet is missing!')
   }
 }
 
-module.exports = Lib
+module.exports = Wallet
