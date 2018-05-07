@@ -4,12 +4,12 @@
 
 'use strict'
 
-function getLib () {
+function getLib (name = 'index') {
   if (process.env.TYPE === 'js') {
-    const JS = require('./js/index')
+    const JS = require(`./js/${name}`)
     return new JS()
   } else if (process.env.TYPE === 'c') {
-    const C = require('./c/index')
+    const C = require(`./c/${name}`)
     return new C()
   }
 }

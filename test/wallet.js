@@ -11,7 +11,7 @@ const helper = require('../helper')
 const snapshot = require('snap-shot-it')
 const mockery = require('mockery')
 
-const lib = helper.getLib()
+const lib = helper.getLib('wallet')
 
 describe('wallet', function () {
   before(function () {
