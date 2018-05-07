@@ -6,7 +6,7 @@
 
 const Lib = require('./index')
 
-class Publisher extends Lib { 
+class Publisher extends Lib {
   addSite () {
     throw new Error('Function addSite is missing!')
   }

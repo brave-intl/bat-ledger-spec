@@ -13,7 +13,6 @@ const mockery = require('mockery')
 
 const lib = helper.getLib('contribution')
 
-
 describe('contribution', function () {
   before(function () {
     lib.before(mockery)
