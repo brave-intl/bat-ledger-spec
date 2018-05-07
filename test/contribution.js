@@ -19,8 +19,11 @@ const mockery = require('mockery')
 
 const lib = helper.getLib('contribution')
 
+<<<<<<< HEAD
 >>>>>>> Added contribution
 
+=======
+>>>>>>> wip
 describe('contribution', function () {
   before(function () {
     lib.before(mockery)
