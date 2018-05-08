@@ -2,6 +2,15 @@ language: node_js
 node_js:
   - "node"
 dist: trusty
+env:
+  matrix:
+    - TEST_SUITE=lint
+    - TEST_SUITE=test-js
+branches:
+  only:
+    - master
+install:
+  - npm install
+  - npm run install-bl
 script:
-  - npm run lint
-  - npm run test-js
+  - npm run $TEST_SUITE
