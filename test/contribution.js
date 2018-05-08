@@ -11,9 +11,9 @@ const helper = require('../helper')
 const snapshot = require('snap-shot-it')
 const mockery = require('mockery')
 
-const lib = helper.getLib('wallet')
+const lib = helper.getLib('contribution')
 
-describe('wallet', function () {
+describe('contribution', function () {
   before(function () {
     lib.before(mockery)
   })
@@ -26,8 +26,16 @@ describe('wallet', function () {
     lib.after(mockery)
   })
 
-  it('create', function () {
-    const result = lib.createWallet()
+  it.skip('Tries to run contribution before time to reconcile', function () {
+    const result = lib.contributionBeforeTime()
     snapshot(this.test.fullTitle(), result)
+  })
+
+  it.skip('Tries to run contribution at reconcile with enough funds', function () {
+
+  })
+
+  it.skip('Tries to run contribution at reconcile with not enough funds', function () {
+
   })
 })

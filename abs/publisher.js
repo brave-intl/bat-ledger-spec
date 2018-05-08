@@ -7,10 +7,18 @@
 const Lib = require('./index')
 const error = require('../error')
 
-class Wallet extends Lib {
-  createWallet () {
-    error.setError('createWallet')
+class Publisher extends Lib {
+  addSite () {
+    error.setError('Function addSite is missing!')
+  }
+
+  addMedia () {
+    error.setError('Function addMedia is missing!')
+  }
+
+  manuallyAddSite () {
+    error.setError('Function manuallyAddSite is missing!')
   }
 }
 
-module.exports = Wallet
+module.exports = Publisher
