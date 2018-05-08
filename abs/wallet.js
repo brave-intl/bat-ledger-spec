@@ -5,10 +5,11 @@
 'use strict'
 
 const Lib = require('./index')
+const error = require('../error')
 
 class Wallet extends Lib {
   createWallet () {
-    this.setError('createWallet')
+    error.setError('createWallet')
   }
 }
 
