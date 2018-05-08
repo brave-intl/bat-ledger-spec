@@ -25,6 +25,7 @@ describe('contribution', function () {
   after(function () {
     lib.after(mockery)
   })
+
   it.skip('Tries to run contribution before time to reconcile', function () {
     const result = lib.contributionBeforeTime()
     snapshot(this.test.fullTitle(), result)

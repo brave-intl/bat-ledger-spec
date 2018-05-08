@@ -4,6 +4,8 @@
 
 'use strict'
 
+const error = require('../error')
+
 class Lib {
   before () {
     error.setError('before')
@@ -17,8 +19,7 @@ class Lib {
     error.setError('after')
   }
 
-  createWallet () {
-    this.setError('createWallet')
+  afterEach () {
     error.setError('afterEach')
   }
 }
