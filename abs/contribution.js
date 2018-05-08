@@ -5,19 +5,19 @@
 'use strict'
 
 const Lib = require('./index')
-const setError = require('../error').setError
+const error = require('../error')
 
 class Contribution extends Lib {
   contributionBeforeTime () {
-    setError('contributionBeforeTime')
+    error.setError('contributionBeforeTime')
   }
 
   contributionMinusFunds () {
-    setError('contributionMinusFunds')
+    error.setError('contributionMinusFunds')
   }
 
   contributionAdequateFunds () {
-    setError('contributionAdequateFunds')
+    error.setError('contributionAdequateFunds')
   }
 }
 
