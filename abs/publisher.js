@@ -5,18 +5,19 @@
 'use strict'
 
 const Lib = require('./index')
+const error = require('../error')
 
 class Publisher extends Lib {
   addSite () {
-    throw new Error('Function addSite is missing!')
+    error.setError('Function addSite is missing!')
   }
 
   addMedia () {
-    throw new Error('Function addMedia is missing!')
+    error.setError('Function addMedia is missing!')
   }
 
   manuallyAddSite () {
-    throw new Error('Function manuallyAddSite is missing!')
+    error.setError('Function manuallyAddSite is missing!')
   }
 }
 

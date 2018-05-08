@@ -5,10 +5,11 @@
 'use strict'
 
 const Lib = require('./index')
+const error = require('../error')
 
 class Wallet extends Lib {
   createWallet () {
-    throw new Error('Function createWallet is missing!')
+    error.setError('createWallet')
   }
 }
 
