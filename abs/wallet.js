@@ -8,7 +8,7 @@ const Lib = require('./index')
 
 class Wallet extends Lib {
   createWallet () {
-    throw new Error('Function createWallet is missing!')
+    this.setError('createWallet')
   }
 }
 
