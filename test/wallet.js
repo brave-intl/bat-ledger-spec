@@ -34,13 +34,12 @@ describe('wallet', function () {
   describe('balance', function () {
     it('wallet marked as funded with balance', function () {
       const result = lib.setWalletProperties()
-      console.log(result.getIn(['ledger', 'info', 'userHasFunded']))
+      snapshot(this.test.fullTitle(), result)
     })
 
     it('wallet is not marked as funded with no balance', function () {
       const result = lib.setWalletProperties({balance: 0})
-      // should be undefined
-      console.log(result.getIn(['ledger', 'info', 'userHasFunded']))
+      snapshot(this.test.fullTitle(), result)
     })
   })
 
@@ -57,7 +56,8 @@ describe('wallet', function () {
   describe('recovery', function () {
     it('succeeds with valid key', function () {
       const state = lib.corruptWallet()
-      lib.recoverWallet(state, 'test key')
+      const result = lib.recoverWallet(state, 'test key')
+      snapshot(this.test.fullTitle(), result)
     })
 
     it('fails with a key that is too short', function () {
@@ -74,7 +74,8 @@ describe('wallet', function () {
 
     it('fails with a non-string key', function () {
       const state = lib.corruptWallet()
-      lib.recoverWallet(state, 2352)
+      const result = lib.recoverWallet(state, 2352)
+      snapshot(this.test.fullTitle(), result)
     })
 
     it('fails with a key containing invalid words', function () {
