@@ -4,13 +4,8 @@
 
 'use strict'
 
-const Lib = require('./index')
-const err = require('../error/index')
-
-class Wallet extends Lib {
-  createWallet () {
-    err.setError('Function createWallet is missing!')
-  }
+function setError (text) {
+  throw new Error(`Function ${text} is missing!`)
 }
 
-module.exports = Wallet
+exports.setError = setError

@@ -4,21 +4,23 @@
 
 'use strict'
 
+const error = require('../error/index')
+
 class Lib {
   before () {
-    throw new Error('Function before is missing!')
+    error.setError('Function before is missing!')
   }
 
   beforeEach () {
-    throw new Error('Function beforeEach is missing!')
+    error.setError('Function beforeEach is missing!')
   }
 
   after () {
-    throw new Error('Function after is missing!')
+    error.setError('Function after is missing!')
   }
 
   afterEach () {
-    throw new Error('Function afterEach is missing!')
+    error.setError('Function afterEach is missing!')
   }
 }
 
