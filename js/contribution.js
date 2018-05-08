@@ -4,15 +4,15 @@
 
 'use strict'
 
-const Immutable = require('immutable')
-const sinon = require('sinon')
+// const Immutable = require('immutable')
+// const sinon = require('sinon')
 
 const Contribution = require('../abs/contribution')
 const settings = require('../browser-laptop/js/constants/settings')
 
-const defaultAppState = Immutable.fromJS({
-  ledger: {}
-})
+// const defaultAppState = Immutable.fromJS({
+//   ledger: {}
+// })
 
 class JS extends Contribution {
   constructor () {

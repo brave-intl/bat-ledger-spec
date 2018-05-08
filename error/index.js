@@ -4,8 +4,8 @@
 
 'use strict'
 
-class Error {
-  setError (text) {
-    throw new Error(`Function ${text} is missing!`)
-  }
+const setError = (text) => {
+  throw new Error(`Function ${text} is missing!`)
 }
+
+module.exports = setError
