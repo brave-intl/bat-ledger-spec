@@ -4,7 +4,7 @@
   "description": "Spec for bat ledger",
   "scripts": {
     "install-bl": "cd browser-laptop && npm install",
-    "update": "git submodule foreach git pull",
+    "update": "git submodule update --init --recursive",
     "test": "npm run test-js && npm run test-c",
     "test-js": "cross-env NODE_ENV=test TYPE=\"js\" mocha \"test/**/*.js\"",
     "test-c": "cross-env NODE_ENV=test TYPE=\"c\" mocha \"test/**/*.js\"",
