@@ -4,10 +4,9 @@
 
 'use strict'
 
-const Lib = require('./index')
 const error = require('../error')
 
-class Contribution extends Lib {
+class Lib {
   before () {
     error.setError('before')
   }
