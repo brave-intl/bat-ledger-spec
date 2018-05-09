@@ -34,6 +34,7 @@
     "mocha": "^5.1.1",
     "mockery": "^2.1.0",
     "pre-push": "^0.1.1",
+    "sinon": "^5.0.6",
     "snap-shot-it": "^4.1.4",
     "sinon": "^5.0.6",
     "snazzy": "^7.1.1",

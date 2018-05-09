@@ -10,6 +10,18 @@ class Wallet extends Lib {
   createWallet () {
     throw new Error('Function createWallet is missing!')
   }
+
+  corruptWallet () {
+    throw new Error('Function corruptWallet is missing!')
+  }
+
+  recoverWallet () {
+    throw new Error('Function recoverWallet is missing!')
+  }
+
+  setWalletProperties () {
+    throw new Error('Function setWalletProperties is missing!')
+  }
 }
 
 module.exports = Wallet
