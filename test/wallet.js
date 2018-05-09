@@ -30,4 +30,54 @@ describe('wallet', function () {
     const result = lib.createWallet()
     snapshot(this.test.fullTitle(), result)
   })
+
+  describe('balance', function () {
+    it('wallet marked as funded with balance', function () {
+      const result = lib.setWalletProperties({balance: 10})
+      snapshot(this.test.fullTitle(), lib.getInfo(result))
+    })
+
+    it('wallet is not marked as funded with no balance', function () {
+      const result = lib.setWalletProperties()
+      snapshot(this.test.fullTitle(), lib.getInfo(result))
+    })
+  })
+
+  describe('properties', function () {
+    it('generates wallet addresses', function () {
+      const result = lib.setWalletProperties()
+      snapshot(this.test.fullTitle(), lib.getInfo(result))
+    })
+  })
+
+  describe('backup', function () {
+    it('backs up wallet', function () {
+      const walletState = lib._createWallet()
+      const result = lib.backupWallet(walletState)
+      snapshot(this.test.fullTitle(), lib.getPreferences(result))
+    })
+  })
+
+  describe('recovery', function () {
+    it('succeeds with valid key', function () {
+      const walletState = lib._createWallet()
+      const corruptedState = lib.corruptWallet(walletState)
+      const result = lib.recoverWallet(corruptedState, lib.walletPassphrase)
+      snapshot(this.test.fullTitle(), lib.getInfo(result))
+    })
+
+    it('fails with an invalid key', function () {
+      const walletState = lib._createWallet()
+      const corruptedState = lib.corruptWallet(walletState)
+      const result = lib.recoverWallet(corruptedState, 'bogus key')
+      snapshot(this.test.fullTitle(), lib.getInfo(result))
+    })
+
+    it('fails with a non-string key', function () {
+      const walletState = lib._createWallet()
+      const corruptedState = lib.corruptWallet(walletState)
+      const result = lib.recoverWallet(corruptedState, 2352)
+      snapshot(this.test.fullTitle(), lib.getInfo(result))
+    })
+  })
 })
