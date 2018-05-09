@@ -65,8 +65,10 @@ class JS extends Publisher {
 
     this.ledger = require('../browser-laptop/app/browser/api/ledger')
 
-    this.fetchFavIcon = sinon.stub(this.ledger, 'fetchFavIcon').callsFake(function () {
-      return 'data:image/x-icon;base64,AAABAAMAQEAAAA'
+    this.getFavIconStub = sinon.stub(this.ledger, 'getFavIcon').callsFake(function (state, publisherKey) {
+      state = self.ledger.onFavIconReceived(state, publisherKey, 'data:image/x-icon;base64,AAABAAMAQEAAAA')
+      state = self.ledger.updatePublisherInfo(state)
+      return state
     })
   }
 
@@ -79,14 +81,14 @@ class JS extends Publisher {
     mockery.deregisterAll()
     mockery.disable()
 
-    if (this.fetchFavIcon) {
-      this.fetchFavIcon.restore()
+    if (this.getFavIconStub) {
+      this.getFavIconStub.restore()
     }
   }
 
   afterEach (mockery) {
-    if (this.fetchFavIcon) {
-      this.fetchFavIcon.reset()
+    if (this.getFavIconStub) {
+      this.getFavIconStub.reset()
     }
   }
 
