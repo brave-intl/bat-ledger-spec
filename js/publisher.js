@@ -23,6 +23,7 @@ class JS extends Publisher {
     this.ledger = null
     this.paymentEnabled = false
     this.paymentAutoSuggest = true
+    this.fakeClock = null
   }
 
   before (mockery) {
@@ -32,6 +33,7 @@ class JS extends Publisher {
       warnOnUnregistered: false,
       useCleanCache: true
     })
+    this.fakeClock = sinon.useFakeTimers()
 
     const fakeElectron = require('../test/fixtures/fakeElectron')
     const fakeAdBlock = require('../test/fixtures/fakeAdBlock')
@@ -80,6 +82,7 @@ class JS extends Publisher {
   after (mockery) {
     mockery.deregisterAll()
     mockery.disable()
+    this.fakeClock.restore()
 
     if (this.getFavIconStub) {
       this.getFavIconStub.restore()
@@ -93,17 +96,18 @@ class JS extends Publisher {
   }
 
   addSite (publisher, exist = true) {
+    this.fakeClock.tick(1525688389657)
     let state = this.ledger.enable(defaultAppState)
     this.paymentEnabled = true
     const publisherKey = publisher.publisherKey
-    const url = `https://${publisherKey}/`
+    const url = `${publisher.url}/`
 
     state = state
       .setIn(['pageData', 'info', url], Immutable.fromJS({
         key: url,
         protocol: 'https:',
         publisher: publisherKey,
-        timestamp: 1525688389657,
+        timestamp: 1525688397657,
         url: url
       }))
       .setIn(['pageData', 'last'], Immutable.fromJS({
@@ -114,12 +118,16 @@ class JS extends Publisher {
         publisher: publisherKey
       }))
 
-    state = this.ledger.pageDataChanged(state, {
-      location: `https://${publisherKey}`,
+    this.ledger.pageDataChanged(state, {
+      location: publisher.url,
       tabId: publisher.tabId
     })
-    console.log(JSON.stringify(state.toJS()))
-    return this.ledger.getSynopsis()
+
+    const synopsis = this.ledger.getSynopsis()
+    return {
+      publishers: synopsis.publishers,
+      options: synopsis.options
+    }
   }
 
   addMedia () {

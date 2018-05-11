@@ -6,9 +6,8 @@
 
 /* global describe, before, beforeEach, after, it */
 
-// const assert = require('assert')
 const helper = require('../helper')
-// const snapshot = require('snap-shot-it')
+const snapshot = require('snap-shot-it')
 const mockery = require('mockery')
 
 const lib = helper.getLib('publisher')
@@ -36,16 +35,24 @@ describe('publisher', function () {
       })
 
       it('do not log about pages', function () {
-
+        const result = lib.addSite({
+          publisherKey: 'about:preference',
+          tabId: 1,
+          visitTime: 8000
+        }, false)
+        snapshot(this.test.fullTitle(), result)
       })
 
       describe('site visit', function () {
-        it('not in the table', function () {
-          lib.addSite({
+        it.skip('not in the table', function () {
+          const result = lib.addSite({
             publisherKey: 'clifton.io',
+            url: 'https://clifton.io',
             tabId: 1,
             visitTime: 8000
           }, false)
+          // console.log(JSON.stringify(result))
+          snapshot(this.test.fullTitle(), result)
         })
 
         it('in the table', function () {
