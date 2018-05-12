@@ -255,7 +255,7 @@ class JS extends Wallet {
   }
 
   // Like create wallet, except the state is returned
-  _createWallet () {
+  createWalletState () {
     return this.ledger.enable(defaultAppState)
   }
 
@@ -263,12 +263,15 @@ class JS extends Wallet {
     return state.setIn(['status'], this.ledgerStatuses.CORRUPTED_SEED)
   }
 
-  backupWallet (state) {
+  backupWallet () {
+    const state = this.createWalletState()
     return this.ledger.backupKeys(state, 'print')
   }
 
-  recoverWallet (state, key) {
-    return this.ledger.recoverKeys(state, key)
+  recoverWallet (key) {
+    const state = this.createWalletState()
+    const corruptedState = this.corruptWallet(state)
+    return this.ledger.recoverKeys(corruptedState, key)
   }
 
   setWalletProperties (props = {}) {
@@ -280,7 +283,7 @@ class JS extends Wallet {
       }
     })
 
-    const state = this._createWallet()
+    const state = this.createWalletState()
     const result = this.ledger.onWalletProperties(state, body)
     return this.ledger.getStateInfo(result, this.walletResult.toJS())
   }

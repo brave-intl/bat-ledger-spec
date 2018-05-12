@@ -52,31 +52,24 @@ describe('wallet', function () {
 
   describe('backup', function () {
     it('backs up wallet', function () {
-      const walletState = lib._createWallet()
-      const result = lib.backupWallet(walletState)
+      const result = lib.backupWallet()
       snapshot(this.test.fullTitle(), lib.getPreferences(result))
     })
   })
 
   describe('recovery', function () {
     it('succeeds with valid key', function () {
-      const walletState = lib._createWallet()
-      const corruptedState = lib.corruptWallet(walletState)
-      const result = lib.recoverWallet(corruptedState, lib.walletPassphrase)
+      const result = lib.recoverWallet(lib.walletPassphrase)
       snapshot(this.test.fullTitle(), lib.getInfo(result))
     })
 
     it('fails with an invalid key', function () {
-      const walletState = lib._createWallet()
-      const corruptedState = lib.corruptWallet(walletState)
-      const result = lib.recoverWallet(corruptedState, 'bogus key')
+      const result = lib.recoverWallet('bogus key')
       snapshot(this.test.fullTitle(), lib.getInfo(result))
     })
 
     it('fails with a non-string key', function () {
-      const walletState = lib._createWallet()
-      const corruptedState = lib.corruptWallet(walletState)
-      const result = lib.recoverWallet(corruptedState, 2352)
+      const result = lib.recoverWallet(2352)
       snapshot(this.test.fullTitle(), lib.getInfo(result))
     })
   })
