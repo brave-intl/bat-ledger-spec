@@ -7,6 +7,7 @@
 const Immutable = require('immutable')
 
 const Wallet = require('../abs/wallet')
+const request = require('../lib/request')
 
 const defaultAppState = Immutable.fromJS({
   cache: {
@@ -35,6 +36,9 @@ class JS extends Wallet {
     mockery.registerMock('electron', fakeElectron)
     mockery.registerMock('level', fakeLevel)
     mockery.registerMock('ad-block', fakeAdBlock)
+    mockery.registerMock('../../../js/lib/request', {
+      request: request
+    })
 
     this.ledger = require('../browser-laptop/app/browser/api/ledger')
   }
