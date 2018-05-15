@@ -5,24 +5,35 @@
 'use strict'
 
 const Immutable = require('immutable')
+const sinon = require('sinon')
 
 const Wallet = require('../abs/wallet')
 const request = require('../lib/request')
+const settings = require('../browser-laptop/js/constants/settings')
 
 const defaultAppState = Immutable.fromJS({
   cache: {
     ledgerVideos: {}
   },
-  ledger: {}
+  ledger: {},
+  about: {
+    preferences: {}
+  }
 })
 
 class JS extends Wallet {
   constructor () {
     super()
+    this.state = null
     this.ledger = null
+    this.minimumVisits = 1
+    this.minimumVisitTime = 5000
+    this.defaultContribution = 10
+    this.stateFile = null
   }
 
   before (mockery) {
+    const self = this
     mockery.enable({
       warnOnReplace: false,
       warnOnUnregistered: false,
@@ -39,8 +50,58 @@ class JS extends Wallet {
     mockery.registerMock('../../../js/lib/request', {
       request: request
     })
+    mockery.registerMock('../../../js/settings', {
+      getSetting: (key) => {
+        switch (key) {
+          case settings.PAYMENTS_MINIMUM_VISITS:
+          {
+            return self.minimumVisits
+          }
+          case settings.PAYMENTS_MINIMUM_VISIT_TIME:
+          {
+            return self.minimumVisitTime
+          }
+          case settings.PAYMENTS_CONTRIBUTION_AMOUNT:
+          {
+            return self.defaultContribution
+          }
+          case settings.PAYMENTS_ENABLED:
+          {
+            return true
+          }
+        }
+      }
+    })
 
+    // browser-laptop modules
     this.ledger = require('../browser-laptop/app/browser/api/ledger')
+    this.ledgerStatuses = require('../browser-laptop/app/common/constants/ledgerStatuses')
+
+    // stubbed ledgerApi functions
+    this.recoverWalletCallback = sinon.stub(this.ledger, 'recoverWalletCallback').callsFake(function (error, result) {
+      self.state = self.ledger.onWalletRecovery(self.state, error, result)
+    })
+
+    this.onBraveryPropertiesCallback = sinon.stub(this.ledger, 'onBraveryPropertiesCallback').callsFake(function (error, result) {
+      self.state = self.ledger.onBraveryProperties(self.state, error, result)
+    })
+
+    this.onInitReadAction = sinon.stub(this.ledger, 'onInitReadAction').callsFake(function (state, parsedData) {
+      // self.state = self.ledger.onInitRead(state, {})
+    })
+
+    this.onLedgerCallbackAction = sinon.stub(this.ledger, 'onLedgerCallbackAction').callsFake(function (result, delayTime) {
+      self.state = self.ledger.onCallback(self.state, result, delayTime)
+    })
+
+    this.muonWriter = sinon.stub(this.ledger, 'muonWriter').callsFake(function (statePath, result) {
+      self.stateFile = result
+    })
+
+    this.initAccessStatePath = sinon.stub(this.ledger, 'initAccessStatePath').callsFake(function (state, statePath) {
+      self.ledger.onInitReadAction(self.stateFile)
+      return state
+    })
   }
 
   beforeEach (mockery) {
@@ -55,6 +116,12 @@ class JS extends Wallet {
   createWallet () {
     this.ledger.enable(defaultAppState)
     return this.ledger.getSynopsis()
+  }
+
+  clientInit () {
+    this.state = this.ledger.init(defaultAppState)
+    this.state = this.ledger.onBootStateFile(this.state)
+    return this.state
   }
 }
 
