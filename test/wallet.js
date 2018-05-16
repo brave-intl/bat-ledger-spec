@@ -30,4 +30,12 @@ describe('wallet', function () {
     const result = lib.createWallet()
     snapshot(this.test.fullTitle(), result)
   })
+
+  describe('recovery', function () {
+    it('recovers', function () {
+      lib.clientInit()
+      const result = lib.recoverWallet('wasp broken strong analyst until tray olympic arrow input bicycle gun settle prepare tissue road try sustain husband width brave section obey country area')
+      snapshot(this.test.fullTitle(), result)
+    })
+  })
 })
