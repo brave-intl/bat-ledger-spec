@@ -6,8 +6,9 @@
 
 const Immutable = require('immutable')
 
+const sinon = require('sinon')
 const Wallet = require('../abs/wallet')
-const request = require('../lib/request')
+const {request, roundtrip} = require('../lib/request')
 
 const defaultAppState = Immutable.fromJS({
   cache: {
@@ -41,6 +42,9 @@ class JS extends Wallet {
     })
 
     this.ledger = require('../browser-laptop/app/browser/api/ledger')
+    this.roundtrip = sinon.stub(this.ledger, 'roundtrip').callsFake(function (params, options, callback) {
+      roundtrip(params, options, callback)
+    })
   }
 
   beforeEach (mockery) {
