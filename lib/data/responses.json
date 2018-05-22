@@ -1,4 +1,7 @@
 {
+  "/v2/wallet?publicKey": {
+    "paymentId": "5b1c9e73-2ec7-4b09-a790-d7dc97004815"
+  },
   "/v3/publisher/timestamp": {
     "timestamp": "6556256801271054343"
   },

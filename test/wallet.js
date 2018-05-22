@@ -4,7 +4,7 @@
 
 'use strict'
 
-/* global describe, before, beforeEach, after, it */
+/* global describe, before, beforeEach, after, afterEach it */
 
 // const assert = require('assert')
 const helper = require('../helper')
@@ -26,8 +26,27 @@ describe('wallet', function () {
     lib.after(mockery)
   })
 
+  afterEach(function () {
+    lib.afterEach(mockery)
+  })
+
   it('create', function () {
     const result = lib.createWallet()
     snapshot(this.test.fullTitle(), result)
+  })
+
+  describe('recovery', function () {
+    it('succeeds with a valid key', function () {
+      const result = lib.recoverWallet('wasp broken strong analyst until tray olympic arrow input bicycle gun settle prepare tissue road try sustain husband width brave section obey country area')
+      snapshot(this.test.fullTitle(), lib.getInfo(result))
+    })
+    it('fails with an invalid key', function () {
+      const result = lib.recoverWallet('broken strong analyst until tray olympic arrow input bicycle gun settle prepare tissue road try sustain husband width brave section obey country area')
+      snapshot(this.test.fullTitle(), lib.getInfo(result))
+    })
+    it('recovery does not process with a non-string key', function () {
+      const result = lib.recoverWallet(93247639267)
+      snapshot(this.test.fullTitle(), lib.getInfo(result))
+    })
   })
 })
