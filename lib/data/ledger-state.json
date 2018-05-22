@@ -1,0 +1,110 @@
+{
+  "personaId": "312c959c-e9cf-42b0-95af-715d9547aeea",
+  "options": {
+    "debugP": false,
+    "loggingP": false,
+    "rulesTestP": false,
+    "verboseP": false,
+    "server": {
+      "protocol": "https:",
+      "slashes": true,
+      "auth": null,
+      "host": "ledger.mercury.basicattentiontoken.org",
+      "port": null,
+      "hostname": "ledger.mercury.basicattentiontoken.org",
+      "hash": null,
+      "search": null,
+      "query": null,
+      "pathname": "/",
+      "path": "/",
+      "href": "https://ledger.mercury.basicattentiontoken.org/"
+    },
+    "version": "v2",
+    "environment": "production",
+    "prefix": "/v2"
+  },
+  "ballots": [],
+  "transactions": [],
+  "properties": {
+    "setting": "adFree",
+    "fee": {
+      "currency": "BAT",
+      "amount": 7.5
+    },
+    "days": 30,
+    "wallet": {
+      "keyinfo": {
+        "seed": {
+          "0": 14,
+          "1": 182,
+          "2": 213,
+          "3": 46,
+          "4": 183,
+          "5": 45,
+          "6": 142,
+          "7": 189,
+          "8": 223,
+          "9": 216,
+          "10": 163,
+          "11": 26,
+          "12": 21,
+          "13": 112,
+          "14": 78,
+          "15": 22,
+          "16": 204,
+          "17": 38,
+          "18": 136,
+          "19": 222,
+          "20": 127,
+          "21": 240,
+          "22": 178,
+          "23": 64,
+          "24": 89,
+          "25": 46,
+          "26": 237,
+          "27": 247,
+          "28": 48,
+          "29": 220,
+          "30": 144,
+          "31": 1
+        }
+      },
+      "paymentId": "7ec50587-223f-4189-a377-9d570a17ad1c",
+      "addresses": {
+        "BAT": "0x9076CE8d5e6aD43EBA94c7A909572DE0A39E7eFC",
+        "BTC": "1NyTZUmwLJoDNhvJwKGCAAKPhbnGo4SVTd",
+        "CARD_ID": "6c4dd79e-1008-4381-89d0-d6078963bef6",
+        "ETH": "0x9076CE8d5e6aD43EBA94c7A909572DE0A39E7eFC",
+        "LTC": "LLcZ6fFz9zdrMzf3f9ewno3xe6LPXoeVxK"
+      }
+    }
+  },
+  "reconcileStamp": 1529211991783,
+  "memos": [
+    "{\"who\":\"sync\",\"what\":{\"reconcileStamp\":1527829588048,\"reconcileDate\":\"2018-06-01T05:06:28.048Z\"},\"when\":1526619988048}"
+  ],
+  "ruleset": [
+    {
+      "condition": "/^[a-z][a-z].gov$/.test(SLD)",
+      "consequent": "QLD + '.' + SLD",
+      "description": "governmental sites"
+    },
+    {
+      "condition": "TLD === 'gov' || /^go.[a-z][a-z]$/.test(TLD) || /^gov.[a-z][a-z]$/.test(TLD)",
+      "consequent": "SLD",
+      "description": "governmental sites"
+    },
+    {
+      "condition": "SLD === 'keybase.pub'",
+      "consequent": "QLD + '.' + SLD",
+      "description": "keybase users"
+    },
+    {
+      "condition": true,
+      "consequent": "SLD",
+      "description": "the default rule"
+    }
+  ],
+  "persona": "{\"userId\":\"312c959ce9cf2b095af715d9547aeea\",\"registrarVK\":\"==========ANONLOGIN_VK_BEG==========\n5Zo7fjdryszdwgAZO+HiK18yErXRoPvRkmYmo4E2UQV 4NMDAdwHg0z3LdGN3KkOoFLbza3SpeUWBcMKOUvJ8O1 1\n7MpAGVMgs+tuMQs4pH+nKUh0M+rl21RyUAdhRHKGhq4 5LXnl7uUw0XwaSTIojyDh4hODTEcT5BAiAhPCGIItDM 1\n2qtVvVwfxlDGzPSXXl0Ms94eycXiUJpthRp6uAjrjW8 Auhpv58KOuncZfXB1eekbOwTXloSAgPPRJ3A1g2a1MZ 1\n41nN9zSpWB6xfefhy/BWOouZnE5Vz+Akgtu3WavASEJ AF4pxNogZT38xdPdxe51RIGaFXKNVj3K2vbfN3uzI1T 1\n31ND6Q8qewDElWUU88rMWn4RZl95sjbSvoimlfsVFEg 8VjyRwkfd4dWwMQhShAIiyY0L9tOiJIR4PWlRIwyQs6 wLm/Ph3gh2ZtdqNbGJIcQM1LoCr+23zELEwUKvAnSL 1sWQdlB2UL0xSqgNcb9NObxiSof322GgHUg2nq43Y4l 1 0\n===========ANONLOGIN_VK_END==========\",\"masterUserToken\":\"==========ANONLOGIN_CRED_BEG==========\\n312c959ce9cf2b095af715d9547aeea\\nA0C0dESg6ONR8f+P8mk4X12cbOmADZg5Vm2QPv6wlHk\\nA7DlEe2qHj/r3IktOmq1pE5gjK9+r/oGUz3Q528p9qk 8BvyryzRdi1INPGMMEg25VNacZFQEkKHTmLAhP0VWwO 1\\n8oU7/SrWETtNui8VybQXr7op324hNbVo7Gmb4K6MQ0C\\n3aBoXdyy5FSDfF40iGqq/o/qsHGFR24g++6NTMdUfZ/\\n===========ANONLOGIN_CRED_END==========\"}",
+  "bootStamp": 1526619991783
+}
