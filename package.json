@@ -4,7 +4,8 @@
   "description": "Spec for bat ledger",
   "scripts": {
     "install-bl": "cd browser-laptop && npm install",
-    "update": "git submodule update --init --recursive",
+    "module-init": "git submodule update --init --recursive",
+    "module-update": "git submodule update --remote --recursive",
     "test": "npm run test-js && npm run test-c",
     "test-js": "cross-env NODE_ENV=test TYPE=\"js\" mocha \"test/**/*.js\"",
     "test-c": "cross-env NODE_ENV=test TYPE=\"c\" mocha \"test/**/*.js\"",
@@ -33,9 +34,12 @@
     "mocha": "^5.1.1",
     "mockery": "^2.1.0",
     "pre-push": "^0.1.1",
+    "request": "^2.85.0",
     "snap-shot-it": "^4.1.4",
+    "sinon": "^5.0.6",
     "snazzy": "^7.1.1",
     "standard": "^11.0.1",
+    "underscore": "^1.9.0",
     "util": "^0.10.3"
   },
   "pre-push": {
