@@ -101,6 +101,7 @@ class JS extends Wallet {
     })
 
     this.recoverWalletCallback = sinon.stub(this.ledger, 'recoverWalletCallback').callsFake(function (error, result) {
+      result = Immutable.fromJS(result)
       self.state = self.ledger.onWalletRecovery(self.state, error, result)
     })
 
@@ -115,8 +116,8 @@ class JS extends Wallet {
       if (err) {
         return self.state
       }
-      self.state = this.ledger.onWalletProperties(self.state, body)
-      return self.state
+      body = Immutable.fromJS(body)
+      self.state = self.ledger.onWalletProperties(self.state, body)
     })
 
     this.setBraveryPropertiesCallback = sinon.stub(this.ledger, 'setBraveryPropertiesCallback').callsFake(function (error, result) {
@@ -142,6 +143,11 @@ class JS extends Wallet {
     this.fetchReferralHeadersCallback = sinon.stub(this.ledger, 'fetchReferralHeadersCallback').callsFake(function (err, response, body) {
       self.state = self.ledger.onFetchReferralHeaders(self.state, err, response, body)
       return self.state
+    })
+
+    this.onLedgerQRGeneratedCallback = sinon.stub(this.ledger, 'onLedgerQRGeneratedCallback').callsFake(function (index, paymentIMG) {
+      self.state = self.state
+        .setIn(['ledger', 'info', 'walletQR', index], paymentIMG)
     })
   }
 
