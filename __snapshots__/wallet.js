@@ -25,24 +25,22 @@ exports['wallet create 1'] = {
 
 exports['wallet recovery succeeds with a valid key 1'] = {
   "paymentId": "7ec50587-223f-4189-a377-9d570a17ad1c",
-  "addresses": {},
   "created": true,
-  "passphrase": "attitude repeat entry hour suggest galaxy legal behave borrow process bean collect second dutch ketchup wrap rather actress entry swim indoor hour divorce come",
+  "creating": true,
   "reconcileFrequency": 30,
   "reconcileStamp": 1529211991783,
-  "transactions": [],
-  "creating": true,
-  "walletQR": {}
+  "passphrase": "attitude repeat entry hour suggest galaxy legal behave borrow process bean collect second dutch ketchup wrap rather actress entry swim indoor hour divorce come",
+  "transactions": []
 }
 
 exports['wallet recovery fails with an invalid key 1'] = {
-  "creating": true,
-  "error": {
-    "caller": "recoveryWallet",
-    "error": "Error: invalid passphrase:Error: Input words length 23 is not 24 or 16."
-  }
+  "creating": true
 }
 
 exports['wallet recovery recovery does not process with a non-string key 1'] = {
-  "creating": true
+  "creating": true,
+  "error": {
+    "caller": "recoverKeys",
+    "error": true
+  }
 }

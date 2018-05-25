@@ -100,6 +100,11 @@ class JS extends Wallet {
       roundtrip(params, options, callback)
     })
 
+    this.getBalance = sinon.stub(this.ledger, 'getBalance').callsFake(function (state) {
+      self.state = self.ledger.getPaymentInfo(state)
+      return self.state
+    })
+
     this.recoverWalletCallback = sinon.stub(this.ledger, 'recoverWalletCallback').callsFake(function (error, result) {
       result = Immutable.fromJS(result)
       self.state = self.ledger.onWalletRecovery(self.state, error, result)
@@ -118,6 +123,7 @@ class JS extends Wallet {
       }
       body = Immutable.fromJS(body)
       self.state = self.ledger.onWalletProperties(self.state, body)
+      return self.state
     })
 
     this.setBraveryPropertiesCallback = sinon.stub(this.ledger, 'setBraveryPropertiesCallback').callsFake(function (error, result) {
@@ -208,7 +214,7 @@ class JS extends Wallet {
   recoverWallet (key) {
     this.clientInit()
     this.corruptWallet()
-    this.ledger.recoverKeys(this.state, false, key)
+    this.state = this.ledger.recoverKeys(this.state, false, key)
     this.modifyDateStamp()
     return this.state
   }
