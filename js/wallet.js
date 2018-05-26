@@ -33,6 +33,7 @@ class JS extends Wallet {
     this.paymentsEnabled = false
     this.state = defaultAppState
     this.stateFile = null
+    this.wallet = 'default-wallet'
   }
 
   setStateFile () {
@@ -128,7 +129,7 @@ class JS extends Wallet {
     })
 
     this.roundtrip = sinon.stub(this.ledger, 'roundtrip').callsFake(function (params, options, callback) {
-      roundtrip(params, options, callback)
+      roundtrip(params, options, callback, self.wallet)
     })
 
     this.getBalance = sinon.stub(this.ledger, 'getBalance').callsFake(function (state) {
@@ -183,7 +184,7 @@ class JS extends Wallet {
     })
 
     this.qrWriteImage = sinon.stub(this.ledger, 'qrWriteImage').callsFake(function (index, url) {
-      const paymentIMG = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAM0AAADNCAAAAAA+16u1AAACJklEQVR42u3bS26DQBQEQO5/6WQZxZJx93zATopVJLAyxeLp'
+      const paymentIMG = `data:image/png;base64,${Buffer.from(url).toString('base64')}`
       self.ledger.onLedgerQRGeneratedCallback(index, paymentIMG)
     })
 
@@ -203,8 +204,10 @@ class JS extends Wallet {
   }
 
   afterEach (mockery) {
+    mockery.resetCache()
     this.setStateFile()
     this.state = defaultAppState
+    this.ledger.resetModules()
   }
 
   getInfo (state) {
@@ -217,14 +220,16 @@ class JS extends Wallet {
       .setIn(['about', 'preferences', 'updatedStamp'], 1527108385208))
   }
 
-  createWallet () {
+  enable () {
     this.ledger.enable(defaultAppState)
     return this.ledger.getSynopsis()
   }
 
-  clientInit () {
+  createWallet () {
     this.setState(this.ledger.init(defaultAppState))
     this.setState(this.ledger.onBootStateFile(this.state))
+    this.wallet = 'recovered-wallet'
+    return this.state
   }
 
   corruptWallet () {
@@ -246,9 +251,11 @@ class JS extends Wallet {
       .setIn(['ledger', 'about', 'status'], this.ledgerStatuses.CORRUPTED_SEED))
   }
 
-  recoverWallet (key) {
-    this.clientInit()
-    this.corruptWallet()
+  recoverWallet (key, corrupt = false) {
+    this.createWallet()
+    if (corrupt) {
+      this.corruptWallet()
+    }
     this.ledger.recoverKeys(this.state, false, key)
     this.modifyDateStamp()
     return this.state

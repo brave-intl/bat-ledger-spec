@@ -32,7 +32,7 @@ describe('wallet', function () {
 
   it('create', function () {
     const result = lib.createWallet()
-    snapshot(this.test.fullTitle(), result)
+    snapshot(this.test.fullTitle(), lib.getInfo(result))
   })
 
   describe('recovery', function () {
@@ -46,6 +46,10 @@ describe('wallet', function () {
     })
     it('recovery does not process with a non-string key', function () {
       const result = lib.recoverWallet(93247639267)
+      snapshot(this.test.fullTitle(), lib.getInfo(result))
+    })
+    it('recovers a corrupted wallet', function () {
+      const result = lib.recoverWallet('wasp broken strong analyst until tray olympic arrow input bicycle gun settle prepare tissue road try sustain husband width brave section obey country area', true)
       snapshot(this.test.fullTitle(), lib.getInfo(result))
     })
   })
