@@ -40,6 +40,37 @@ class JS extends Wallet {
     this.stateFile = JSON.stringify(ledgerStateData)
   }
 
+  setState (newState) {
+    const oldStateJS = this.state.toJS()
+    const newStateJS = newState.toJS()
+    this.state = newState
+
+    if (!newStateJS.ledger.hasOwnProperty('info')) {
+      return
+    }
+
+    const newInfo = newStateJS.ledger.info
+
+    if (!oldStateJS.ledger.hasOwnProperty('info')) {
+      oldStateJS.ledger.info = {}
+    }
+
+    for (let key of Object.keys(newInfo)) {
+      if (
+        !newInfo.hasOwnProperty(key) ||
+        (typeof newInfo[key] === 'object' &&
+        Object.keys(newInfo[key]).length === 0)
+      ) {
+        continue
+      }
+
+      oldStateJS.ledger.info[key] = newInfo[key]
+    }
+
+    this.state = this.state
+      .setIn(['ledger', 'info'], Immutable.fromJS(oldStateJS.ledger.info))
+  }
+
   before (mockery) {
     const self = this
     mockery.enable({
@@ -93,7 +124,7 @@ class JS extends Wallet {
       if (typeof delayTime === 'undefined') {
         delayTime = Math.floor(Math.random() * (5 * 60 * 1000))
       }
-      self.state = self.ledger.onCallback(self.state, result, delayTime)
+      self.setState(self.ledger.onCallback(self.state, result, delayTime))
     })
 
     this.roundtrip = sinon.stub(this.ledger, 'roundtrip').callsFake(function (params, options, callback) {
@@ -101,13 +132,13 @@ class JS extends Wallet {
     })
 
     this.getBalance = sinon.stub(this.ledger, 'getBalance').callsFake(function (state) {
-      self.state = self.ledger.getPaymentInfo(state)
+      self.setState(self.ledger.getPaymentInfo(state))
       return self.state
     })
 
     this.recoverWalletCallback = sinon.stub(this.ledger, 'recoverWalletCallback').callsFake(function (error, result) {
       result = Immutable.fromJS(result)
-      self.state = self.ledger.onWalletRecovery(self.state, error, result)
+      self.setState(self.ledger.onWalletRecovery(self.state, error, result))
     })
 
     this.publisherTimestampCallback = sinon.stub(this.ledger, 'publisherTimestampCallback').callsFake(function (err, result) {
@@ -122,14 +153,14 @@ class JS extends Wallet {
         return self.state
       }
       body = Immutable.fromJS(body)
-      self.state = self.ledger.onWalletProperties(self.state, body)
+      self.setState(self.ledger.onWalletProperties(self.state, body))
       return self.state
     })
 
     this.setBraveryPropertiesCallback = sinon.stub(this.ledger, 'setBraveryPropertiesCallback').callsFake(function (error, result) {
-      self.state = self.state
-        .setIn(['ledger', 'info', 'created'], true)
-      self.state = self.ledger.onBraveryProperties(self.state, error, result)
+      self.setState(self.state
+        .setIn(['ledger', 'info', 'created'], true))
+      self.setState(self.ledger.onBraveryProperties(self.state, error, result))
     })
 
     this.muonWriter = sinon.stub(this.ledger, 'muonWriter').callsFake(function (fileName, payload) {
@@ -137,23 +168,23 @@ class JS extends Wallet {
     })
 
     this.initAccessStatePath = sinon.stub(this.ledger, 'initAccessStatePath').callsFake(function (state, statePath) {
-      self.state = self.ledger.onInitReadAction(self.state, JSON.parse(self.stateFile))
+      self.setState(self.ledger.onInitReadAction(self.state, JSON.parse(self.stateFile)))
       return self.state
     })
 
     this.onInitReadAction = sinon.stub(this.ledger, 'onInitReadAction').callsFake(function (state, parsedData) {
-      self.state = self.ledger.onInitRead(self.state, parsedData)
+      self.setState(self.ledger.onInitRead(self.state, parsedData))
       return self.state
     })
 
     this.fetchReferralHeadersCallback = sinon.stub(this.ledger, 'fetchReferralHeadersCallback').callsFake(function (err, response, body) {
-      self.state = self.ledger.onFetchReferralHeaders(self.state, err, response, body)
+      self.setState(self.ledger.onFetchReferralHeaders(self.state, err, response, body))
       return self.state
     })
 
     this.onLedgerQRGeneratedCallback = sinon.stub(this.ledger, 'onLedgerQRGeneratedCallback').callsFake(function (index, paymentIMG) {
-      self.state = self.state
-        .setIn(['ledger', 'info', 'walletQR', index], paymentIMG)
+      self.setState(self.state
+        .setIn(['ledger', 'info', 'walletQR', index], paymentIMG))
     })
   }
 
@@ -177,8 +208,8 @@ class JS extends Wallet {
 
   // To avoid snapshot inconsistencies, keeps the updateStamp constant
   modifyDateStamp () {
-    this.state = this.state
-      .setIn(['about', 'preferences', 'updatedStamp'], 1527108385208)
+    this.setState(this.state
+      .setIn(['about', 'preferences', 'updatedStamp'], 1527108385208))
   }
 
   createWallet () {
@@ -187,9 +218,8 @@ class JS extends Wallet {
   }
 
   clientInit () {
-    this.state = this.ledger.init(defaultAppState)
-    this.state = this.ledger.onBootStateFile(this.state)
-    return this.state
+    this.setState(this.ledger.init(defaultAppState))
+    this.setState(this.ledger.onBootStateFile(this.state))
   }
 
   corruptWallet () {
@@ -207,14 +237,14 @@ class JS extends Wallet {
     parsedStateFile.properties.wallet.seed = seed
     this.ledger.muonWriter(false, parsedStateFile)
 
-    this.state = this.state
-      .setIn(['ledger', 'about', 'status'], this.ledgerStatuses.CORRUPTED_SEED)
+    this.setState(this.state
+      .setIn(['ledger', 'about', 'status'], this.ledgerStatuses.CORRUPTED_SEED))
   }
 
   recoverWallet (key) {
     this.clientInit()
     this.corruptWallet()
-    this.state = this.ledger.recoverKeys(this.state, false, key)
+    this.ledger.recoverKeys(this.state, false, key)
     this.modifyDateStamp()
     return this.state
   }
