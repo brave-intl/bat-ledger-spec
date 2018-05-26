@@ -182,6 +182,11 @@ class JS extends Wallet {
       return self.state
     })
 
+    this.qrWriteImage = sinon.stub(this.ledger, 'qrWriteImage').callsFake(function (index, url) {
+      const paymentIMG = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAM0AAADNCAAAAAA+16u1AAACJklEQVR42u3bS26DQBQEQO5/6WQZxZJx93zATopVJLAyxeLp'
+      self.ledger.onLedgerQRGeneratedCallback(index, paymentIMG)
+    })
+
     this.onLedgerQRGeneratedCallback = sinon.stub(this.ledger, 'onLedgerQRGeneratedCallback').callsFake(function (index, paymentIMG) {
       self.setState(self.state
         .setIn(['ledger', 'info', 'walletQR', index], paymentIMG))

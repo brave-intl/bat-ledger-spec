@@ -68,6 +68,12 @@ exports['wallet recovery succeeds with a valid key 1'] = {
   "reconcileStamp": 1529211991783,
   "currentRate": 0.352857648,
   "creating": true,
+  "walletQR": {
+    "BAT": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAM0AAADNCAAAAAA+16u1AAACJklEQVR42u3bS26DQBQEQO5/6WQZxZJx93zATopVJLAyxeLp",
+    "BTC": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAM0AAADNCAAAAAA+16u1AAACJklEQVR42u3bS26DQBQEQO5/6WQZxZJx93zATopVJLAyxeLp",
+    "ETH": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAM0AAADNCAAAAAA+16u1AAACJklEQVR42u3bS26DQBQEQO5/6WQZxZJx93zATopVJLAyxeLp",
+    "LTC": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAM0AAADNCAAAAAA+16u1AAACJklEQVR42u3bS26DQBQEQO5/6WQZxZJx93zATopVJLAyxeLp"
+  },
   "balance": 0
 }
 
