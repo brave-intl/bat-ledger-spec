@@ -1,7 +1,7 @@
 {
   "/v2/wallet/id": {
     "default-wallet": {
-      "paymentId": "5b1c9e73-2ec7-4b09-a790-d7dc97004815"
+      "paymentId": "c3a3c1b8-1390-46fe-b2a8-0a84df8d7a48"
     },
     "recovered-wallet": {
       "paymentId": "b5b1d044-eac8-468d-bd6d-e027899d3c84"
@@ -43,115 +43,45 @@
       "registrarVK": "==========ANONLOGIN_VK_BEG==========\n5Zo7fjdryszdwgAZO+HiK18yErXRoPvRkmYmo4E2UQV 4NMDAdwHg0z3LdGN3KkOoFLbza3SpeUWBcMKOUvJ8O1 1\n7MpAGVMgs+tuMQs4pH+nKUh0M+rl21RyUAdhRHKGhq4 5LXnl7uUw0XwaSTIojyDh4hODTEcT5BAiAhPCGIItDM 1\n2qtVvVwfxlDGzPSXXl0Ms94eycXiUJpthRp6uAjrjW8 Auhpv58KOuncZfXB1eekbOwTXloSAgPPRJ3A1g2a1MZ 1\n41nN9zSpWB6xfefhy/BWOouZnE5Vz+Akgtu3WavASEJ AF4pxNogZT38xdPdxe51RIGaFXKNVj3K2vbfN3uzI1T 1\n31ND6Q8qewDElWUU88rMWn4RZl95sjbSvoimlfsVFEg 8VjyRwkfd4dWwMQhShAIiyY0L9tOiJIR4PWlRIwyQs6 wLm/Ph3gh2ZtdqNbGJIcQM1LoCr+23zELEwUKvAnSL 1sWQdlB2UL0xSqgNcb9NObxiSof322GgHUg2nq43Y4l 1 0\n===========ANONLOGIN_VK_END=========="
     },
     "finished-registrar": {
-      "personaId": "213a838d-430e-4ea3-a4ee-326819d316d8",
-      "options": {
-        "debugP": false,
-        "loggingP": false,
-        "rulesTestP": false,
-        "verboseP": false,
-        "server": {
-          "protocol": "https:",
-          "slashes": true,
-          "auth": null,
-          "host": "ledger.mercury.basicattentiontoken.org",
-          "port": null,
-          "hostname": "ledger.mercury.basicattentiontoken.org",
-          "hash": null,
-          "search": null,
-          "query": null,
-          "pathname": "/",
-          "path": "/",
-          "href": "https://ledger.mercury.basicattentiontoken.org/"
-        },
-        "version": "v2",
-        "environment": "production",
-        "prefix": "/v2"
+      "wallet": {
+        "paymentId": "c3a3c1b8-1390-46fe-b2a8-0a84df8d7a48",
+        "addresses": {
+          "BAT": "0x23729f096c13B1bf22D5efE41340fD3cb5E0BC40",
+          "BTC": "12xTgVvyJRA14KHLXYEBPxW4TnABH9Fcvh",
+          "CARD_ID": "15c58bce-ba76-4964-a7ec-4cc1a1bb3874",
+          "ETH": "0x23729f096c13B1bf22D5efE41340fD3cb5E0BC40",
+          "LTC": "LSxP8qz11zBekrmGpo2rDNrQPHCJt6NVCS"
+        }
       },
-      "ballots": [],
-      "batch": {},
-      "transactions": [],
-      "properties": {
-        "setting": "adFree",
-        "fee": {
+      "payload": {
+        "adFree": {
           "currency": "BAT",
-          "amount": 10
-        },
-        "days": 30,
-        "wallet": {
-          "keyinfo": {
-            "seed": {
-              "0": 139,
-              "1": 12,
-              "2": 58,
-              "3": 53,
-              "4": 220,
-              "5": 171,
-              "6": 203,
-              "7": 108,
-              "8": 112,
-              "9": 121,
-              "10": 1,
-              "11": 160,
-              "12": 175,
-              "13": 235,
-              "14": 130,
-              "15": 204,
-              "16": 32,
-              "17": 71,
-              "18": 151,
-              "19": 158,
-              "20": 126,
-              "21": 73,
-              "22": 117,
-              "23": 122,
-              "24": 126,
-              "25": 226,
-              "26": 3,
-              "27": 203,
-              "28": 136,
-              "29": 143,
-              "30": 185,
-              "31": 164
-            }
+          "fee": {
+            "BAT": 10
           },
-          "paymentId": "b41371c9-6c26-4ab0-8be0-6ef4a6946b6f",
-          "addresses": {
-            "BAT": "0x35477Df485EfEaE0c3Bae426995cFb89C0cCC6DC",
-            "BTC": "14FVuA8iiSYxXc5iprGadtdf6ppVtGRwQR",
-            "CARD_ID": "29e2dc14-da8c-4b76-b420-0e8e03d08c1d",
-            "ETH": "0x35477Df485EfEaE0c3Bae426995cFb89C0cCC6DC",
-            "LTC": "LPhwY1X4ssC7LZTjsXDm4w7md8N1MXW25P"
-          }
+          "choices": {
+            "BAT": [
+              5,
+              7.5,
+              10,
+              12.5,
+              15,
+              17.5,
+              20,
+              25,
+              50
+            ]
+          },
+          "range": {
+            "BAT": [
+              5,
+              100
+            ]
+          },
+          "days": 30
         }
       },
-      "reconcileStamp": 1530331823161,
-      "memos": [
-        "{\"who\":\"sync\",\"what\":{\"reconcileStamp\":1528949419678,\"reconcileDate\":\"2018-06-14T04:10:19.678Z\"},\"when\":1527739819679}"
-      ],
-      "ruleset": [
-        {
-          "condition": "/^[a-z][a-z].gov$/.test(SLD)",
-          "consequent": "QLD + '.' + SLD",
-          "description": "governmental sites"
-        },
-        {
-          "condition": "TLD === 'gov' || /^go.[a-z][a-z]$/.test(TLD) || /^gov.[a-z][a-z]$/.test(TLD)",
-          "consequent": "SLD",
-          "description": "governmental sites"
-        },
-        {
-          "condition": "SLD === 'keybase.pub'",
-          "consequent": "QLD + '.' + SLD",
-          "description": "keybase users"
-        },
-        {
-          "condition": true,
-          "consequent": "SLD",
-          "description": "the default rule"
-        }
-      ],
-      "persona": "{\"userId\":\"213a838d430eea3a4ee326819d316d8\",\"registrarVK\":\"==========ANONLOGIN_VK_BEG==========\\n5Zo7fjdryszdwgAZO+HiK18yErXRoPvRkmYmo4E2UQV 4NMDAdwHg0z3LdGN3KkOoFLbza3SpeUWBcMKOUvJ8O1 1\\n7MpAGVMgs+tuMQs4pH+nKUh0M+rl21RyUAdhRHKGhq4 5LXnl7uUw0XwaSTIojyDh4hODTEcT5BAiAhPCGIItDM 1\\n2qtVvVwfxlDGzPSXXl0Ms94eycXiUJpthRp6uAjrjW8 Auhpv58KOuncZfXB1eekbOwTXloSAgPPRJ3A1g2a1MZ 1\\n41nN9zSpWB6xfefhy/BWOouZnE5Vz+Akgtu3WavASEJ AF4pxNogZT38xdPdxe51RIGaFXKNVj3K2vbfN3uzI1T 1\\n31ND6Q8qewDElWUU88rMWn4RZl95sjbSvoimlfsVFEg 8VjyRwkfd4dWwMQhShAIiyY0L9tOiJIR4PWlRIwyQs6 wLm/Ph3gh2ZtdqNbGJIcQM1LoCr+23zELEwUKvAnSL 1sWQdlB2UL0xSqgNcb9NObxiSof322GgHUg2nq43Y4l 1 0\\n===========ANONLOGIN_VK_END==========\",\"masterUserToken\":\"==========ANONLOGIN_CRED_BEG==========\\n213a838d430eea3a4ee326819d316d8\\n5c3UDmSGEIgSLsnVVBz6uuy0IqsLlC/JbRodh0JdiVR\\n38uwqFw8MlkVwIrJTA+lGePGycOkUMOS7Zd7x8Vci6J 8AOSwiP8Ea7XkyPVE8kZyJ22Ee+E2tkvt51cPowczU6 1\\n3RpHNQ+VJueE7v85x1rlbt3fgqI/8HJKjX1uefidEBi\\n1DartHjFyz95dL7BxiWa6RM06N65/AohJvqToDijZVI\\n===========ANONLOGIN_CRED_END==========\"}",
-      "bootStamp": 1527739823161
+      "verification": "7QdBLe1vc63jXmroDqX8F50FEQkcqD1Q1fuFr8fRueO 2vQmq+gC+aGxAFCR/on8jhCrYPcPqv/NdLAz3uV0Qj1 1 9CZ5JtWDMX6YubL7Y9PusLro7wgsk2ivH7qtobl/lJP\n"
     }
   },
   "/v2/wallet/balance": {
@@ -196,11 +126,11 @@
         }
       },
       "addresses": {
-        "BAT": "0x9076CE8d5e6aD43EBA94c7A909572DE0A39E7eFC",
-        "BTC": "1NyTZUmwLJoDNhvJwKGCAAKPhbnGo4SVTd",
-        "CARD_ID": "6c4dd79e-1008-4381-89d0-d6078963bef6",
-        "ETH": "0x9076CE8d5e6aD43EBA94c7A909572DE0A39E7eFC",
-        "LTC": "LLcZ6fFz9zdrMzf3f9ewno3xe6LPXoeVxK"
+        "BAT": "0x23729f096c13B1bf22D5efE41340fD3cb5E0BC40",
+        "BTC": "12xTgVvyJRA14KHLXYEBPxW4TnABH9Fcvh",
+        "CARD_ID": "15c58bce-ba76-4964-a7ec-4cc1a1bb3874",
+        "ETH": "0x23729f096c13B1bf22D5efE41340fD3cb5E0BC40",
+        "LTC": "LSxP8qz11zBekrmGpo2rDNrQPHCJt6NVCS"
       }
     },
     "recovered-wallet": {
