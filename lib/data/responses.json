@@ -1,14 +1,19 @@
 {
   "/v2/wallet/id": {
     "default-wallet": {
-      "paymentId": "c3a3c1b8-1390-46fe-b2a8-0a84df8d7a48"
+      "paymentId": "7ec50587-223f-4189-a377-9d570a17ad1c"
     },
     "recovered-wallet": {
-      "paymentId": "b5b1d044-eac8-468d-bd6d-e027899d3c84"
+      "paymentId": "fde1d34e-31a1-4784-ba71-c6eb99ac44f5"
     }
   },
   "/v3/publisher/timestamp": {
     "timestamp": "6556256801271054343"
+  },
+  "/v1/grants": {
+    "statusCode": 404,
+    "error": "Not Found",
+    "message": "no promotions available"
   },
   "/v2/registrar/persona": {
     "initial-registrar": {
@@ -44,13 +49,13 @@
     },
     "finished-registrar": {
       "wallet": {
-        "paymentId": "c3a3c1b8-1390-46fe-b2a8-0a84df8d7a48",
+        "paymentId": "7ec50587-223f-4189-a377-9d570a17ad1c",
         "addresses": {
-          "BAT": "0x23729f096c13B1bf22D5efE41340fD3cb5E0BC40",
-          "BTC": "12xTgVvyJRA14KHLXYEBPxW4TnABH9Fcvh",
-          "CARD_ID": "15c58bce-ba76-4964-a7ec-4cc1a1bb3874",
-          "ETH": "0x23729f096c13B1bf22D5efE41340fD3cb5E0BC40",
-          "LTC": "LSxP8qz11zBekrmGpo2rDNrQPHCJt6NVCS"
+          "BAT": "0x9076CE8d5e6aD43EBA94c7A909572DE0A39E7eFC",
+          "BTC": "1NyTZUmwLJoDNhvJwKGCAAKPhbnGo4SVTd",
+          "CARD_ID": "6c4dd79e-1008-4381-89d0-d6078963bef6",
+          "ETH": "0x9076CE8d5e6aD43EBA94c7A909572DE0A39E7eFC",
+          "LTC": "LLcZ6fFz9zdrMzf3f9ewno3xe6LPXoeVxK"
         }
       },
       "payload": {
@@ -126,11 +131,11 @@
         }
       },
       "addresses": {
-        "BAT": "0x23729f096c13B1bf22D5efE41340fD3cb5E0BC40",
-        "BTC": "12xTgVvyJRA14KHLXYEBPxW4TnABH9Fcvh",
-        "CARD_ID": "15c58bce-ba76-4964-a7ec-4cc1a1bb3874",
-        "ETH": "0x23729f096c13B1bf22D5efE41340fD3cb5E0BC40",
-        "LTC": "LSxP8qz11zBekrmGpo2rDNrQPHCJt6NVCS"
+        "BAT": "0x9076CE8d5e6aD43EBA94c7A909572DE0A39E7eFC",
+        "BTC": "1NyTZUmwLJoDNhvJwKGCAAKPhbnGo4SVTd",
+        "CARD_ID": "6c4dd79e-1008-4381-89d0-d6078963bef6",
+        "ETH": "0x9076CE8d5e6aD43EBA94c7A909572DE0A39E7eFC",
+        "LTC": "LLcZ6fFz9zdrMzf3f9ewno3xe6LPXoeVxK"
       }
     },
     "recovered-wallet": {
@@ -174,11 +179,11 @@
         }
       },
       "addresses": {
-        "BAT": "0xf5c94B53947F6E67dCB5a683Fd9E74f11F42019B",
-        "BTC": "1E2mxjJfALVwGdxnZMsanffpE1Ejc221zx",
-        "CARD_ID": "452bb35b-7f89-4578-87ff-5a33d7c70720",
-        "ETH": "0xf5c94B53947F6E67dCB5a683Fd9E74f11F42019B",
-        "LTC": "LafDWZyrq8zBcqCQDxLhELaeMLhVhucBGt"
+        "BAT": "0x2E060397E054232348ba182BEd637A39E2781B0A",
+        "BTC": "1AkuxARUYPfWrVBFoKXSaaTZEmFZcNKM4C",
+        "CARD_ID": "9298cae4-92d4-4a9a-ba6f-c55f7b25a73a",
+        "ETH": "0x2E060397E054232348ba182BEd637A39E2781B0A",
+        "LTC": "LSHxsmR1ufcisBC5EZCBvPWT9wKDF5WCQa"
       }
     }
   },
@@ -209,4 +214,4 @@
       "expiration": 31536000000
     }
   ]
-}
+} 

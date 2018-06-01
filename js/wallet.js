@@ -34,11 +34,12 @@ class JS extends Wallet {
     this.state = defaultAppState
     this.stateFile = null
     this.wallet = 'default-wallet'
+    this.stateKey = 'default-state'
   }
 
   setStateFile () {
     const ledgerStateData = require('../lib/data/ledger-state.json')
-    this.stateFile = JSON.stringify(ledgerStateData)
+    this.stateFile = JSON.stringify(ledgerStateData[this.stateKey])
   }
 
   setState (newState) {
@@ -229,6 +230,7 @@ class JS extends Wallet {
     this.setState(this.ledger.init(defaultAppState))
     this.setState(this.ledger.onBootStateFile(this.state))
     this.wallet = 'recovered-wallet'
+    this.stateKey = 'recovered-state'
     return this.state
   }
 
