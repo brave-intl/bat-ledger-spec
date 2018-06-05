@@ -10,6 +10,7 @@ const sinon = require('sinon')
 const Wallet = require('../abs/wallet')
 const {request, roundtrip} = require('../lib/request')
 const settings = require('../browser-laptop/js/constants/settings')
+const responses = require('../lib/data/responses.json')
 
 const defaultAppState = Immutable.fromJS({
   cache: {
@@ -73,6 +74,18 @@ class JS extends Wallet {
       .setIn(['ledger', 'info'], Immutable.fromJS(oldStateJS.ledger.info))
   }
 
+  get cbResult () {
+    const initialResult = Immutable.fromJS(JSON.parse(this.stateFile))
+    const initialSeed = initialResult.getIn(['properties', 'wallet', 'keyinfo', 'seed'])
+
+    const seed = this.ledger.uintKeySeed(initialSeed.toJS())
+    const result = initialResult
+      .setIn(['roundtrip'], this.ledger.roundtrip)
+      .setIn(['properties', 'wallet', 'keyinfo', 'seed'], seed)
+
+    return result
+  }
+
   before (mockery) {
     const self = this
     mockery.enable({
@@ -119,6 +132,19 @@ class JS extends Wallet {
     this.ledgerStatuses = require('../browser-laptop/app/common/constants/ledgerStatuses')
     this.setStateFile()
 
+    this.resetWalletProperties = function () {
+      self.wallet = 'default-wallet'
+      self.stateKey = 'default-state'
+      self.setStateFile()
+
+      const stateFile = JSON.parse(self.stateFile)
+      const body = Immutable.fromJS(responses['/v2/wallet/balance'][self.wallet])
+
+      self.setState(self.ledger.onWalletProperties(self.state, body))
+      self.setState(self.setInfo(self.state, 'paymentId', stateFile.properties.wallet.paymentId))
+      self.setState(self.ledger.onInitRead(self.state, stateFile))
+    }
+
     this.callback = sinon.stub(this.ledger, 'callback').callsFake(function (err, result, delayTime) {
       if (err) {
         return
@@ -139,6 +165,10 @@ class JS extends Wallet {
     })
 
     this.recoverWalletCallback = sinon.stub(this.ledger, 'recoverWalletCallback').callsFake(function (error, result) {
+      if (error != null) {
+        self.resetWalletProperties()
+        return self.state
+      }
       result = Immutable.fromJS(result)
       self.setState(self.ledger.onWalletRecovery(self.state, error, result))
     })
@@ -160,8 +190,6 @@ class JS extends Wallet {
     })
 
     this.setBraveryPropertiesCallback = sinon.stub(this.ledger, 'setBraveryPropertiesCallback').callsFake(function (error, result) {
-      self.setState(self.state
-        .setIn(['ledger', 'info', 'created'], true))
       self.setState(self.ledger.onBraveryProperties(self.state, error, result))
     })
 
@@ -215,6 +243,10 @@ class JS extends Wallet {
     return state.getIn(['ledger', 'info'])
   }
 
+  setInfo (state, prop, value) {
+    return state.setIn(['ledger', 'info', prop], value)
+  }
+
   // To avoid snapshot inconsistencies, keeps the updateStamp constant
   modifyDateStamp () {
     this.setState(this.state
@@ -229,8 +261,11 @@ class JS extends Wallet {
   createWallet () {
     this.setState(this.ledger.init(defaultAppState))
     this.setState(this.ledger.onBootStateFile(this.state))
+    this.setState(this.ledger.onCallback(this.state, this.cbResult, -1))
+
     this.wallet = 'recovered-wallet'
     this.stateKey = 'recovered-state'
+
     return this.state
   }
 
