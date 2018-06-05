@@ -31,6 +31,7 @@ exports['wallet create 1'] = {
     25,
     50
   ],
+  "userFunded": 0,
   "converted": 0,
   "rates": {
     "BTC": "0.00004800",
@@ -85,6 +86,7 @@ exports['wallet recovery succeeds with a valid key 1'] = {
     25,
     50
   ],
+  "userFunded": 0,
   "converted": 0,
   "rates": {
     "BTC": "0.00004800",
@@ -143,6 +145,7 @@ exports['wallet recovery fails with an invalid key 1'] = {
     25,
     50
   ],
+  "userFunded": 0,
   "converted": 0,
   "rates": {
     "BTC": "0.00004800",
@@ -197,6 +200,7 @@ exports['wallet recovery recovery does not process with a non-string key 1'] = {
     25,
     50
   ],
+  "userFunded": 0,
   "converted": 0,
   "rates": {
     "BTC": "0.00004800",
@@ -251,6 +255,7 @@ exports['wallet recovery recovers a corrupted wallet 1'] = {
     25,
     50
   ],
+  "userFunded": 0,
   "converted": 0,
   "rates": {
     "BTC": "0.00004800",
