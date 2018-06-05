@@ -221,6 +221,10 @@ class JS extends Wallet {
       self.setState(self.state
         .setIn(['ledger', 'info', 'walletQR', index], paymentIMG))
     })
+
+    this.deleteStateFile = sinon.stub(this.ledger, 'deleteStateFile').callsFake(function () {
+      self.stateFile = JSON.stringify({})
+    })
   }
 
   beforeEach (mockery) {
@@ -266,6 +270,12 @@ class JS extends Wallet {
     this.wallet = 'recovered-wallet'
     this.stateKey = 'recovered-state'
 
+    return this.state
+  }
+
+  deleteWallet () {
+    this.createWallet()
+    this.state = this.ledger.deleteWallet(this.state)
     return this.state
   }
 

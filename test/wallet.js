@@ -35,6 +35,11 @@ describe('wallet', function () {
     snapshot(this.test.fullTitle(), lib.getInfo(result))
   })
 
+  it('delete', function () {
+    const result = lib.deleteWallet()
+    snapshot(this.test.fullTitle(), lib.getInfo(result))
+  })
+
   describe('recovery', function () {
     it('succeeds with a valid key', function () {
       const result = lib.recoverWallet('wasp broken strong analyst until tray olympic arrow input bicycle gun settle prepare tissue road try sustain husband width brave section obey country area')

@@ -53,6 +53,8 @@ exports['wallet create 1'] = {
   "balance": 0
 }
 
+exports['wallet delete 1'] = {}
+
 exports['wallet recovery succeeds with a valid key 1'] = {
   "paymentId": "fde1d34e-31a1-4784-ba71-c6eb99ac44f5",
   "addresses": {
