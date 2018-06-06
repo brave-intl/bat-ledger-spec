@@ -225,6 +225,10 @@ class JS extends Wallet {
     this.deleteStateFile = sinon.stub(this.ledger, 'deleteStateFile').callsFake(function () {
       self.stateFile = JSON.stringify({})
     })
+
+    this.delayFirstSync = sinon.stub(this.ledger, 'delayFirstSync').callsFake(function (parsedData) {
+      self.setState(self.ledger.cacheRuleSet(self.state, parsedData.ruleset))
+    })
   }
 
   beforeEach (mockery) {
