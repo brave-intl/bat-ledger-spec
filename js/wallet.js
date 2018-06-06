@@ -11,6 +11,7 @@ const Wallet = require('../abs/wallet')
 const {request, roundtrip} = require('../lib/request')
 const settings = require('../browser-laptop/js/constants/settings')
 const responses = require('../lib/data/responses.json')
+const ledgerStateData = require('../lib/data/ledger-state.json')
 
 const defaultAppState = Immutable.fromJS({
   cache: {
@@ -29,7 +30,7 @@ class JS extends Wallet {
     super()
     this.ledger = null
     this.minimumVisits = 1
-    this.minimumVisitTime = 5000
+    this.minimumVisitTime = 8000
     this.defaultContribution = 10
     this.paymentsEnabled = false
     this.state = defaultAppState
@@ -39,39 +40,36 @@ class JS extends Wallet {
   }
 
   setStateFile () {
-    const ledgerStateData = require('../lib/data/ledger-state.json')
     this.stateFile = JSON.stringify(ledgerStateData[this.stateKey])
   }
 
   setState (newState) {
-    const oldStateJS = this.state.toJS()
-    const newStateJS = newState.toJS()
+    let oldState = this.state
     this.state = newState
 
-    if (!newStateJS.ledger.hasOwnProperty('info')) {
+    if (!newState.get('ledger').hasIn(['info'])) {
       return
     }
 
-    const newInfo = newStateJS.ledger.info
-
-    if (!oldStateJS.ledger.hasOwnProperty('info')) {
-      oldStateJS.ledger.info = {}
+    if (!oldState.get('ledger').hasIn(['info'])) {
+      oldState = oldState.setIn(['ledger', 'info'], Immutable.Map())
     }
 
-    for (let key of Object.keys(newInfo)) {
-      if (
-        !newInfo.hasOwnProperty(key) ||
-        (typeof newInfo[key] === 'object' &&
-        Object.keys(newInfo[key]).length === 0)
-      ) {
-        continue
+    const newInfo = newState.getIn(['ledger', 'info'])
+
+    newInfo.keySeq().forEach((key) => {
+      const temp = newInfo.getIn([key])
+
+      if (Immutable.Map.isMap(temp) &&
+         Object.keys(temp.toJS()).length === 0) {
+        return
       }
 
-      oldStateJS.ledger.info[key] = newInfo[key]
-    }
+      oldState = oldState.setIn(['ledger', 'info', key], temp)
+    })
 
     this.state = this.state
-      .setIn(['ledger', 'info'], Immutable.fromJS(oldStateJS.ledger.info))
+      .setIn(['ledger', 'info'], oldState.getIn(['ledger', 'info']))
   }
 
   get cbResult () {
@@ -132,7 +130,7 @@ class JS extends Wallet {
     this.ledgerStatuses = require('../browser-laptop/app/common/constants/ledgerStatuses')
     this.setStateFile()
 
-    this.resetWalletProperties = function () {
+    this.fallbackToPrevWallet = function () {
       self.wallet = 'default-wallet'
       self.stateKey = 'default-state'
       self.setStateFile()
@@ -166,7 +164,7 @@ class JS extends Wallet {
 
     this.recoverWalletCallback = sinon.stub(this.ledger, 'recoverWalletCallback').callsFake(function (error, result) {
       if (error != null) {
-        self.resetWalletProperties()
+        self.fallbackToPrevWallet()
         return self.state
       }
       result = Immutable.fromJS(result)

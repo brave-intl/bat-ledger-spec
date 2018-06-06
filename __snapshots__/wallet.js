@@ -42,6 +42,7 @@ exports['wallet create 1'] = {
   },
   "probi": 0,
   "reconcileStamp": 1529211991783,
+  "grants": [],
   "currentRate": 0.352857648,
   "creating": false,
   "walletQR": {
@@ -99,6 +100,7 @@ exports['wallet recovery succeeds with a valid key 1'] = {
   },
   "probi": 0,
   "reconcileStamp": 1530334671611,
+  "grants": [],
   "currentRate": 0.352857648,
   "creating": false,
   "walletQR": {
@@ -154,6 +156,7 @@ exports['wallet recovery fails with an invalid key 1'] = {
   },
   "probi": 0,
   "reconcileStamp": 1529211991783,
+  "grants": [],
   "currentRate": 0.352857648,
   "creating": false,
   "walletQR": {
@@ -165,7 +168,7 @@ exports['wallet recovery fails with an invalid key 1'] = {
   "balance": 0
 }
 
-exports['wallet recovery recovery does not process with a non-string key 1'] = {
+exports['wallet recovery does not process with a non-string key 1'] = {
   "paymentId": "7ec50587-223f-4189-a377-9d570a17ad1c",
   "addresses": {
     "BAT": "0x9076CE8d5e6aD43EBA94c7A909572DE0A39E7eFC",
@@ -209,6 +212,7 @@ exports['wallet recovery recovery does not process with a non-string key 1'] = {
   },
   "probi": 0,
   "reconcileStamp": 1529211991783,
+  "grants": [],
   "currentRate": 0.352857648,
   "creating": false,
   "walletQR": {
@@ -264,6 +268,7 @@ exports['wallet recovery recovers a corrupted wallet 1'] = {
   },
   "probi": 0,
   "reconcileStamp": 1530334671611,
+  "grants": [],
   "currentRate": 0.352857648,
   "creating": false,
   "walletQR": {

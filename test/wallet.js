@@ -49,7 +49,7 @@ describe('wallet', function () {
       const result = lib.recoverWallet('broken strong analyst until tray olympic arrow input bicycle gun settle prepare tissue road try sustain husband width brave section obey country area')
       snapshot(this.test.fullTitle(), lib.getInfo(result))
     })
-    it('recovery does not process with a non-string key', function () {
+    it('does not process with a non-string key', function () {
       const result = lib.recoverWallet(93247639267)
       snapshot(this.test.fullTitle(), lib.getInfo(result))
     })
