@@ -8,10 +8,11 @@ const Immutable = require('immutable')
 const sinon = require('sinon')
 
 const Wallet = require('../abs/wallet')
-const {request, roundtrip} = require('../lib/request')
+const {request} = require('../lib/util/request')
 const settings = require('../browser-laptop/js/constants/settings')
 const responses = require('../lib/data/responses.json')
 const ledgerStateData = require('../lib/data/ledger-state.json')
+const walletStubs = require('../lib/stubs/wallet')
 
 const defaultAppState = Immutable.fromJS({
   cache: {
@@ -72,6 +73,25 @@ class JS extends Wallet {
       .setIn(['ledger', 'info'], oldState.getIn(['ledger', 'info']))
   }
 
+  fallbackToPrevWallet () {
+    this.wallet = 'default-wallet'
+    this.stateKey = 'default-state'
+    this.setStateFile()
+
+    const stateFile = JSON.parse(this.stateFile)
+    const body = Immutable.fromJS(responses['/v2/wallet/balance'][this.wallet])
+
+    this.setState(this.ledger.onWalletProperties(this.state, body))
+    this.setState(this.setInfo(this.state, 'paymentId', stateFile.properties.wallet.paymentId))
+    this.setState(this.ledger.onInitRead(this.state, stateFile))
+  }
+
+  loadStubs () {
+    walletStubs.forEach((stub) => {
+      sinon.stub(this.ledger, stub.name).callsFake(stub.func.bind(null, this))
+    })
+  }
+
   get cbResult () {
     const initialResult = Immutable.fromJS(JSON.parse(this.stateFile))
     const initialSeed = initialResult.getIn(['properties', 'wallet', 'keyinfo', 'seed'])
@@ -126,107 +146,10 @@ class JS extends Wallet {
       }
     })
 
+    this.setStateFile()
     this.ledger = require('../browser-laptop/app/browser/api/ledger')
     this.ledgerStatuses = require('../browser-laptop/app/common/constants/ledgerStatuses')
-    this.setStateFile()
-
-    this.fallbackToPrevWallet = function () {
-      self.wallet = 'default-wallet'
-      self.stateKey = 'default-state'
-      self.setStateFile()
-
-      const stateFile = JSON.parse(self.stateFile)
-      const body = Immutable.fromJS(responses['/v2/wallet/balance'][self.wallet])
-
-      self.setState(self.ledger.onWalletProperties(self.state, body))
-      self.setState(self.setInfo(self.state, 'paymentId', stateFile.properties.wallet.paymentId))
-      self.setState(self.ledger.onInitRead(self.state, stateFile))
-    }
-
-    this.callback = sinon.stub(this.ledger, 'callback').callsFake(function (err, result, delayTime) {
-      if (err) {
-        return
-      }
-      if (typeof delayTime === 'undefined') {
-        delayTime = Math.floor(Math.random() * (5 * 60 * 1000))
-      }
-      self.setState(self.ledger.onCallback(self.state, result, delayTime))
-    })
-
-    this.roundtrip = sinon.stub(this.ledger, 'roundtrip').callsFake(function (params, options, callback) {
-      roundtrip(params, options, callback, self.wallet)
-    })
-
-    this.getBalance = sinon.stub(this.ledger, 'getBalance').callsFake(function (state) {
-      self.setState(self.ledger.getPaymentInfo(state))
-      return self.state
-    })
-
-    this.recoverWalletCallback = sinon.stub(this.ledger, 'recoverWalletCallback').callsFake(function (error, result) {
-      if (error != null) {
-        self.fallbackToPrevWallet()
-        return self.state
-      }
-      result = Immutable.fromJS(result)
-      self.setState(self.ledger.onWalletRecovery(self.state, error, result))
-    })
-
-    this.publisherTimestampCallback = sinon.stub(this.ledger, 'publisherTimestampCallback').callsFake(function (err, result) {
-      if (err) {
-        return self.state
-      }
-      self.ledger.onPublisherTimestamp(self.state, result.timestamp, false)
-    })
-
-    this.getWalletPropertiesCallback = sinon.stub(this.ledger, 'getWalletPropertiesCallback').callsFake(function (err, body) {
-      if (err) {
-        return self.state
-      }
-      body = Immutable.fromJS(body)
-      self.setState(self.ledger.onWalletProperties(self.state, body))
-      return self.state
-    })
-
-    this.setBraveryPropertiesCallback = sinon.stub(this.ledger, 'setBraveryPropertiesCallback').callsFake(function (error, result) {
-      self.setState(self.ledger.onBraveryProperties(self.state, error, result))
-    })
-
-    this.muonWriter = sinon.stub(this.ledger, 'muonWriter').callsFake(function (fileName, payload) {
-      self.stateFile = JSON.stringify(payload)
-    })
-
-    this.initAccessStatePath = sinon.stub(this.ledger, 'initAccessStatePath').callsFake(function (state, statePath) {
-      self.setState(self.ledger.onInitReadAction(self.state, JSON.parse(self.stateFile)))
-      return self.state
-    })
-
-    this.onInitReadAction = sinon.stub(this.ledger, 'onInitReadAction').callsFake(function (state, parsedData) {
-      self.setState(self.ledger.onInitRead(self.state, parsedData))
-      return self.state
-    })
-
-    this.fetchReferralHeadersCallback = sinon.stub(this.ledger, 'fetchReferralHeadersCallback').callsFake(function (err, response, body) {
-      self.setState(self.ledger.onFetchReferralHeaders(self.state, err, response, body))
-      return self.state
-    })
-
-    this.qrWriteImage = sinon.stub(this.ledger, 'qrWriteImage').callsFake(function (index, url) {
-      const paymentIMG = `data:image/png;base64,${Buffer.from(url).toString('base64')}`
-      self.ledger.onLedgerQRGeneratedCallback(index, paymentIMG)
-    })
-
-    this.onLedgerQRGeneratedCallback = sinon.stub(this.ledger, 'onLedgerQRGeneratedCallback').callsFake(function (index, paymentIMG) {
-      self.setState(self.state
-        .setIn(['ledger', 'info', 'walletQR', index], paymentIMG))
-    })
-
-    this.deleteStateFile = sinon.stub(this.ledger, 'deleteStateFile').callsFake(function () {
-      self.stateFile = JSON.stringify({})
-    })
-
-    this.delayFirstSync = sinon.stub(this.ledger, 'delayFirstSync').callsFake(function (parsedData) {
-      self.setState(self.ledger.cacheRuleSet(self.state, parsedData.ruleset))
-    })
+    this.loadStubs()
   }
 
   beforeEach (mockery) {
