@@ -30,14 +30,10 @@ class JS extends Wallet {
   constructor () {
     super()
     this.ledger = null
-    this.minimumVisits = 1
-    this.minimumVisitTime = 8000
-    this.defaultContribution = 10
-    this.paymentsEnabled = false
-    this.state = defaultAppState
-    this.stateFile = null
     this.wallet = 'default-wallet'
     this.stateKey = 'default-state'
+    this.state = defaultAppState
+    this.stateFile = null
   }
 
   setStateFile () {
@@ -92,6 +88,16 @@ class JS extends Wallet {
     })
   }
 
+  get settingsP () {
+    return {
+      PAYMENTS_MINIMUM_VISITS: 1,
+      PAYMENTS_MINIMUM_VISIT_TIME: 8000,
+      PAYMENTS_CONTRIBUTION_AMOUNT: 10,
+      PAYMENTS_ENABLED: true,
+      PAYMENTS_NOTIFICATION_TRY_PAYMENTS_DISMISSED: true
+    }
+  }
+
   get cbResult () {
     const initialResult = Immutable.fromJS(JSON.parse(this.stateFile))
     const initialSeed = initialResult.getIn(['properties', 'wallet', 'keyinfo', 'seed'])
@@ -124,24 +130,9 @@ class JS extends Wallet {
     })
     mockery.registerMock('../../../js/settings', {
       getSetting: (key) => {
-        switch (key) {
-          case settings.PAYMENTS_MINIMUM_VISITS:
-          {
-            return self.minimumVisits
-          }
-          case settings.PAYMENTS_MINIMUM_VISIT_TIME:
-          {
-            return self.minimumVisitTime
-          }
-          case settings.PAYMENTS_CONTRIBUTION_AMOUNT:
-          {
-            return self.defaultContribution
-          }
-          case settings.PAYMENTS_ENABLED:
-          case settings.PAYMENTS_NOTIFICATION_TRY_PAYMENTS_DISMISSED:
-          {
-            return true
-          }
+        const keyP = Object.keys(settings).find((k) => settings[k] === key)
+        if (this.settingsP.hasOwnProperty(keyP)) {
+          return self.settingsP[keyP]
         }
       }
     })
