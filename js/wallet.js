@@ -12,7 +12,7 @@ const {request} = require('../lib/util/request')
 const settings = require('../browser-laptop/js/constants/settings')
 const responses = require('../lib/data/responses.json')
 const ledgerStateData = require('../lib/data/ledger-state.json')
-const walletStubs = require('../lib/stubs/wallet')
+const stubs = require('../lib/helpers/stubs')
 
 const defaultAppState = Immutable.fromJS({
   cache: {
@@ -87,7 +87,7 @@ class JS extends Wallet {
   }
 
   loadStubs () {
-    walletStubs.forEach((stub) => {
+    stubs.wallet.forEach((stub) => {
       sinon.stub(this.ledger, stub.name).callsFake(stub.func.bind(null, this))
     })
   }
