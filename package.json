@@ -7,7 +7,7 @@
     "module-init": "git submodule update --init --recursive",
     "module-update": "git submodule update --remote --recursive",
     "test": "npm run test-js && npm run test-c",
-    "test-js": "cross-env NODE_ENV=test TYPE=\"js\" mocha \"test/**/*.js\"",
+    "test-js": "cross-env NODE_ENV=test TYPE=\"js\" mocha \"test/**/*.js\" --timeout 99999",
     "test-c": "cross-env NODE_ENV=test TYPE=\"c\" mocha \"test/**/*.js\"",
     "lint": "standard --verbose | snazzy"
   },
