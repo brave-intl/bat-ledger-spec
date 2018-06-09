@@ -16,6 +16,8 @@ class JS extends Publisher {
     this.timeStamp = 1525688397657
     this.mediaType = null
     this.mediaMinimum = null
+    this.currentVisitTime = null
+    this.activeWindowId = 25
   }
 
   runBefore (mockery) {
@@ -24,24 +26,19 @@ class JS extends Publisher {
     this.loadStubs(['publisher'])
   }
 
-  beforeEach (mockery) {
-    this.ledger.setSynopsis(null)
+  runBeforeEach (mockery) {
+    this.beforeEach(mockery)
+    this.changeSetting('PAYMENTS_ALLOW_NON_VERIFIED', false)
   }
 
-  after (mockery) {
-    mockery.deregisterAll()
-    mockery.disable()
-  }
-
-  afterEach (mockery) {
-    mockery.resetCache()
-    this.state = this.defaultAppState
-    this.ledger.resetModules()
+  runAfterEach (mockery) {
+    this.afterEach(mockery)
+    this.currentVisitTime = null
+    this.ledger.resetCurrentUrl()
   }
 
   initSynopsis () {
     this.state = this.ledger.enable(this.defaultAppState)
-    return this.ledger.getSynopsis()
   }
 
   deleteSynopsis () {
@@ -53,53 +50,77 @@ class JS extends Publisher {
     this.state = this.state
       .setIn(['tabs'], Immutable.fromJS([{
         'active': true,
-        'windowId': 25,
+        'windowId': this.activeWindowId,
         'tabId': tabId
       }]))
   }
 
-  addPublisher (publisher, enable = true, manual = false) {
-    if (enable) {
-      this.state = this.ledger.enable(this.defaultAppState)
-    }
-
-    const publisherTabId = publisher.tabId
-    const publisherKey = publisher.publisherKey
-    const publisherUrl = `${publisher.url}/`
-
-    this.state = this.state
-      .setIn(['pageData', 'info', publisherUrl], Immutable.fromJS({
-        key: publisherUrl,
-        protocol: 'https:',
-        publisher: publisherKey,
-        timestamp: this.timeStamp,
-        url: publisherUrl
-      }))
-      .setIn(['pageData', 'last'], Immutable.fromJS({
-        info: publisherUrl,
-        tabId: publisherTabId
-      }))
-      .setIn(['ledger', 'locations', publisherUrl], Immutable.fromJS({
-        publisher: publisherKey
-      }))
-
-    if (manual) {
-      this.setState(this.ledger.addNewLocation(this.state, publisherUrl, publisherTabId, false, true))
-    }
-
-    this.setState(this.ledger.pageDataChanged(this.state, {
-      location: publisherUrl,
-      tabId: publisherTabId
-    }))
-
-    return this.ledger.getSynopsis()
+  incTabId (pub) {
+    const publisher = Object.assign({tabId: pub.tabId++}, pub)
+    return publisher
   }
 
   get mediaRequest () {
     return responses['media'][this.mediaType]['media-request'][this.mediaMinimum]
   }
 
+  get synopsis () {
+    return this.ledger.getSynopsis()
+  }
+
+  setLocationData (publisher) {
+    return this.state
+      .setIn(['pageData', 'info', publisher.url], Immutable.fromJS({
+        key: publisher.url,
+        protocol: 'https:',
+        publisher: publisher.key,
+        timestamp: this.timeStamp,
+        url: publisher.url
+      }))
+      .setIn(['pageData', 'last'], Immutable.fromJS({
+        info: publisher.url,
+        tabId: publisher.tabId
+      }))
+      .setIn(['ledger', 'locations', publisher.url], Immutable.fromJS({
+        publisher: publisher.key
+      }))
+  }
+
+  manualAddPublisher (publisher, enableSynopsis = true) {
+    if (enableSynopsis) {
+      this.initSynopsis()
+    }
+
+    this.setState(this.setLocationData(publisher))
+    this.setState(this.ledger.addNewLocation(this.state, publisher.url, publisher.tabId, false, true))
+    this.setState(this.ledger.pageDataChanged(this.state, {
+      location: publisher.url,
+      tabId: publisher.tabId
+    }))
+  }
+
+  addPublisherVisit (publisher, enableSynopsis = true) {
+    if (enableSynopsis) {
+      this.initSynopsis()
+    }
+
+    this.currentVisitTime = publisher.visitTime
+    this.setState(this.setLocationData(publisher))
+    this.setState(this.ledger.pageDataChanged(this.state, {
+      location: publisher.url,
+      tabId: publisher.tabId
+    }))
+    this.setState(this.ledger.pageDataChanged(this.state, {}, true))
+  }
+
+  deletePublisher (publisherKey) {
+    this.ledger.deleteSynopsisPublisher(publisherKey)
+    this.setState(ledgerState.deletePublishers(this.state, publisherKey))
+    this.setState(this.ledger.updatePublisherInfo(this.state, publisherKey))
+  }
+
   pinPublisher (publisherKey, percentage, pinned = true) {
+    const newPercentage = pinned ? percentage : 0
     const publisher = ledgerState.getPublisher(this.state, publisherKey)
 
     if (publisher.isEmpty()) {
@@ -107,26 +128,49 @@ class JS extends Publisher {
     }
 
     this.setState(this.ledger.updatePublisherInfo(this.state))
+    this.setState(ledgerState.setPublishersProp(this.state, publisherKey, 'pinPercentage', newPercentage))
 
-    this.setState(ledgerState.setPublishersProp(this.state, publisherKey, 'pinPercentage', percentage))
-    this.ledger.savePublisherData(publisherKey, 'pinPercentage', percentage)
+    this.ledger.savePublisherData(publisherKey, 'pinPercentage', newPercentage)
     this.setState(this.ledger.updatePublisherInfo(this.state, publisherKey))
-
-    return this.ledger.getSynopsis()
   }
 
-  invokeMediaRequest (type, min = false) {
+  processTwitchData (key, xhr, type, details) {
+    const twitchUploadData = require('../lib/data/twitchUploadData.json').upload_data[key]
+
+    twitchUploadData.forEach((piece) => {
+      let uploadData = []
+
+      if (!Array.isArray(piece)) {
+        piece.data.forEach((data) => {
+          uploadData.push({
+            'bytes': Buffer.from(data)
+          })
+        })
+      } else {
+        uploadData = [{'bytes': Buffer.from(piece)}]
+      }
+
+      details.uploadData = uploadData
+      this.setState(this.ledger.onMediaRequest(this.state, xhr, type, Immutable.fromJS(details)))
+    })
+  }
+
+  invokeMediaRequest (type, min = false, key = false) {
     this.mediaType = type
     this.mediaMinimum = min ? 'min' : 'non'
     this.state = this.ledger.enable(this.defaultAppState)
 
     const xhr = this.mediaRequest.xhr
-    const details = Immutable.fromJS(this.mediaRequest.details)
+    const details = this.mediaRequest.details
+    const immutableDetails = Immutable.fromJS(details)
+    this.setActiveTab(immutableDetails.get('tabId'))
 
-    this.setActiveTab(details.get('tabId'))
-    this.setState(this.ledger.onMediaRequest(this.state, xhr, type, details))
+    if (type === 'twitch') {
+      this.processTwitchData(key, xhr, type, details)
+      return
+    }
 
-    return this.ledger.getSynopsis()
+    this.setState(this.ledger.onMediaRequest(this.state, xhr, type, immutableDetails))
   }
 }
 
