@@ -21,7 +21,8 @@ const defaultAppState = Immutable.fromJS({
   },
   about: {
     preferences: {}
-  }
+  },
+  tabs: []
 })
 
 class JS extends Publisher {
@@ -42,37 +43,8 @@ class JS extends Publisher {
     }
   }
 
-  setState (newState) {
-    let oldState = this.state
-    this.state = newState
-
-    if (!newState.get('ledger').hasIn(['info'])) {
-      return
-    }
-
-    if (!oldState.get('ledger').hasIn(['info'])) {
-      oldState = oldState.setIn(['ledger', 'info'], Immutable.Map())
-    }
-
-    const newInfo = newState.getIn(['ledger', 'info'])
-
-    newInfo.keySeq().forEach((key) => {
-      const temp = newInfo.getIn([key])
-
-      if (Immutable.Map.isMap(temp) &&
-         Object.keys(temp.toJS()).length === 0) {
-        return
-      }
-
-      oldState = oldState.setIn(['ledger', 'info', key], temp)
-    })
-
-    this.state = this.state
-      .setIn(['ledger', 'info'], oldState.getIn(['ledger', 'info']))
-  }
-
   loadStubs () {
-    ['wallet', 'publisher'].forEach((key) => {
+    ['publisher'].forEach((key) => {
       stubs[key].forEach((stub) => {
         sinon.stub(this.ledger, stub.name).callsFake(stub.func.bind(null, this))
       })
