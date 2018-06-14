@@ -5,14 +5,12 @@
 'use strict'
 
 const Immutable = require('immutable')
-const sinon = require('sinon')
 
 const Wallet = require('../abs/wallet')
 const {request} = require('../lib/util/request')
 const settings = require('../browser-laptop/js/constants/settings')
 const responses = require('../lib/data/responses.json')
 const ledgerStateData = require('../lib/data/ledger-state.json')
-const stubs = require('../lib/helpers/stubs')
 
 const defaultAppState = Immutable.fromJS({
   cache: {
@@ -40,35 +38,6 @@ class JS extends Wallet {
     this.stateFile = JSON.stringify(ledgerStateData[this.stateKey])
   }
 
-  setState (newState) {
-    let oldState = this.state
-    this.state = newState
-
-    if (!newState.get('ledger').hasIn(['info'])) {
-      return
-    }
-
-    if (!oldState.get('ledger').hasIn(['info'])) {
-      oldState = oldState.setIn(['ledger', 'info'], Immutable.Map())
-    }
-
-    const newInfo = newState.getIn(['ledger', 'info'])
-
-    newInfo.keySeq().forEach((key) => {
-      const temp = newInfo.getIn([key])
-
-      if (Immutable.Map.isMap(temp) &&
-         Object.keys(temp.toJS()).length === 0) {
-        return
-      }
-
-      oldState = oldState.setIn(['ledger', 'info', key], temp)
-    })
-
-    this.state = this.state
-      .setIn(['ledger', 'info'], oldState.getIn(['ledger', 'info']))
-  }
-
   fallbackToPrevWallet () {
     this.wallet = 'default-wallet'
     this.stateKey = 'default-state'
@@ -80,12 +49,6 @@ class JS extends Wallet {
     this.setState(this.ledger.onWalletProperties(this.state, body))
     this.setState(this.setInfo(this.state, 'paymentId', stateFile.properties.wallet.paymentId))
     this.setState(this.ledger.onInitRead(this.state, stateFile))
-  }
-
-  loadStubs () {
-    stubs.wallet.forEach((stub) => {
-      sinon.stub(this.ledger, stub.name).callsFake(stub.func.bind(null, this))
-    })
   }
 
   get settingsP () {
@@ -140,7 +103,7 @@ class JS extends Wallet {
     this.setStateFile()
     this.ledger = require('../browser-laptop/app/browser/api/ledger')
     this.ledgerStatuses = require('../browser-laptop/app/common/constants/ledgerStatuses')
-    this.loadStubs()
+    this.loadStubs(['wallet'])
   }
 
   beforeEach (mockery) {

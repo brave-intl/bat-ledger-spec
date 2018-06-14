@@ -4,11 +4,9 @@
 
 'use strict'
 
-class Publisher {
-  getPublisherInfo () {
-    throw new Error('Function getPublisherInfo is missing!')
-  }
+const Lib = require('./index')
 
+class Publisher extends Lib {
   addPublisher () {
     throw new Error('Function addPublisher is missing!')
   }

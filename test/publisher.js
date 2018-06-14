@@ -25,16 +25,33 @@ describe('publisher', function () {
     lib.after(mockery)
   })
 
-  describe('add', function () {
-    it('publisher', function () {
-      const publisher = {
-        publisherKey: 'brave.com',
-        url: 'https://brave.com',
-        tabId: 1,
-        visitTime: 8500
-      }
-      const result = lib.addPublisher(publisher)
+  describe('synopsis', function () {
+    it('init', function () {
+      const result = lib.initSynopsis()
       snapshot(this.test.fullTitle(), result)
+    })
+  })
+
+  describe('add', function () {
+    describe('manual', function () {
+      it('single visit minimum', function () {
+        const publisher = {
+          publisherKey: 'brave.com',
+          url: 'https://brave.com',
+          tabId: 1
+        }
+        const result = lib.addPublisher(publisher, true)
+        snapshot(this.test.fullTitle(), result)
+      })
+      it('excludes about page', function () {
+        const publisher = {
+          publisherKey: 'about:preferences',
+          url: 'about:preferences',
+          tabId: 1
+        }
+        const result = lib.addPublisher(publisher, true)
+        snapshot(this.test.fullTitle(), result)
+      })
     })
   })
 })

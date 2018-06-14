@@ -10,7 +10,6 @@ const sinon = require('sinon')
 const Publisher = require('../abs/publisher')
 const {request} = require('../lib/util/request')
 const settings = require('../browser-laptop/js/constants/settings')
-const stubs = require('../lib/helpers/stubs')
 
 const defaultAppState = Immutable.fromJS({
   cache: {
@@ -43,14 +42,6 @@ class JS extends Publisher {
     }
   }
 
-  loadStubs () {
-    ['publisher'].forEach((key) => {
-      stubs[key].forEach((stub) => {
-        sinon.stub(this.ledger, stub.name).callsFake(stub.func.bind(null, this))
-      })
-    })
-  }
-
   before (mockery) {
     const self = this
     mockery.enable({
@@ -80,7 +71,7 @@ class JS extends Publisher {
     })
 
     this.ledger = require('../browser-laptop/app/browser/api/ledger')
-    this.loadStubs()
+    this.loadStubs(['publisher'])
   }
 
   beforeEach (mockery) {
@@ -98,7 +89,12 @@ class JS extends Publisher {
     this.ledger.resetModules()
   }
 
-  addPublisher (publisher) {
+  initSynopsis () {
+    this.state = this.ledger.enable(defaultAppState)
+    return this.ledger.getSynopsis()
+  }
+
+  addPublisher (publisher, manual = false) {
     this.state = this.ledger.enable(defaultAppState)
 
     const publisherTabId = publisher.tabId
@@ -120,6 +116,10 @@ class JS extends Publisher {
       .setIn(['ledger', 'locations', publisherUrl], Immutable.fromJS({
         publisher: publisherKey
       }))
+
+    if (manual) {
+      this.state = this.ledger.addNewLocation(this.state, publisherUrl, publisherTabId, false, true)
+    }
 
     this.state = this.ledger.pageDataChanged(this.state, {
       location: publisherUrl,
