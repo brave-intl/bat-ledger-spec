@@ -30,6 +30,10 @@ describe('publisher', function () {
       const result = lib.initSynopsis()
       snapshot(this.test.fullTitle(), result)
     })
+    it('delete', function () {
+      const result = lib.deleteSynopsis()
+      snapshot(this.test.fullTitle(), result)
+    })
   })
 
   describe('add', function () {

@@ -23,6 +23,20 @@ exports['publisher synopsis init 1'] = {
   "publishers": {}
 }
 
+exports['publisher synopsis delete 1'] = {
+  "about": {
+    "synopsis": [],
+    "synopsisOptions": {}
+  },
+  "info": {},
+  "locations": {},
+  "synopsis": {
+    "options": {},
+    "publishers": {}
+  },
+  "promotion": {}
+}
+
 exports['publisher add manual single visit minimum 1'] = {
   "options": {
     "scorekeepers": [

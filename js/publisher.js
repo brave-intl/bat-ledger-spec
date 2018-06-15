@@ -10,6 +10,7 @@ const sinon = require('sinon')
 const Publisher = require('../abs/publisher')
 const {request} = require('../lib/util/request')
 const settings = require('../browser-laptop/js/constants/settings')
+const ledgerState = require('../browser-laptop/app/common/state/ledgerState')
 
 const defaultAppState = Immutable.fromJS({
   cache: {
@@ -92,6 +93,11 @@ class JS extends Publisher {
   initSynopsis () {
     this.state = this.ledger.enable(defaultAppState)
     return this.ledger.getSynopsis()
+  }
+
+  deleteSynopsis () {
+    this.state = ledgerState.deleteSynopsis(this.state)
+    return this.state.get('ledger')
   }
 
   addPublisher (publisher, manual = false) {

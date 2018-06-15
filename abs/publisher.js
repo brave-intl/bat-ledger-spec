@@ -7,6 +7,14 @@
 const Lib = require('./index')
 
 class Publisher extends Lib {
+  initSynopsis () {
+    throw new Error('Function initSynopsis is missing!')
+  }
+
+  deleteSynopsis () {
+    throw new Error('Function deleteSynopsis is missing!')
+  }
+
   addPublisher () {
     throw new Error('Function addPublisher is missing!')
   }
