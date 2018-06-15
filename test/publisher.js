@@ -4,7 +4,7 @@
 
 'use strict'
 
-/* global describe, before, beforeEach, after, it */
+/* global describe, before, beforeEach, after, afterEach, it */
 
 const helper = require('../helper')
 const snapshot = require('snap-shot-it')
@@ -23,6 +23,10 @@ describe('publisher', function () {
 
   after(function () {
     lib.after(mockery)
+  })
+
+  afterEach(function () {
+    lib.afterEach(mockery)
   })
 
   describe('synopsis', function () {
@@ -54,6 +58,15 @@ describe('publisher', function () {
           tabId: 1
         }
         const result = lib.addPublisher(publisher, true)
+        snapshot(this.test.fullTitle(), result)
+      })
+    })
+  })
+
+  describe('media', function () {
+    describe('youtube', function () {
+      it('processes', function () {
+        const result = lib.invokeMediaRequest('youtube')
         snapshot(this.test.fullTitle(), result)
       })
     })

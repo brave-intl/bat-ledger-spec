@@ -213,5 +213,41 @@
       "cookieNames": [],
       "expiration": 31536000000
     }
-  ]
+  ],
+  "media": {
+    "youtube": {
+      "media-request": {
+        "xhr": "https://www.youtube.com/api/stats/watchtime?ns=yt&el=detailpage&cpn=kEB4ZmR1Piv4xf1U&docid=nbCgfiqq-5c&ver=2&cmt=2.181&plid=AAVupkonUy3OhJBQ&ei=azojW_mUB9X7-QOr8ZaYBQ&fmt=248&fs=0&rt=3.006&of=HfpJrHn9oE1a8TQ0t-OkpQ&euri&lact=221&cl=-1&state=playing&vm=CAEQABgE&volume=100&c=WEB&cver=2.20180612&cplayer=UNIPLAYER&cbr=Chrome&cbrver=67.0.3396.71&cos=Macintosh&cosver=10_13_2&hl=en_US&cr=US&len=487.841&rtn=13&afmt=251&idpj=-8&ldpj=-8&rti=3&muted=0&st=0&et=2.181",
+        "type": "youtube",
+        "details": {
+          "firstPartyUrl": "https://www.youtube.com/watch?v=nbCgfiqq-5c",
+          "id": 261,
+          "method": "GET",
+          "referrer": "https://www.youtube.com/watch?v=nbCgfiqq-5c",
+          "resourceType": "image",
+          "tabId": 1,
+          "timestamp": 1529035384529.479,
+          "url": "https://www.youtube.com/api/stats/watchtime?ns=yt&el=detailpage&cpn=kEB4ZmR1Piv4xf1U&docid=nbCgfiqq-5c&ver=2&cmt=12.176&plid=AAVupkonUy3OhJBQ&ei=azojW_mUB9X7-QOr8ZaYBQ&fmt=248&fs=0&rt=13.001&of=HfpJrHn9oE1a8TQ0t-OkpQ&euri&lact=674&cl=-1&state=playing&vm=CAEQABgE&volume=100&c=WEB&cver=2.20180612&cplayer=UNIPLAYER&cbr=Chrome&cbrver=67.0.3396.71&cos=Macintosh&cosver=10_13_2&hl=en_US&cr=US&len=487.841&rtn=23&afmt=251&idpj=-8&ldpj=-8&rti=13&muted=0&st=2.181&et=12.176"
+        }
+      },
+      "media-publisher": {
+        "providerValue": "bgfilms",
+        "providerSuffix": "channel",
+        "QLD": "",
+        "RLD": "bgfilms",
+        "SLD": "youtube#channel:bgfilms",
+        "TLD": "youtube#channel",
+        "URL": "https://www.youtube.com/user/bgfilms/videos",
+        "properties": {},
+        "publisherURL": "https://www.youtube.com/user/bgfilms/videos",
+        "publisherType": "provider",
+        "faviconURL2": "https://i.ytimg.com/vi/nbCgfiqq-5c/hqdefault.jpg",
+        "faviconURL": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAA",
+        "providerName": "YouTube",
+        "publisher": "youtube#channel:bgfilms",
+        "faviconName": "Binging with Babish"
+      }
+    },
+    "twitch": {}
+  }
 } 

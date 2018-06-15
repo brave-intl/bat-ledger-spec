@@ -11,6 +11,7 @@ const Publisher = require('../abs/publisher')
 const {request} = require('../lib/util/request')
 const settings = require('../browser-laptop/js/constants/settings')
 const ledgerState = require('../browser-laptop/app/common/state/ledgerState')
+const responses = require('../lib/data/responses.json')
 
 const defaultAppState = Immutable.fromJS({
   cache: {
@@ -22,7 +23,11 @@ const defaultAppState = Immutable.fromJS({
   about: {
     preferences: {}
   },
-  tabs: []
+  tabs: [],
+  windows: [{
+    focused: true,
+    windowId: -1
+  }]
 })
 
 class JS extends Publisher {
@@ -31,6 +36,7 @@ class JS extends Publisher {
     this.ledger = null
     this.timeStamp = 1525688397657
     this.state = defaultAppState
+    this.mediaType = null
   }
 
   get settingsP () {
@@ -100,6 +106,15 @@ class JS extends Publisher {
     return this.state.get('ledger')
   }
 
+  setActiveTab (tabId) {
+    this.state = this.state
+      .setIn(['tabs'], Immutable.fromJS([{
+        'active': true,
+        'windowId': 25,
+        'tabId': tabId
+      }]))
+  }
+
   addPublisher (publisher, manual = false) {
     this.state = this.ledger.enable(defaultAppState)
 
@@ -132,6 +147,19 @@ class JS extends Publisher {
       tabId: publisherTabId
     })
 
+    return this.ledger.getSynopsis()
+  }
+
+  invokeMediaRequest (type) {
+    this.mediaType = type
+    this.state = this.ledger.enable(defaultAppState)
+
+    const requestData = responses.media[type]['media-request']
+    const xhr = requestData.xhr
+    const details = Immutable.fromJS(requestData.details)
+
+    this.setActiveTab(details.get('tabId'))
+    this.setState(this.ledger.onMediaRequest(this.state, xhr, type, details))
     return this.ledger.getSynopsis()
   }
 }
