@@ -65,8 +65,12 @@ describe('publisher', function () {
 
   describe('media', function () {
     describe('youtube', function () {
-      it('processes', function () {
+      it('logs visit ignoring minimum time', function () {
         const result = lib.invokeMediaRequest('youtube')
+        snapshot(this.test.fullTitle(), result)
+      })
+      it('logs visit when minimum time is exceeded', function () {
+        const result = lib.invokeMediaRequest('youtube', true)
         snapshot(this.test.fullTitle(), result)
       })
     })

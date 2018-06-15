@@ -18,6 +18,14 @@ class Publisher extends Lib {
   addPublisher () {
     throw new Error('Function addPublisher is missing!')
   }
+
+  setActiveTab () {
+    throw new Error('Function setActiveTab is missing!')
+  }
+
+  invokeMediaRequest () {
+    throw new Error('Function invokeMediaRequest is missing!')
+  }
 }
 
 module.exports = Publisher

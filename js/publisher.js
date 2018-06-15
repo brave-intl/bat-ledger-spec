@@ -37,6 +37,7 @@ class JS extends Publisher {
     this.timeStamp = 1525688397657
     this.state = defaultAppState
     this.mediaType = null
+    this.mediaMinimum = null
   }
 
   get settingsP () {
@@ -150,16 +151,21 @@ class JS extends Publisher {
     return this.ledger.getSynopsis()
   }
 
-  invokeMediaRequest (type) {
+  get mediaRequest () {
+    return responses['media'][this.mediaType]['media-request'][this.mediaMinimum]
+  }
+
+  invokeMediaRequest (type, min = false) {
     this.mediaType = type
+    this.mediaMinimum = min ? 'min' : 'non'
     this.state = this.ledger.enable(defaultAppState)
 
-    const requestData = responses.media[type]['media-request']
-    const xhr = requestData.xhr
-    const details = Immutable.fromJS(requestData.details)
+    const xhr = this.mediaRequest.xhr
+    const details = Immutable.fromJS(this.mediaRequest.details)
 
     this.setActiveTab(details.get('tabId'))
     this.setState(this.ledger.onMediaRequest(this.state, xhr, type, details))
+
     return this.ledger.getSynopsis()
   }
 }
