@@ -82,19 +82,35 @@ class JS extends Publisher {
       }))
 
     if (manual) {
-      this.state = this.ledger.addNewLocation(this.state, publisherUrl, publisherTabId, false, true)
+      this.setState(this.ledger.addNewLocation(this.state, publisherUrl, publisherTabId, false, true))
     }
 
-    this.state = this.ledger.pageDataChanged(this.state, {
+    this.setState(this.ledger.pageDataChanged(this.state, {
       location: publisherUrl,
       tabId: publisherTabId
-    })
+    }))
 
     return this.ledger.getSynopsis()
   }
 
   get mediaRequest () {
     return responses['media'][this.mediaType]['media-request'][this.mediaMinimum]
+  }
+
+  pinPublisher (publisherKey, percentage, pinned = true) {
+    const publisher = ledgerState.getPublisher(this.state, publisherKey)
+
+    if (publisher.isEmpty()) {
+      return
+    }
+
+    this.setState(this.ledger.updatePublisherInfo(this.state))
+
+    this.setState(ledgerState.setPublishersProp(this.state, publisherKey, 'pinPercentage', percentage))
+    this.ledger.savePublisherData(publisherKey, 'pinPercentage', percentage)
+    this.setState(this.ledger.updatePublisherInfo(this.state, publisherKey))
+
+    return this.ledger.getSynopsis()
   }
 
   invokeMediaRequest (type, min = false) {

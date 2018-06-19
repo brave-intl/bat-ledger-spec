@@ -63,6 +63,19 @@ describe('publisher', function () {
     })
   })
 
+  describe('pin', function () {
+    it('pins', function () {
+      const publisher = {
+        publisherKey: 'brave.com',
+        url: 'https://brave.com',
+        tabId: 1
+      }
+      lib.addPublisher(publisher, true)
+      const result = lib.pinPublisher('brave.com', 100)
+      snapshot(this.test.fullTitle(), result)
+    })
+  })
+
   describe('media', function () {
     describe('youtube', function () {
       it('logs visit ignoring minimum time', function () {
