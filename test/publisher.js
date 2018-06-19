@@ -14,7 +14,7 @@ const lib = helper.getLib('publisher')
 
 describe('publisher', function () {
   before(function () {
-    lib.before(mockery)
+    lib.runBefore(mockery)
   })
 
   beforeEach(function () {
@@ -72,6 +72,12 @@ describe('publisher', function () {
       it('logs visit when minimum time is exceeded', function () {
         const result = lib.invokeMediaRequest('youtube', true)
         snapshot(this.test.fullTitle(), result)
+      })
+    })
+    describe('twitch', function () {
+      it('logs visit ignoring minimum time', function () {
+        // const result = lib.invokeMediaRequest('twitch')
+        // snapshot(this.test.fullTitle(), result)
       })
     })
   })

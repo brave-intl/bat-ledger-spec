@@ -133,7 +133,7 @@ exports['publisher add manual excludes about page 1'] = {
   }
 }
 
-exports['publisher media youtube excluded when watch data does not meet the minimum time 1'] = {
+exports['publisher media youtube logs visit ignoring minimum time 1'] = {
   "options": {
     "scorekeepers": [
       "concave",
@@ -185,7 +185,7 @@ exports['publisher media youtube excluded when watch data does not meet the mini
   }
 }
 
-exports['publisher media youtube included when watch data does meet the minimum time 1'] = {
+exports['publisher media youtube logs visit when minimum time is exceeded 1'] = {
   "options": {
     "scorekeepers": [
       "concave",

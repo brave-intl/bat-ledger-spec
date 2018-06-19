@@ -7,10 +7,65 @@
 const Immutable = require('immutable')
 const sinon = require('sinon')
 const stubs = require('../lib/helpers/stubs')
+const {request} = require('../lib/util/request')
+const settings = require('../browser-laptop/js/constants/settings')
 
 class Lib {
-  before () {
-    throw new Error('Function before is missing!')
+  constructor () {
+    this.settings = {
+      PAYMENTS_MINIMUM_VISITS: 1,
+      PAYMENTS_MINIMUM_VISIT_TIME: 8000,
+      PAYMENTS_CONTRIBUTION_AMOUNT: 10,
+      PAYMENTS_ENABLED: true,
+      PAYMENTS_NOTIFICATION_TRY_PAYMENTS_DISMISSED: true
+    }
+    this.defaultAppState = Immutable.fromJS({
+      cache: {
+        ledgerVideos: {}
+      },
+      ledger: {
+        about: {}
+      },
+      about: {
+        preferences: {}
+      },
+      tabs: [],
+      windows: [{
+        focused: true,
+        windowId: -1
+      }]
+    })
+    this.ledger = null
+    this.state = this.defaultAppState
+  }
+
+  before (mockery) {
+    mockery.enable({
+      warnOnReplace: false,
+      warnOnUnregistered: false,
+      useCleanCache: true
+    })
+
+    sinon.useFakeTimers()
+
+    const fakeElectron = require('../test/fixtures/fakeElectron')
+    const fakeAdBlock = require('../test/fixtures/fakeAdBlock')
+    const fakeLevel = require('../test/fixtures/fakeLevel')
+
+    mockery.registerMock('electron', fakeElectron)
+    mockery.registerMock('level', fakeLevel)
+    mockery.registerMock('ad-block', fakeAdBlock)
+    mockery.registerMock('../../../js/lib/request', {
+      request: request
+    })
+    mockery.registerMock('../../../js/settings', {
+      getSetting: (key) => {
+        const keyP = Object.keys(settings).find((k) => settings[k] === key)
+        if (this.settings.hasOwnProperty(keyP)) {
+          return this.settings[keyP]
+        }
+      }
+    })
   }
 
   beforeEach () {

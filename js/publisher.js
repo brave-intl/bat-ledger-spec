@@ -5,79 +5,21 @@
 'use strict'
 
 const Immutable = require('immutable')
-const sinon = require('sinon')
 
 const Publisher = require('../abs/publisher')
-const {request} = require('../lib/util/request')
-const settings = require('../browser-laptop/js/constants/settings')
 const ledgerState = require('../browser-laptop/app/common/state/ledgerState')
 const responses = require('../lib/data/responses.json')
-
-const defaultAppState = Immutable.fromJS({
-  cache: {
-    ledgerVideos: {}
-  },
-  ledger: {
-    about: {}
-  },
-  about: {
-    preferences: {}
-  },
-  tabs: [],
-  windows: [{
-    focused: true,
-    windowId: -1
-  }]
-})
 
 class JS extends Publisher {
   constructor () {
     super()
-    this.ledger = null
     this.timeStamp = 1525688397657
-    this.state = defaultAppState
     this.mediaType = null
     this.mediaMinimum = null
   }
 
-  get settingsP () {
-    return {
-      PAYMENTS_MINIMUM_VISITS: 1,
-      PAYMENTS_MINIMUM_VISIT_TIME: 8000,
-      PAYMENTS_CONTRIBUTION_AMOUNT: 10,
-      PAYMENTS_ENABLED: true,
-      PAYMENTS_NOTIFICATION_TRY_PAYMENTS_DISMISSED: true
-    }
-  }
-
-  before (mockery) {
-    const self = this
-    mockery.enable({
-      warnOnReplace: false,
-      warnOnUnregistered: false,
-      useCleanCache: true
-    })
-    this.fakeClock = sinon.useFakeTimers()
-
-    const fakeElectron = require('../test/fixtures/fakeElectron')
-    const fakeAdBlock = require('../test/fixtures/fakeAdBlock')
-    const fakeLevel = require('../test/fixtures/fakeLevel')
-
-    mockery.registerMock('electron', fakeElectron)
-    mockery.registerMock('level', fakeLevel)
-    mockery.registerMock('ad-block', fakeAdBlock)
-    mockery.registerMock('../../../js/lib/request', {
-      request: request
-    })
-    mockery.registerMock('../../../js/settings', {
-      getSetting: (key) => {
-        const keyP = Object.keys(settings).find((k) => settings[k] === key)
-        if (this.settingsP.hasOwnProperty(keyP)) {
-          return self.settingsP[keyP]
-        }
-      }
-    })
-
+  runBefore (mockery) {
+    this.before(mockery)
     this.ledger = require('../browser-laptop/app/browser/api/ledger')
     this.loadStubs(['publisher'])
   }
@@ -93,12 +35,12 @@ class JS extends Publisher {
 
   afterEach (mockery) {
     mockery.resetCache()
-    this.state = defaultAppState
+    this.state = this.defaultAppState
     this.ledger.resetModules()
   }
 
   initSynopsis () {
-    this.state = this.ledger.enable(defaultAppState)
+    this.state = this.ledger.enable(this.defaultAppState)
     return this.ledger.getSynopsis()
   }
 
@@ -117,7 +59,7 @@ class JS extends Publisher {
   }
 
   addPublisher (publisher, manual = false) {
-    this.state = this.ledger.enable(defaultAppState)
+    this.state = this.ledger.enable(this.defaultAppState)
 
     const publisherTabId = publisher.tabId
     const publisherKey = publisher.publisherKey
@@ -158,7 +100,7 @@ class JS extends Publisher {
   invokeMediaRequest (type, min = false) {
     this.mediaType = type
     this.mediaMinimum = min ? 'min' : 'non'
-    this.state = this.ledger.enable(defaultAppState)
+    this.state = this.ledger.enable(this.defaultAppState)
 
     const xhr = this.mediaRequest.xhr
     const details = Immutable.fromJS(this.mediaRequest.details)

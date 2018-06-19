@@ -15,7 +15,7 @@ const lib = helper.getLib('wallet')
 
 describe('wallet', function () {
   before(function () {
-    lib.before(mockery)
+    lib.runBefore(mockery)
   })
 
   beforeEach(function () {
