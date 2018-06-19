@@ -58,8 +58,10 @@ class JS extends Publisher {
       }]))
   }
 
-  addPublisher (publisher, manual = false) {
-    this.state = this.ledger.enable(this.defaultAppState)
+  addPublisher (publisher, enable = true, manual = false) {
+    if (enable) {
+      this.state = this.ledger.enable(this.defaultAppState)
+    }
 
     const publisherTabId = publisher.tabId
     const publisherKey = publisher.publisherKey

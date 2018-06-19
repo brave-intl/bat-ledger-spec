@@ -106,8 +106,7 @@ class Lib {
     newInfo.keySeq().forEach((key) => {
       const temp = newInfo.getIn([key])
 
-      if (Immutable.Map.isMap(temp) &&
-         Object.keys(temp.toJS()).length === 0) {
+      if (Immutable.Map.isMap(temp) && temp.size === 0) {
         return
       }
 

@@ -48,7 +48,7 @@ describe('publisher', function () {
           url: 'https://brave.com',
           tabId: 1
         }
-        const result = lib.addPublisher(publisher, true)
+        const result = lib.addPublisher(publisher, true, true)
         snapshot(this.test.fullTitle(), result)
       })
       it('excludes about page', function () {
@@ -57,7 +57,7 @@ describe('publisher', function () {
           url: 'about:preferences',
           tabId: 1
         }
-        const result = lib.addPublisher(publisher, true)
+        const result = lib.addPublisher(publisher, true, true)
         snapshot(this.test.fullTitle(), result)
       })
     })
@@ -70,9 +70,35 @@ describe('publisher', function () {
         url: 'https://brave.com',
         tabId: 1
       }
-      lib.addPublisher(publisher, true)
+      lib.addPublisher(publisher, true, true)
       const result = lib.pinPublisher('brave.com', 100)
       snapshot(this.test.fullTitle(), result)
+    })
+    it('pins multi', function () {
+      const publisherOne = {
+        publisherKey: 'brave.com',
+        url: 'https://brave.com',
+        tabId: 1
+      }
+      const publisherTwo = {
+        publisherKey: 'clifton.io',
+        url: 'https://clifton.io',
+        tabId: 1
+      }
+      const publisherThree = {
+        publisherKey: 'brianbondy.com',
+        url: 'https://brianbondy.com',
+        tabId: 1
+      }
+      lib.addPublisher(publisherOne, true, true)
+      lib.addPublisher(publisherTwo, false, true)
+      lib.addPublisher(publisherThree, false, true)
+
+      lib.pinPublisher('brave.com', 40)
+      lib.pinPublisher('clifton.io', 30)
+      lib.pinPublisher('brianbondy.com', 25)
+
+      snapshot(this.test.fullTitle(), lib.ledger.getSynopsis())
     })
   })
 
@@ -85,12 +111,6 @@ describe('publisher', function () {
       it('logs visit when minimum time is exceeded', function () {
         const result = lib.invokeMediaRequest('youtube', true)
         snapshot(this.test.fullTitle(), result)
-      })
-    })
-    describe('twitch', function () {
-      it('logs visit ignoring minimum time', function () {
-        // const result = lib.invokeMediaRequest('twitch')
-        // snapshot(this.test.fullTitle(), result)
       })
     })
   })
