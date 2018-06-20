@@ -31,8 +31,8 @@ describe('publisher', function () {
 
   describe('synopsis', function () {
     it('init', function () {
-      const result = lib.initSynopsis()
-      snapshot(this.test.fullTitle(), result)
+      lib.initSynopsis()
+      snapshot(this.test.fullTitle(), lib.synopsis)
     })
     it('delete', function () {
       const result = lib.deleteSynopsis()
@@ -48,8 +48,8 @@ describe('publisher', function () {
           url: 'https://brave.com',
           tabId: 1
         }
-        const result = lib.addPublisher(publisher, true, true)
-        snapshot(this.test.fullTitle(), result)
+        lib.addPublisher(publisher, true)
+        snapshot(this.test.fullTitle(), lib.synopsis)
       })
       it('excludes about page', function () {
         const publisher = {
@@ -57,24 +57,24 @@ describe('publisher', function () {
           url: 'about:preferences',
           tabId: 1
         }
-        const result = lib.addPublisher(publisher, true, true)
-        snapshot(this.test.fullTitle(), result)
+        lib.addPublisher(publisher, true)
+        snapshot(this.test.fullTitle(), lib.synopsis)
       })
     })
   })
 
-  describe('pin', function () {
-    it('pins', function () {
+  describe('delete', function () {
+    it('single', function () {
       const publisher = {
         publisherKey: 'brave.com',
         url: 'https://brave.com',
         tabId: 1
       }
-      lib.addPublisher(publisher, true, true)
-      const result = lib.pinPublisher('brave.com', 100)
-      snapshot(this.test.fullTitle(), result)
+      lib.addPublisher(publisher, true)
+      lib.deletePublisher('brave.com')
+      snapshot(this.test.fullTitle(), lib.synopsis)
     })
-    it('pins multi', function () {
+    it('multi', function () {
       const publisherOne = {
         publisherKey: 'brave.com',
         url: 'https://brave.com',
@@ -90,27 +90,115 @@ describe('publisher', function () {
         url: 'https://brianbondy.com',
         tabId: 1
       }
-      lib.addPublisher(publisherOne, true, true)
-      lib.addPublisher(publisherTwo, false, true)
-      lib.addPublisher(publisherThree, false, true)
+      lib.addPublisher(publisherOne, true)
+      lib.addPublisher(publisherTwo, false)
+      lib.addPublisher(publisherThree, false)
+
+      lib.pinPublisher('brave.com', 40)
+      lib.pinPublisher('brianbondy.com', 25)
+
+      lib.deletePublisher('brianbondy.com')
+      snapshot(this.test.fullTitle(), lib.synopsis)
+    })
+    it('pinned', function () {
+      const publisher = {
+        publisherKey: 'brave.com',
+        url: 'https://brave.com',
+        tabId: 1
+      }
+      lib.addPublisher(publisher, true)
+      lib.pinPublisher('brave.com', 100)
+      lib.deletePublisher('brave.com')
+      snapshot(this.test.fullTitle(), lib.synopsis)
+    })
+  })
+
+  describe('pin', function () {
+    it('single', function () {
+      const publisher = {
+        publisherKey: 'brave.com',
+        url: 'https://brave.com',
+        tabId: 1
+      }
+      lib.addPublisher(publisher, true)
+      lib.pinPublisher('brave.com', 100)
+      snapshot(this.test.fullTitle(), lib.synopsis)
+    })
+    it('multi', function () {
+      const publisherOne = {
+        publisherKey: 'brave.com',
+        url: 'https://brave.com',
+        tabId: 1
+      }
+      const publisherTwo = {
+        publisherKey: 'clifton.io',
+        url: 'https://clifton.io',
+        tabId: 1
+      }
+      const publisherThree = {
+        publisherKey: 'brianbondy.com',
+        url: 'https://brianbondy.com',
+        tabId: 1
+      }
+      lib.addPublisher(publisherOne, true)
+      lib.addPublisher(publisherTwo, false)
+      lib.addPublisher(publisherThree, false)
 
       lib.pinPublisher('brave.com', 40)
       lib.pinPublisher('clifton.io', 30)
       lib.pinPublisher('brianbondy.com', 25)
 
+      snapshot(this.test.fullTitle(), lib.synopsis)
+    })
+    it('unpins', function () {
+      const publisher = {
+        publisherKey: 'brave.com',
+        url: 'https://brave.com',
+        tabId: 1
+      }
+      lib.addPublisher(publisher, true)
+      lib.pinPublisher('brave.com', 100)
+      lib.pinPublisher('brave.com', 0, false)
       snapshot(this.test.fullTitle(), lib.ledger.getSynopsis())
+    })
+    it('unpins multi', function () {
+      const publisherOne = {
+        publisherKey: 'brave.com',
+        url: 'https://brave.com',
+        tabId: 1
+      }
+      const publisherTwo = {
+        publisherKey: 'clifton.io',
+        url: 'https://clifton.io',
+        tabId: 1
+      }
+      const publisherThree = {
+        publisherKey: 'brianbondy.com',
+        url: 'https://brianbondy.com',
+        tabId: 1
+      }
+      lib.addPublisher(publisherOne, true)
+      lib.addPublisher(publisherTwo, false)
+      lib.addPublisher(publisherThree, false)
+
+      lib.pinPublisher('brave.com', 40)
+      lib.pinPublisher('clifton.io', 30)
+      lib.pinPublisher('brianbondy.com', 25)
+
+      lib.pinPublisher('clifton.io', 0, false)
+      snapshot(this.test.fullTitle(), lib.synopsis)
     })
   })
 
   describe('media', function () {
     describe('youtube', function () {
       it('logs visit ignoring minimum time', function () {
-        const result = lib.invokeMediaRequest('youtube')
-        snapshot(this.test.fullTitle(), result)
+        lib.invokeMediaRequest('youtube')
+        snapshot(this.test.fullTitle(), lib.synopsis)
       })
       it('logs visit when minimum time is exceeded', function () {
-        const result = lib.invokeMediaRequest('youtube', true)
-        snapshot(this.test.fullTitle(), result)
+        lib.invokeMediaRequest('youtube', true)
+        snapshot(this.test.fullTitle(), lib.synopsis)
       })
     })
   })

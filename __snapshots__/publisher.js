@@ -109,7 +109,127 @@ exports['publisher add manual excludes about page 1'] = {
   "publishers": {}
 }
 
-exports['publisher pin pins 1'] = {
+exports['publisher delete single 1'] = {
+  "options": {
+    "scorekeepers": [
+      "concave",
+      "visits"
+    ],
+    "minPublisherDuration": 8000,
+    "numFrames": 30,
+    "frameSize": 86400000,
+    "_d": 0.000033333333333333335,
+    "minPublisherVisits": 1,
+    "scorekeeper": "concave",
+    "emptyScores": {
+      "concave": 0,
+      "visits": 0
+    },
+    "_a": 7000,
+    "_a2": 14000,
+    "_a4": 28000,
+    "_b": 1000,
+    "_b2": 1000000
+  },
+  "publishers": {}
+}
+
+exports['publisher delete multi 1'] = {
+  "options": {
+    "scorekeepers": [
+      "concave",
+      "visits"
+    ],
+    "minPublisherDuration": 8000,
+    "numFrames": 30,
+    "frameSize": 86400000,
+    "_d": 0.000033333333333333335,
+    "minPublisherVisits": 1,
+    "scorekeeper": "concave",
+    "emptyScores": {
+      "concave": 0,
+      "visits": 0
+    },
+    "_a": 7000,
+    "_a2": 14000,
+    "_a4": 28000,
+    "_b": 1000,
+    "_b2": 1000000
+  },
+  "publishers": {
+    "brave.com": {
+      "visits": 1,
+      "duration": 8000,
+      "options": {},
+      "scores": {
+        "concave": 1,
+        "visits": 1
+      },
+      "window": [
+        {
+          "timestamp": 0,
+          "visits": 1,
+          "duration": 8000,
+          "scores": {
+            "concave": 1,
+            "visits": 1
+          }
+        }
+      ],
+      "faviconURL": "data:image/png;base64,YnJhdmUuY29t",
+      "pinPercentage": 100,
+      "weight": 100
+    },
+    "clifton.io": {
+      "visits": 1,
+      "duration": 8000,
+      "options": {},
+      "scores": {
+        "concave": 1,
+        "visits": 1
+      },
+      "window": [
+        {
+          "timestamp": 0,
+          "visits": 1,
+          "duration": 8000,
+          "scores": {
+            "concave": 1,
+            "visits": 1
+          }
+        }
+      ],
+      "faviconURL": "data:image/png;base64,Y2xpZnRvbi5pbw=="
+    }
+  }
+}
+
+exports['publisher delete pinned 1'] = {
+  "options": {
+    "scorekeepers": [
+      "concave",
+      "visits"
+    ],
+    "minPublisherDuration": 8000,
+    "numFrames": 30,
+    "frameSize": 86400000,
+    "_d": 0.000033333333333333335,
+    "minPublisherVisits": 1,
+    "scorekeeper": "concave",
+    "emptyScores": {
+      "concave": 0,
+      "visits": 0
+    },
+    "_a": 7000,
+    "_a2": 14000,
+    "_a4": 28000,
+    "_b": 1000,
+    "_b2": 1000000
+  },
+  "publishers": {}
+}
+
+exports['publisher pin single 1'] = {
   "options": {
     "scorekeepers": [
       "concave",
@@ -158,7 +278,7 @@ exports['publisher pin pins 1'] = {
   }
 }
 
-exports['publisher pin pins multi 1'] = {
+exports['publisher pin multi 1'] = {
   "options": {
     "scorekeepers": [
       "concave",
@@ -249,6 +369,150 @@ exports['publisher pin pins multi 1'] = {
       "faviconURL": "data:image/png;base64,YnJpYW5ib25keS5jb20=",
       "pinPercentage": 25,
       "weight": 25
+    }
+  }
+}
+
+exports['publisher pin unpins 1'] = {
+  "options": {
+    "scorekeepers": [
+      "concave",
+      "visits"
+    ],
+    "minPublisherDuration": 8000,
+    "numFrames": 30,
+    "frameSize": 86400000,
+    "_d": 0.000033333333333333335,
+    "minPublisherVisits": 1,
+    "scorekeeper": "concave",
+    "emptyScores": {
+      "concave": 0,
+      "visits": 0
+    },
+    "_a": 7000,
+    "_a2": 14000,
+    "_a4": 28000,
+    "_b": 1000,
+    "_b2": 1000000
+  },
+  "publishers": {
+    "brave.com": {
+      "visits": 1,
+      "duration": 8000,
+      "options": {},
+      "scores": {
+        "concave": 1,
+        "visits": 1
+      },
+      "window": [
+        {
+          "timestamp": 0,
+          "visits": 1,
+          "duration": 8000,
+          "scores": {
+            "concave": 1,
+            "visits": 1
+          }
+        }
+      ],
+      "faviconURL": "data:image/png;base64,YnJhdmUuY29t",
+      "pinPercentage": 0,
+      "weight": 100
+    }
+  }
+}
+
+exports['publisher pin unpins multi 1'] = {
+  "options": {
+    "scorekeepers": [
+      "concave",
+      "visits"
+    ],
+    "minPublisherDuration": 8000,
+    "numFrames": 30,
+    "frameSize": 86400000,
+    "_d": 0.000033333333333333335,
+    "minPublisherVisits": 1,
+    "scorekeeper": "concave",
+    "emptyScores": {
+      "concave": 0,
+      "visits": 0
+    },
+    "_a": 7000,
+    "_a2": 14000,
+    "_a4": 28000,
+    "_b": 1000,
+    "_b2": 1000000
+  },
+  "publishers": {
+    "brave.com": {
+      "visits": 1,
+      "duration": 8000,
+      "options": {},
+      "scores": {
+        "concave": 1,
+        "visits": 1
+      },
+      "window": [
+        {
+          "timestamp": 0,
+          "visits": 1,
+          "duration": 8000,
+          "scores": {
+            "concave": 1,
+            "visits": 1
+          }
+        }
+      ],
+      "faviconURL": "data:image/png;base64,YnJhdmUuY29t",
+      "pinPercentage": 68,
+      "weight": 67.94871794871796
+    },
+    "clifton.io": {
+      "visits": 1,
+      "duration": 8000,
+      "options": {},
+      "scores": {
+        "concave": 1,
+        "visits": 1
+      },
+      "window": [
+        {
+          "timestamp": 0,
+          "visits": 1,
+          "duration": 8000,
+          "scores": {
+            "concave": 1,
+            "visits": 1
+          }
+        }
+      ],
+      "faviconURL": "data:image/png;base64,Y2xpZnRvbi5pbw==",
+      "pinPercentage": 0,
+      "weight": 22
+    },
+    "brianbondy.com": {
+      "visits": 1,
+      "duration": 8000,
+      "options": {},
+      "scores": {
+        "concave": 1,
+        "visits": 1
+      },
+      "window": [
+        {
+          "timestamp": 0,
+          "visits": 1,
+          "duration": 8000,
+          "scores": {
+            "concave": 1,
+            "visits": 1
+          }
+        }
+      ],
+      "faviconURL": "data:image/png;base64,YnJpYW5ib25keS5jb20=",
+      "pinPercentage": 32,
+      "weight": 32.05128205128205
     }
   }
 }

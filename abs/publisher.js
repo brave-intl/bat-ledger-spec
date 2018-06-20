@@ -19,6 +19,14 @@ class Publisher extends Lib {
     throw new Error('Function addPublisher is missing!')
   }
 
+  pinPublisher () {
+    throw new Error('Function pinPublisher is missing!')
+  }
+
+  deletePublisher () {
+    throw new Error('Function deletePublisher is missing!')
+  }
+
   setActiveTab () {
     throw new Error('Function setActiveTab is missing!')
   }

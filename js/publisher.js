@@ -41,7 +41,6 @@ class JS extends Publisher {
 
   initSynopsis () {
     this.state = this.ledger.enable(this.defaultAppState)
-    return this.ledger.getSynopsis()
   }
 
   deleteSynopsis () {
@@ -58,8 +57,16 @@ class JS extends Publisher {
       }]))
   }
 
-  addPublisher (publisher, enable = true, manual = false) {
-    if (enable) {
+  get mediaRequest () {
+    return responses['media'][this.mediaType]['media-request'][this.mediaMinimum]
+  }
+
+  get synopsis () {
+    return this.ledger.getSynopsis()
+  }
+
+  addPublisher (publisher, enableSynopsis = true) {
+    if (enableSynopsis) {
       this.state = this.ledger.enable(this.defaultAppState)
     }
 
@@ -83,23 +90,23 @@ class JS extends Publisher {
         publisher: publisherKey
       }))
 
-    if (manual) {
-      this.setState(this.ledger.addNewLocation(this.state, publisherUrl, publisherTabId, false, true))
-    }
+    this.setState(this.ledger.addNewLocation(this.state, publisherUrl, publisherTabId, false, true))
 
     this.setState(this.ledger.pageDataChanged(this.state, {
       location: publisherUrl,
       tabId: publisherTabId
     }))
-
-    return this.ledger.getSynopsis()
   }
 
-  get mediaRequest () {
-    return responses['media'][this.mediaType]['media-request'][this.mediaMinimum]
+  deletePublisher (publisherKey) {
+    this.ledger.deleteSynopsisPublisher(publisherKey)
+
+    this.setState(ledgerState.deletePublishers(this.state, publisherKey))
+    this.setState(this.ledger.updatePublisherInfo(this.state, publisherKey))
   }
 
   pinPublisher (publisherKey, percentage, pinned = true) {
+    const newPercentage = pinned ? percentage : 0
     const publisher = ledgerState.getPublisher(this.state, publisherKey)
 
     if (publisher.isEmpty()) {
@@ -108,11 +115,9 @@ class JS extends Publisher {
 
     this.setState(this.ledger.updatePublisherInfo(this.state))
 
-    this.setState(ledgerState.setPublishersProp(this.state, publisherKey, 'pinPercentage', percentage))
-    this.ledger.savePublisherData(publisherKey, 'pinPercentage', percentage)
+    this.setState(ledgerState.setPublishersProp(this.state, publisherKey, 'pinPercentage', newPercentage))
+    this.ledger.savePublisherData(publisherKey, 'pinPercentage', newPercentage)
     this.setState(this.ledger.updatePublisherInfo(this.state, publisherKey))
-
-    return this.ledger.getSynopsis()
   }
 
   invokeMediaRequest (type, min = false) {
@@ -125,8 +130,6 @@ class JS extends Publisher {
 
     this.setActiveTab(details.get('tabId'))
     this.setState(this.ledger.onMediaRequest(this.state, xhr, type, details))
-
-    return this.ledger.getSynopsis()
   }
 }
 
