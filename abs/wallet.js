@@ -7,8 +7,44 @@
 const Lib = require('./index')
 
 class Wallet extends Lib {
+  setStateFile () {
+    throw new Error('Function setStateFile is missing!')
+  }
+
+  fallbackToPrevWallet () {
+    throw new Error('Function fallbackToPrevWallet is missing!')
+  }
+
+  getInfo () {
+    throw new Error('Function getInfo is missing!')
+  }
+
+  setInfo () {
+    throw new Error('Function setInfo is missing!')
+  }
+
+  modifyDateStamp () {
+    throw new Error('Function modifyDateStamp is missing!')
+  }
+
+  enable () {
+    throw new Error('Function enable is missing!')
+  }
+
   createWallet () {
     throw new Error('Function createWallet is missing!')
+  }
+
+  deleteWallet () {
+    throw new Error('Function deleteWallet is missing!')
+  }
+
+  corruptWallet () {
+    throw new Error('Function corruptWallet is missing!')
+  }
+
+  recoverWallet () {
+    throw new Error('Function recoverWallet is missing!')
   }
 }
 
