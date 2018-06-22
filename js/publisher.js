@@ -120,6 +120,26 @@ class JS extends Publisher {
     this.setState(this.ledger.updatePublisherInfo(this.state, publisherKey))
   }
 
+  processTwitchData (xhr, type, details) {
+    const twitchUploadData = responses['media']['twitch']['upload-data']
+    twitchUploadData.forEach((piece) => {
+      let uploadData = []
+
+      if (!Array.isArray(piece)) {
+        piece.data.forEach((data) => {
+          uploadData.push({
+            'bytes': Buffer.from(data)
+          })
+        })
+      } else {
+        uploadData = [{'bytes': Buffer.from(piece)}]
+      }
+
+      details.uploadData = uploadData
+      this.setState(this.ledger.onMediaRequest(this.state, xhr, type, Immutable.fromJS(details)))
+    })
+  }
+
   invokeMediaRequest (type, min = false) {
     this.mediaType = type
     this.mediaMinimum = min ? 'min' : 'non'
@@ -127,9 +147,14 @@ class JS extends Publisher {
 
     const xhr = this.mediaRequest.xhr
     const details = Immutable.fromJS(this.mediaRequest.details)
-
     this.setActiveTab(details.get('tabId'))
-    this.setState(this.ledger.onMediaRequest(this.state, xhr, type, details))
+
+    if (type === 'twitch') {
+      this.processTwitchData(xhr, type, details.toJS())
+      return
+    }
+
+    this.setState(this.ledger.onMediaRequest(this.state, xhr, type, Immutable.fromJS(details)))
   }
 }
 

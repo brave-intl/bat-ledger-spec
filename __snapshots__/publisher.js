@@ -616,3 +616,52 @@ exports['publisher media youtube logs visit when minimum time is exceeded 1'] = 
     }
   }
 }
+
+exports['publisher media twitch logs visit ignoring minimum time 1'] = {
+  "options": {
+    "scorekeepers": [
+      "concave",
+      "visits"
+    ],
+    "minPublisherDuration": 8000,
+    "numFrames": 30,
+    "frameSize": 86400000,
+    "_d": 0.000033333333333333335,
+    "minPublisherVisits": 1,
+    "scorekeeper": "concave",
+    "emptyScores": {
+      "concave": 0,
+      "visits": 0
+    },
+    "_a": 7000,
+    "_a2": 14000,
+    "_a4": 28000,
+    "_b": 1000,
+    "_b2": 1000000
+  },
+  "publishers": {
+    "twitch#author:ninja": {
+      "visits": 2,
+      "duration": 0,
+      "options": {},
+      "scores": {
+        "concave": 0,
+        "visits": 2
+      },
+      "window": [
+        {
+          "timestamp": 0,
+          "visits": 2,
+          "duration": 0,
+          "scores": {
+            "concave": 0,
+            "visits": 2
+          }
+        }
+      ],
+      "faviconName": "ninja",
+      "publisherURL": "https://www.twitch.tv/ninja/videos",
+      "providerName": "Twitch"
+    }
+  }
+}
