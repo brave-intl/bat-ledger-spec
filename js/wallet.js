@@ -55,20 +55,9 @@ class JS extends Wallet {
     this.loadStubs(['wallet'])
   }
 
-  beforeEach (mockery) {
-    this.ledger.setSynopsis(null)
-  }
-
-  after (mockery) {
-    mockery.deregisterAll()
-    mockery.disable()
-  }
-
-  afterEach (mockery) {
-    mockery.resetCache()
+  runAfterEach (mockery) {
+    this.afterEach(mockery)
     this.setStateFile()
-    this.state = this.defaultAppState
-    this.ledger.resetModules()
   }
 
   getInfo (state) {

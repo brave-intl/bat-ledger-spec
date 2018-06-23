@@ -12,7 +12,7 @@ const settings = require('../browser-laptop/js/constants/settings')
 
 class Lib {
   constructor () {
-    this.settings = {
+    this.defaultSettings = {
       PAYMENTS_MINIMUM_VISITS: 1,
       PAYMENTS_MINIMUM_VISIT_TIME: 8000,
       PAYMENTS_CONTRIBUTION_AMOUNT: 10,
@@ -38,6 +38,7 @@ class Lib {
     })
     this.ledger = null
     this.state = this.defaultAppState
+    this.settings = this.defaultSettings
   }
 
   before (mockery) {
@@ -69,16 +70,20 @@ class Lib {
     })
   }
 
-  beforeEach () {
-    throw new Error('Function beforeEach is missing!')
+  beforeEach (mockery) {
+    this.ledger.setSynopsis(null)
   }
 
-  after () {
-    throw new Error('Function after is missing!')
+  after (mockery) {
+    mockery.deregisterAll()
+    mockery.disable()
   }
 
-  afterEach () {
-    throw new Error('Function afterEach is missing!')
+  afterEach (mockery) {
+    mockery.resetCache()
+    this.state = this.defaultAppState
+    this.ledger.resetModules()
+    this.settings = this.defaultSettings
   }
 
   loadStubs (keys) {

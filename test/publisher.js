@@ -48,7 +48,7 @@ describe('publisher', function () {
           url: 'https://brave.com',
           tabId: 1
         }
-        lib.addPublisher(publisher, true)
+        lib.addPublisher(publisher)
         snapshot(this.test.fullTitle(), lib.synopsis)
       })
       it('excludes about page', function () {
@@ -57,7 +57,7 @@ describe('publisher', function () {
           url: 'about:preferences',
           tabId: 1
         }
-        lib.addPublisher(publisher, true)
+        lib.addPublisher(publisher)
         snapshot(this.test.fullTitle(), lib.synopsis)
       })
     })
@@ -70,7 +70,7 @@ describe('publisher', function () {
         url: 'https://brave.com',
         tabId: 1
       }
-      lib.addPublisher(publisher, true)
+      lib.addPublisher(publisher)
       lib.deletePublisher('brave.com')
       snapshot(this.test.fullTitle(), lib.synopsis)
     })
@@ -90,7 +90,7 @@ describe('publisher', function () {
         url: 'https://brianbondy.com',
         tabId: 1
       }
-      lib.addPublisher(publisherOne, true)
+      lib.addPublisher(publisherOne)
       lib.addPublisher(publisherTwo, false)
       lib.addPublisher(publisherThree, false)
 
@@ -106,7 +106,7 @@ describe('publisher', function () {
         url: 'https://brave.com',
         tabId: 1
       }
-      lib.addPublisher(publisher, true)
+      lib.addPublisher(publisher)
       lib.pinPublisher('brave.com', 100)
       lib.deletePublisher('brave.com')
       snapshot(this.test.fullTitle(), lib.synopsis)
@@ -120,7 +120,7 @@ describe('publisher', function () {
         url: 'https://brave.com',
         tabId: 1
       }
-      lib.addPublisher(publisher, true)
+      lib.addPublisher(publisher)
       lib.pinPublisher('brave.com', 100)
       snapshot(this.test.fullTitle(), lib.synopsis)
     })
@@ -140,7 +140,7 @@ describe('publisher', function () {
         url: 'https://brianbondy.com',
         tabId: 1
       }
-      lib.addPublisher(publisherOne, true)
+      lib.addPublisher(publisherOne)
       lib.addPublisher(publisherTwo, false)
       lib.addPublisher(publisherThree, false)
 
@@ -156,7 +156,7 @@ describe('publisher', function () {
         url: 'https://brave.com',
         tabId: 1
       }
-      lib.addPublisher(publisher, true)
+      lib.addPublisher(publisher)
       lib.pinPublisher('brave.com', 100)
       lib.pinPublisher('brave.com', 0, false)
       snapshot(this.test.fullTitle(), lib.ledger.getSynopsis())
@@ -177,7 +177,7 @@ describe('publisher', function () {
         url: 'https://brianbondy.com',
         tabId: 1
       }
-      lib.addPublisher(publisherOne, true)
+      lib.addPublisher(publisherOne)
       lib.addPublisher(publisherTwo, false)
       lib.addPublisher(publisherThree, false)
 

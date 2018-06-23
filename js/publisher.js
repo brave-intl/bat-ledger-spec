@@ -24,21 +24,6 @@ class JS extends Publisher {
     this.loadStubs(['publisher'])
   }
 
-  beforeEach (mockery) {
-    this.ledger.setSynopsis(null)
-  }
-
-  after (mockery) {
-    mockery.deregisterAll()
-    mockery.disable()
-  }
-
-  afterEach (mockery) {
-    mockery.resetCache()
-    this.state = this.defaultAppState
-    this.ledger.resetModules()
-  }
-
   initSynopsis () {
     this.state = this.ledger.enable(this.defaultAppState)
   }
@@ -122,6 +107,7 @@ class JS extends Publisher {
 
   processTwitchData (xhr, type, details) {
     const twitchUploadData = responses['media']['twitch']['upload-data']
+
     twitchUploadData.forEach((piece) => {
       let uploadData = []
 
