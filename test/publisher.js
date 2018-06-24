@@ -26,7 +26,7 @@ describe('publisher', function () {
   })
 
   afterEach(function () {
-    lib.afterEach(mockery)
+    lib.runAfterEach(mockery)
   })
 
   describe('synopsis', function () {
@@ -41,23 +41,45 @@ describe('publisher', function () {
   })
 
   describe('add', function () {
+    describe('organic', function () {
+      it('adds site when visit meets the minimum time', function () {
+        const publisher = {
+          key: 'brave.com',
+          url: 'https://brave.com/',
+          tabId: 1,
+          visitTime: 8050
+        }
+        lib.addPublisherVisit(publisher)
+        snapshot(this.test.fullTitle(), lib.synopsis)
+      })
+      it('does not add site visit under the minimum time', function () {
+        const publisher = {
+          key: 'brave.com',
+          url: 'https://brave.com/',
+          tabId: 1,
+          visitTime: 5050
+        }
+        lib.addPublisherVisit(publisher)
+        snapshot(this.test.fullTitle(), lib.synopsis)
+      })
+    })
     describe('manual', function () {
       it('single visit minimum', function () {
         const publisher = {
-          publisherKey: 'brave.com',
-          url: 'https://brave.com',
+          key: 'brave.com',
+          url: 'https://brave.com/',
           tabId: 1
         }
-        lib.addPublisher(publisher)
+        lib.manualAddPublisher(publisher)
         snapshot(this.test.fullTitle(), lib.synopsis)
       })
       it('excludes about page', function () {
         const publisher = {
-          publisherKey: 'about:preferences',
+          key: 'about:preferences',
           url: 'about:preferences',
           tabId: 1
         }
-        lib.addPublisher(publisher)
+        lib.manualAddPublisher(publisher)
         snapshot(this.test.fullTitle(), lib.synopsis)
       })
     })
@@ -66,33 +88,33 @@ describe('publisher', function () {
   describe('delete', function () {
     it('single', function () {
       const publisher = {
-        publisherKey: 'brave.com',
-        url: 'https://brave.com',
+        key: 'brave.com',
+        url: 'https://brave.com/',
         tabId: 1
       }
-      lib.addPublisher(publisher)
+      lib.manualAddPublisher(publisher)
       lib.deletePublisher('brave.com')
       snapshot(this.test.fullTitle(), lib.synopsis)
     })
     it('multi', function () {
       const publisherOne = {
-        publisherKey: 'brave.com',
-        url: 'https://brave.com',
+        key: 'brave.com',
+        url: 'https://brave.com/',
         tabId: 1
       }
       const publisherTwo = {
-        publisherKey: 'clifton.io',
+        key: 'clifton.io',
         url: 'https://clifton.io',
         tabId: 1
       }
       const publisherThree = {
-        publisherKey: 'brianbondy.com',
+        key: 'brianbondy.com',
         url: 'https://brianbondy.com',
         tabId: 1
       }
-      lib.addPublisher(publisherOne)
-      lib.addPublisher(publisherTwo, false)
-      lib.addPublisher(publisherThree, false)
+      lib.manualAddPublisher(publisherOne)
+      lib.manualAddPublisher(publisherTwo, false)
+      lib.manualAddPublisher(publisherThree, false)
 
       lib.pinPublisher('brave.com', 40)
       lib.pinPublisher('brianbondy.com', 25)
@@ -102,11 +124,11 @@ describe('publisher', function () {
     })
     it('pinned', function () {
       const publisher = {
-        publisherKey: 'brave.com',
+        key: 'brave.com',
         url: 'https://brave.com',
         tabId: 1
       }
-      lib.addPublisher(publisher)
+      lib.manualAddPublisher(publisher)
       lib.pinPublisher('brave.com', 100)
       lib.deletePublisher('brave.com')
       snapshot(this.test.fullTitle(), lib.synopsis)
@@ -116,33 +138,33 @@ describe('publisher', function () {
   describe('pin', function () {
     it('single', function () {
       const publisher = {
-        publisherKey: 'brave.com',
+        key: 'brave.com',
         url: 'https://brave.com',
         tabId: 1
       }
-      lib.addPublisher(publisher)
+      lib.manualAddPublisher(publisher)
       lib.pinPublisher('brave.com', 100)
       snapshot(this.test.fullTitle(), lib.synopsis)
     })
     it('multi', function () {
       const publisherOne = {
-        publisherKey: 'brave.com',
+        key: 'brave.com',
         url: 'https://brave.com',
         tabId: 1
       }
       const publisherTwo = {
-        publisherKey: 'clifton.io',
+        key: 'clifton.io',
         url: 'https://clifton.io',
         tabId: 1
       }
       const publisherThree = {
-        publisherKey: 'brianbondy.com',
+        key: 'brianbondy.com',
         url: 'https://brianbondy.com',
         tabId: 1
       }
-      lib.addPublisher(publisherOne)
-      lib.addPublisher(publisherTwo, false)
-      lib.addPublisher(publisherThree, false)
+      lib.manualAddPublisher(publisherOne)
+      lib.manualAddPublisher(publisherTwo, false)
+      lib.manualAddPublisher(publisherThree, false)
 
       lib.pinPublisher('brave.com', 40)
       lib.pinPublisher('clifton.io', 30)
@@ -152,34 +174,34 @@ describe('publisher', function () {
     })
     it('unpins', function () {
       const publisher = {
-        publisherKey: 'brave.com',
+        key: 'brave.com',
         url: 'https://brave.com',
         tabId: 1
       }
-      lib.addPublisher(publisher)
+      lib.manualAddPublisher(publisher)
       lib.pinPublisher('brave.com', 100)
       lib.pinPublisher('brave.com', 0, false)
       snapshot(this.test.fullTitle(), lib.ledger.getSynopsis())
     })
     it('unpins multi', function () {
       const publisherOne = {
-        publisherKey: 'brave.com',
+        key: 'brave.com',
         url: 'https://brave.com',
         tabId: 1
       }
       const publisherTwo = {
-        publisherKey: 'clifton.io',
+        key: 'clifton.io',
         url: 'https://clifton.io',
         tabId: 1
       }
       const publisherThree = {
-        publisherKey: 'brianbondy.com',
+        key: 'brianbondy.com',
         url: 'https://brianbondy.com',
         tabId: 1
       }
-      lib.addPublisher(publisherOne)
-      lib.addPublisher(publisherTwo, false)
-      lib.addPublisher(publisherThree, false)
+      lib.manualAddPublisher(publisherOne)
+      lib.manualAddPublisher(publisherTwo, false)
+      lib.manualAddPublisher(publisherThree, false)
 
       lib.pinPublisher('brave.com', 40)
       lib.pinPublisher('clifton.io', 30)

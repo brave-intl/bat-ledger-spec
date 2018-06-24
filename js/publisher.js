@@ -16,12 +16,19 @@ class JS extends Publisher {
     this.timeStamp = 1525688397657
     this.mediaType = null
     this.mediaMinimum = null
+    this.currentVisitTime = null
   }
 
   runBefore (mockery) {
     this.before(mockery)
     this.ledger = require('../browser-laptop/app/browser/api/ledger')
     this.loadStubs(['publisher'])
+  }
+
+  runAfterEach (mockery) {
+    this.afterEach(mockery)
+    this.currentVisitTime = null
+    this.ledger.resetCurrentUrl()
   }
 
   initSynopsis () {
@@ -50,42 +57,52 @@ class JS extends Publisher {
     return this.ledger.getSynopsis()
   }
 
-  addPublisher (publisher, enableSynopsis = true) {
-    if (enableSynopsis) {
-      this.state = this.ledger.enable(this.defaultAppState)
-    }
-
-    const publisherTabId = publisher.tabId
-    const publisherKey = publisher.publisherKey
-    const publisherUrl = `${publisher.url}/`
-
-    this.state = this.state
-      .setIn(['pageData', 'info', publisherUrl], Immutable.fromJS({
-        key: publisherUrl,
+  setLocationData (publisher) {
+    return this.state
+      .setIn(['pageData', 'info', publisher.url], Immutable.fromJS({
+        key: publisher.url,
         protocol: 'https:',
-        publisher: publisherKey,
+        publisher: publisher.key,
         timestamp: this.timeStamp,
-        url: publisherUrl
+        url: publisher.url
       }))
       .setIn(['pageData', 'last'], Immutable.fromJS({
-        info: publisherUrl,
-        tabId: publisherTabId
+        info: publisher.url,
+        tabId: publisher.tabId
       }))
-      .setIn(['ledger', 'locations', publisherUrl], Immutable.fromJS({
-        publisher: publisherKey
+      .setIn(['ledger', 'locations', publisher.url], Immutable.fromJS({
+        publisher: publisher.key
       }))
+  }
 
-    this.setState(this.ledger.addNewLocation(this.state, publisherUrl, publisherTabId, false, true))
+  manualAddPublisher (publisher, enableSynopsis = true) {
+    if (enableSynopsis) {
+      this.initSynopsis()
+    }
 
+    this.setState(this.setLocationData(publisher))
+    this.setState(this.ledger.addNewLocation(this.state, publisher.url, publisher.tabId, false, true))
     this.setState(this.ledger.pageDataChanged(this.state, {
-      location: publisherUrl,
-      tabId: publisherTabId
+      location: publisher.url,
+      tabId: publisher.tabId
+    }))
+  }
+
+  addPublisherVisit (publisher, enableSynopsis = true) {
+    if (enableSynopsis) {
+      this.initSynopsis()
+    }
+
+    this.currentVisitTime = publisher.visitTime
+    this.setState(this.setLocationData(publisher))
+    this.setState(this.ledger.pageDataChanged(this.state, {
+      location: publisher.url,
+      tabId: publisher.tabId
     }))
   }
 
   deletePublisher (publisherKey) {
     this.ledger.deleteSynopsisPublisher(publisherKey)
-
     this.setState(ledgerState.deletePublishers(this.state, publisherKey))
     this.setState(this.ledger.updatePublisherInfo(this.state, publisherKey))
   }
@@ -99,8 +116,8 @@ class JS extends Publisher {
     }
 
     this.setState(this.ledger.updatePublisherInfo(this.state))
-
     this.setState(ledgerState.setPublishersProp(this.state, publisherKey, 'pinPercentage', newPercentage))
+
     this.ledger.savePublisherData(publisherKey, 'pinPercentage', newPercentage)
     this.setState(this.ledger.updatePublisherInfo(this.state, publisherKey))
   }
