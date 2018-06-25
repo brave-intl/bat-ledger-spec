@@ -17,6 +17,7 @@ class JS extends Publisher {
     this.mediaType = null
     this.mediaMinimum = null
     this.currentVisitTime = null
+    this.activeWindowId = 25
   }
 
   runBefore (mockery) {
@@ -44,7 +45,7 @@ class JS extends Publisher {
     this.state = this.state
       .setIn(['tabs'], Immutable.fromJS([{
         'active': true,
-        'windowId': 25,
+        'windowId': this.activeWindowId,
         'tabId': tabId
       }]))
   }
@@ -99,6 +100,7 @@ class JS extends Publisher {
       location: publisher.url,
       tabId: publisher.tabId
     }))
+    this.setState(this.ledger.pageDataChanged(this.state, {}, true))
   }
 
   deletePublisher (publisherKey) {

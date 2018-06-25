@@ -89,7 +89,11 @@ class Lib {
   loadStubs (keys) {
     keys.forEach((key) => {
       stubs[key].forEach((stub) => {
-        sinon.stub(this.ledger, stub.name).callsFake(stub.func.bind(null, this))
+        let args = [null, this]
+        if (stub.bindOriginal) {
+          args.push(this.ledger[stub.name])
+        }
+        sinon.stub(this.ledger, stub.name).callsFake(stub.func.bind(...args))
       })
     })
   }
