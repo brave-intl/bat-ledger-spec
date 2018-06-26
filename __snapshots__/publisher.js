@@ -763,20 +763,20 @@ exports['publisher media twitch logs visit ignoring minimum time 1'] = {
   },
   "publishers": {
     "twitch#author:ninja": {
-      "visits": 2,
-      "duration": 0,
+      "visits": 1,
+      "duration": 10000,
       "options": {},
       "scores": {
-        "concave": 0,
+        "concave": 1.1259324724457291,
         "visits": 2
       },
       "window": [
         {
           "timestamp": 0,
-          "visits": 2,
-          "duration": 0,
+          "visits": 1,
+          "duration": 10000,
           "scores": {
-            "concave": 0,
+            "concave": 1.1259324724457291,
             "visits": 2
           }
         }

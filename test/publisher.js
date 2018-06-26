@@ -253,7 +253,7 @@ describe('publisher', function () {
     })
     describe('twitch', function () {
       it('logs visit ignoring minimum time', function () {
-        lib.invokeMediaRequest('twitch')
+        lib.invokeMediaRequest('twitch', false, 'single-visit')
         snapshot(this.test.fullTitle(), lib.synopsis)
       })
     })

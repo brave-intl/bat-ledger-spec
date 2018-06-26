@@ -124,8 +124,8 @@ class JS extends Publisher {
     this.setState(this.ledger.updatePublisherInfo(this.state, publisherKey))
   }
 
-  processTwitchData (xhr, type, details) {
-    const twitchUploadData = responses['media']['twitch']['upload-data']
+  processTwitchData (key, xhr, type, details) {
+    const twitchUploadData = require('../lib/data/twitchUploadData.json').upload_data[key]
 
     twitchUploadData.forEach((piece) => {
       let uploadData = []
@@ -145,7 +145,7 @@ class JS extends Publisher {
     })
   }
 
-  invokeMediaRequest (type, min = false) {
+  invokeMediaRequest (type, min = false, key = false) {
     this.mediaType = type
     this.mediaMinimum = min ? 'min' : 'non'
     this.state = this.ledger.enable(this.defaultAppState)
@@ -155,7 +155,7 @@ class JS extends Publisher {
     this.setActiveTab(details.get('tabId'))
 
     if (type === 'twitch') {
-      this.processTwitchData(xhr, type, details.toJS())
+      this.processTwitchData(key, xhr, type, details.toJS())
       return
     }
 

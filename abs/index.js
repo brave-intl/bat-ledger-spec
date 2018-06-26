@@ -38,7 +38,7 @@ class Lib {
     })
     this.ledger = null
     this.state = this.defaultAppState
-    this.settings = Object.assign({}, this.defaultSettings)
+    this.settings = this.assign(this.defaultSettings)
   }
 
   before (mockery) {
@@ -83,7 +83,11 @@ class Lib {
     mockery.resetCache()
     this.state = this.defaultAppState
     this.ledger.resetModules()
-    this.settings = Object.assign({}, this.defaultSettings)
+    this.settings = this.assign(this.defaultSettings)
+  }
+
+  assign (obj) {
+    return Object.assign({}, obj)
   }
 
   changeSetting (prop, value) {
