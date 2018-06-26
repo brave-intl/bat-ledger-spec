@@ -62,6 +62,34 @@ describe('publisher', function () {
         lib.addPublisherVisit(publisher)
         snapshot(this.test.fullTitle(), lib.synopsis)
       })
+      it('adds site after multiple visits meeting minimum time', function () {
+        lib.changeSetting('PAYMENTS_MINIMUM_VISITS', 5)
+        const publisher = {
+          key: 'brave.com',
+          url: 'https://brave.com/',
+          tabId: 1,
+          visitTime: 8050
+        }
+        lib.addPublisherVisit(publisher)
+        lib.addPublisherVisit(publisher)
+        lib.addPublisherVisit(publisher)
+        lib.addPublisherVisit(publisher)
+        lib.addPublisherVisit(publisher)
+        snapshot(this.test.fullTitle(), lib.synopsis)
+      })
+      it('does not add site when multiple visits are required', function () {
+        lib.changeSetting('PAYMENTS_MINIMUM_VISITS', 5)
+        const publisher = {
+          key: 'brave.com',
+          url: 'https://brave.com/',
+          tabId: 1,
+          visitTime: 10050
+        }
+        lib.addPublisherVisit(publisher)
+        lib.addPublisherVisit(publisher)
+        lib.addPublisherVisit(publisher)
+        snapshot(this.test.fullTitle(), lib.synopsis)
+      })
     })
     describe('manual', function () {
       it('single visit minimum', function () {
