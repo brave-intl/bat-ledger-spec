@@ -71,10 +71,10 @@ describe('publisher', function () {
           visitTime: 8050
         }
         lib.addPublisherVisit(publisher)
-        lib.addPublisherVisit(publisher)
-        lib.addPublisherVisit(publisher)
-        lib.addPublisherVisit(publisher)
-        lib.addPublisherVisit(publisher)
+        lib.addPublisherVisit(lib.incTabId(publisher), false)
+        lib.addPublisherVisit(lib.incTabId(publisher), false)
+        lib.addPublisherVisit(lib.incTabId(publisher), false)
+        lib.addPublisherVisit(lib.incTabId(publisher), false)
         snapshot(this.test.fullTitle(), lib.synopsis)
       })
       it('does not add site when multiple visits are required', function () {
@@ -86,8 +86,8 @@ describe('publisher', function () {
           visitTime: 10050
         }
         lib.addPublisherVisit(publisher)
-        lib.addPublisherVisit(publisher)
-        lib.addPublisherVisit(publisher)
+        lib.addPublisherVisit(lib.incTabId(publisher), false)
+        lib.addPublisherVisit(lib.incTabId(publisher), false)
         snapshot(this.test.fullTitle(), lib.synopsis)
       })
     })
@@ -246,6 +246,11 @@ describe('publisher', function () {
         lib.invokeMediaRequest('youtube')
         snapshot(this.test.fullTitle(), lib.synopsis)
       })
+      it('logs visit ignoring minimum visits', function () {
+        lib.changeSetting('PAYMENTS_MINIMUM_VISITS', 5)
+        lib.invokeMediaRequest('youtube')
+        snapshot(this.test.fullTitle(), lib.synopsis)
+      })
       it('logs visit when minimum time is exceeded', function () {
         lib.invokeMediaRequest('youtube', true)
         snapshot(this.test.fullTitle(), lib.synopsis)
@@ -255,6 +260,17 @@ describe('publisher', function () {
       it('logs visit ignoring minimum time', function () {
         lib.invokeMediaRequest('twitch', false, 'single-visit')
         snapshot(this.test.fullTitle(), lib.synopsis)
+      })
+      it('logs visit ignoring minimum visits', function () {
+        lib.changeSetting('PAYMENTS_MINIMUM_VISITS', 5)
+        lib.invokeMediaRequest('twitch', false, 'single-visit')
+        snapshot(this.test.fullTitle(), lib.synopsis)
+      })
+      describe('events', function () {
+        it('stops recording after a pause occurs', function () {
+          lib.invokeMediaRequest('twitch', false, 'single-visit-pause')
+          snapshot(this.test.fullTitle(), lib.synopsis)
+        })
       })
     })
   })

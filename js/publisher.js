@@ -50,6 +50,11 @@ class JS extends Publisher {
       }]))
   }
 
+  incTabId (pub) {
+    const publisher = Object.assign({tabId: pub.tabId++}, pub)
+    return publisher
+  }
+
   get mediaRequest () {
     return responses['media'][this.mediaType]['media-request'][this.mediaMinimum]
   }

@@ -131,7 +131,29 @@ exports['publisher add organic adds site after multiple visits meeting minimum t
     "_b": 1000,
     "_b2": 1000000
   },
-  "publishers": {}
+  "publishers": {
+    "brave.com": {
+      "visits": 4,
+      "duration": 40250,
+      "options": {},
+      "scores": {
+        "concave": 5.016640821086865,
+        "visits": 5
+      },
+      "window": [
+        {
+          "timestamp": 0,
+          "visits": 4,
+          "duration": 40250,
+          "scores": {
+            "concave": 5.016640821086865,
+            "visits": 5
+          }
+        }
+      ],
+      "faviconURL": "data:image/png;base64,YnJhdmUuY29t"
+    }
+  }
 }
 
 exports['publisher add organic does not add site when multiple visits are required 1'] = {
@@ -689,6 +711,56 @@ exports['publisher media youtube logs visit ignoring minimum time 1'] = {
   }
 }
 
+exports['publisher media youtube logs visit ignoring minimum visits 1'] = {
+  "options": {
+    "scorekeepers": [
+      "concave",
+      "visits"
+    ],
+    "minPublisherDuration": 8000,
+    "numFrames": 30,
+    "frameSize": 86400000,
+    "_d": 0.000033333333333333335,
+    "minPublisherVisits": 5,
+    "scorekeeper": "concave",
+    "emptyScores": {
+      "concave": 0,
+      "visits": 0
+    },
+    "_a": 7000,
+    "_a2": 14000,
+    "_a4": 28000,
+    "_b": 1000,
+    "_b2": 1000000
+  },
+  "publishers": {
+    "youtube#channel:bgfilms": {
+      "visits": 1,
+      "duration": 2181,
+      "options": {},
+      "scores": {
+        "concave": 0.4913089067864086,
+        "visits": 1
+      },
+      "window": [
+        {
+          "timestamp": 0,
+          "visits": 1,
+          "duration": 2181,
+          "scores": {
+            "concave": 0.4913089067864086,
+            "visits": 1
+          }
+        }
+      ],
+      "faviconName": "Binging with Babish",
+      "faviconURL": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAA",
+      "publisherURL": "https://www.youtube.com/user/bgfilms/videos",
+      "providerName": "YouTube"
+    }
+  }
+}
+
 exports['publisher media youtube logs visit when minimum time is exceeded 1'] = {
   "options": {
     "scorekeepers": [
@@ -778,6 +850,104 @@ exports['publisher media twitch logs visit ignoring minimum time 1'] = {
           "scores": {
             "concave": 1.1259324724457291,
             "visits": 2
+          }
+        }
+      ],
+      "faviconName": "ninja",
+      "publisherURL": "https://www.twitch.tv/ninja/videos",
+      "providerName": "Twitch"
+    }
+  }
+}
+
+exports['publisher media twitch logs visit ignoring minimum visits 1'] = {
+  "options": {
+    "scorekeepers": [
+      "concave",
+      "visits"
+    ],
+    "minPublisherDuration": 8000,
+    "numFrames": 30,
+    "frameSize": 86400000,
+    "_d": 0.000033333333333333335,
+    "minPublisherVisits": 5,
+    "scorekeeper": "concave",
+    "emptyScores": {
+      "concave": 0,
+      "visits": 0
+    },
+    "_a": 7000,
+    "_a2": 14000,
+    "_a4": 28000,
+    "_b": 1000,
+    "_b2": 1000000
+  },
+  "publishers": {
+    "twitch#author:ninja": {
+      "visits": 1,
+      "duration": 10000,
+      "options": {},
+      "scores": {
+        "concave": 1.1259324724457291,
+        "visits": 2
+      },
+      "window": [
+        {
+          "timestamp": 0,
+          "visits": 1,
+          "duration": 10000,
+          "scores": {
+            "concave": 1.1259324724457291,
+            "visits": 2
+          }
+        }
+      ],
+      "faviconName": "ninja",
+      "publisherURL": "https://www.twitch.tv/ninja/videos",
+      "providerName": "Twitch"
+    }
+  }
+}
+
+exports['publisher media twitch events stops recording after a pause occurs 1'] = {
+  "options": {
+    "scorekeepers": [
+      "concave",
+      "visits"
+    ],
+    "minPublisherDuration": 8000,
+    "numFrames": 30,
+    "frameSize": 86400000,
+    "_d": 0.000033333333333333335,
+    "minPublisherVisits": 1,
+    "scorekeeper": "concave",
+    "emptyScores": {
+      "concave": 0,
+      "visits": 0
+    },
+    "_a": 7000,
+    "_a2": 14000,
+    "_a4": 28000,
+    "_b": 1000,
+    "_b2": 1000000
+  },
+  "publishers": {
+    "twitch#author:ninja": {
+      "visits": 4,
+      "duration": 0,
+      "options": {},
+      "scores": {
+        "concave": 0,
+        "visits": 4
+      },
+      "window": [
+        {
+          "timestamp": 0,
+          "visits": 4,
+          "duration": 0,
+          "scores": {
+            "concave": 0,
+            "visits": 4
           }
         }
       ],
