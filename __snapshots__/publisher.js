@@ -84,6 +84,55 @@ exports['publisher add organic adds site when visit meets the minimum time 1'] =
   }
 }
 
+exports['publisher add organic does not include site when auto-include is off 1'] = {
+  "options": {
+    "scorekeepers": [
+      "concave",
+      "visits"
+    ],
+    "minPublisherDuration": 8000,
+    "numFrames": 30,
+    "frameSize": 86400000,
+    "_d": 0.000033333333333333335,
+    "minPublisherVisits": 1,
+    "scorekeeper": "concave",
+    "emptyScores": {
+      "concave": 0,
+      "visits": 0
+    },
+    "_a": 7000,
+    "_a2": 14000,
+    "_a4": 28000,
+    "_b": 1000,
+    "_b2": 1000000
+  },
+  "publishers": {
+    "brave.com": {
+      "visits": 1,
+      "duration": 12050,
+      "options": {
+        "exclude": true
+      },
+      "scores": {
+        "concave": 1.2425465471505048,
+        "visits": 1
+      },
+      "window": [
+        {
+          "timestamp": 0,
+          "visits": 1,
+          "duration": 12050,
+          "scores": {
+            "concave": 1.2425465471505048,
+            "visits": 1
+          }
+        }
+      ],
+      "faviconURL": "data:image/png;base64,YnJhdmUuY29t"
+    }
+  }
+}
+
 exports['publisher add organic does not add site visit under the minimum time 1'] = {
   "options": {
     "scorekeepers": [
@@ -133,7 +182,7 @@ exports['publisher add organic adds site after multiple visits meeting minimum t
   },
   "publishers": {
     "brave.com": {
-      "visits": 4,
+      "visits": 5,
       "duration": 40250,
       "options": {},
       "scores": {
@@ -143,7 +192,7 @@ exports['publisher add organic adds site after multiple visits meeting minimum t
       "window": [
         {
           "timestamp": 0,
-          "visits": 4,
+          "visits": 5,
           "duration": 40250,
           "scores": {
             "concave": 5.016640821086865,

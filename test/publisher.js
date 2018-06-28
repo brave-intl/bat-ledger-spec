@@ -46,8 +46,19 @@ describe('publisher', function () {
         const publisher = {
           key: 'brave.com',
           url: 'https://brave.com/',
-          tabId: 1,
+          tabId: 11,
           visitTime: 8050
+        }
+        lib.addPublisherVisit(publisher)
+        snapshot(this.test.fullTitle(), lib.synopsis)
+      })
+      it('does not include site when auto-include is off', function () {
+        lib.changeSetting('PAYMENTS_SITES_AUTO_SUGGEST', false)
+        const publisher = {
+          key: 'brave.com',
+          url: 'https://brave.com/',
+          tabId: 12,
+          visitTime: 12050
         }
         lib.addPublisherVisit(publisher)
         snapshot(this.test.fullTitle(), lib.synopsis)
@@ -56,7 +67,7 @@ describe('publisher', function () {
         const publisher = {
           key: 'brave.com',
           url: 'https://brave.com/',
-          tabId: 1,
+          tabId: 13,
           visitTime: 5050
         }
         lib.addPublisherVisit(publisher)
@@ -67,7 +78,7 @@ describe('publisher', function () {
         const publisher = {
           key: 'brave.com',
           url: 'https://brave.com/',
-          tabId: 1,
+          tabId: 14,
           visitTime: 8050
         }
         lib.addPublisherVisit(publisher)
@@ -82,7 +93,7 @@ describe('publisher', function () {
         const publisher = {
           key: 'brave.com',
           url: 'https://brave.com/',
-          tabId: 1,
+          tabId: 15,
           visitTime: 10050
         }
         lib.addPublisherVisit(publisher)
@@ -96,7 +107,7 @@ describe('publisher', function () {
         const publisher = {
           key: 'brave.com',
           url: 'https://brave.com/',
-          tabId: 1
+          tabId: 16
         }
         lib.manualAddPublisher(publisher)
         snapshot(this.test.fullTitle(), lib.synopsis)
@@ -105,7 +116,7 @@ describe('publisher', function () {
         const publisher = {
           key: 'about:preferences',
           url: 'about:preferences',
-          tabId: 1
+          tabId: 17
         }
         lib.manualAddPublisher(publisher)
         snapshot(this.test.fullTitle(), lib.synopsis)
@@ -118,7 +129,7 @@ describe('publisher', function () {
       const publisher = {
         key: 'brave.com',
         url: 'https://brave.com/',
-        tabId: 1
+        tabId: 18
       }
       lib.manualAddPublisher(publisher)
       lib.deletePublisher('brave.com')
@@ -128,17 +139,17 @@ describe('publisher', function () {
       const publisherOne = {
         key: 'brave.com',
         url: 'https://brave.com/',
-        tabId: 1
+        tabId: 19
       }
       const publisherTwo = {
         key: 'clifton.io',
         url: 'https://clifton.io',
-        tabId: 1
+        tabId: 20
       }
       const publisherThree = {
         key: 'brianbondy.com',
         url: 'https://brianbondy.com',
-        tabId: 1
+        tabId: 21
       }
       lib.manualAddPublisher(publisherOne)
       lib.manualAddPublisher(publisherTwo, false)
@@ -154,7 +165,7 @@ describe('publisher', function () {
       const publisher = {
         key: 'brave.com',
         url: 'https://brave.com',
-        tabId: 1
+        tabId: 22
       }
       lib.manualAddPublisher(publisher)
       lib.pinPublisher('brave.com', 100)
@@ -168,7 +179,7 @@ describe('publisher', function () {
       const publisher = {
         key: 'brave.com',
         url: 'https://brave.com',
-        tabId: 1
+        tabId: 23
       }
       lib.manualAddPublisher(publisher)
       lib.pinPublisher('brave.com', 100)
@@ -178,17 +189,17 @@ describe('publisher', function () {
       const publisherOne = {
         key: 'brave.com',
         url: 'https://brave.com',
-        tabId: 1
+        tabId: 24
       }
       const publisherTwo = {
         key: 'clifton.io',
         url: 'https://clifton.io',
-        tabId: 1
+        tabId: 25
       }
       const publisherThree = {
         key: 'brianbondy.com',
         url: 'https://brianbondy.com',
-        tabId: 1
+        tabId: 26
       }
       lib.manualAddPublisher(publisherOne)
       lib.manualAddPublisher(publisherTwo, false)
@@ -204,7 +215,7 @@ describe('publisher', function () {
       const publisher = {
         key: 'brave.com',
         url: 'https://brave.com',
-        tabId: 1
+        tabId: 27
       }
       lib.manualAddPublisher(publisher)
       lib.pinPublisher('brave.com', 100)
@@ -215,17 +226,17 @@ describe('publisher', function () {
       const publisherOne = {
         key: 'brave.com',
         url: 'https://brave.com',
-        tabId: 1
+        tabId: 28
       }
       const publisherTwo = {
         key: 'clifton.io',
         url: 'https://clifton.io',
-        tabId: 1
+        tabId: 29
       }
       const publisherThree = {
         key: 'brianbondy.com',
         url: 'https://brianbondy.com',
-        tabId: 1
+        tabId: 30
       }
       lib.manualAddPublisher(publisherOne)
       lib.manualAddPublisher(publisherTwo, false)
