@@ -3,11 +3,12 @@
   "version": "0.0.1",
   "description": "Spec for bat ledger",
   "scripts": {
+    "setup": "git submodule init && git submodule update && npm run install-bl",
     "install-bl": "cd browser-laptop && npm install",
     "module-init": "git submodule update --init --recursive",
     "module-update": "git submodule update --remote --recursive",
     "test": "npm run test-js && npm run test-c",
-    "test-js": "cross-env NODE_ENV=test TYPE=\"js\" mocha \"test/**/*.js\" --timeout 99999",
+    "test-js": "cross-env NODE_ENV=test TYPE=\"js\" mocha \"test/**/*.js\" --timeout=9999999",
     "test-c": "cross-env NODE_ENV=test TYPE=\"c\" mocha \"test/**/*.js\"",
     "lint": "standard --verbose | snazzy"
   },
@@ -31,16 +32,23 @@
     "cross-env": "^5.1.4",
     "events": "^2.0.0",
     "immutable": "^3.8.2",
+    "joi": "^13.3.0",
     "mocha": "^5.1.1",
     "mockery": "^2.1.0",
+    "node-fetch": "^2.1.2",
     "pre-push": "^0.1.1",
+    "random": "^1.0.0-beta-1",
+    "random-lib": "^2.1.0",
     "request": "^2.85.0",
-    "snap-shot-it": "^4.1.4",
     "sinon": "^5.0.6",
+    "snap-shot-it": "^4.1.4",
     "snazzy": "^7.1.1",
     "standard": "^11.0.1",
+    "sync-request": "^6.0.0",
     "underscore": "^1.9.0",
-    "util": "^0.10.3"
+    "util": "^0.10.3",
+    "uuid": "^3.2.1",
+    "zlib": "^1.0.5"
   },
   "pre-push": {
     "run": [

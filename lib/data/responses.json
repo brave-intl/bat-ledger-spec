@@ -138,6 +138,54 @@
         "LTC": "LLcZ6fFz9zdrMzf3f9ewno3xe6LPXoeVxK"
       }
     },
+    "funded-wallet": {
+      "altcurrency": "BAT",
+      "probi": "100000000000000",
+      "balance": "100.0000",
+      "unconfirmed": "0.0000",
+      "rates": {
+        "BTC": "0.00004800",
+        "ETH": 0.0005088939893845933,
+        "LTC": 0.0025576784426820476,
+        "USD": 0.352857648,
+        "EUR": 0.29858461316111995
+      },
+      "parameters": {
+        "adFree": {
+          "currency": "BAT",
+          "fee": {
+            "BAT": 10
+          },
+          "choices": {
+            "BAT": [
+              5,
+              7.5,
+              10,
+              12.5,
+              15,
+              17.5,
+              20,
+              25,
+              50
+            ]
+          },
+          "range": {
+            "BAT": [
+              5,
+              100
+            ]
+          },
+          "days": 30
+        }
+      },
+      "addresses": {
+        "BAT": "0x9076CE8d5e6aD43EBA94c7A909572DE0A39E7eFC",
+        "BTC": "1NyTZUmwLJoDNhvJwKGCAAKPhbnGo4SVTd",
+        "CARD_ID": "6c4dd79e-1008-4381-89d0-d6078963bef6",
+        "ETH": "0x9076CE8d5e6aD43EBA94c7A909572DE0A39E7eFC",
+        "LTC": "LLcZ6fFz9zdrMzf3f9ewno3xe6LPXoeVxK"
+      }
+    },
     "recovered-wallet": {
       "altcurrency": "BAT",
       "probi": "0",
