@@ -156,15 +156,16 @@ class JS extends Publisher {
     this.state = this.ledger.enable(this.defaultAppState)
 
     const xhr = this.mediaRequest.xhr
-    const details = Immutable.fromJS(this.mediaRequest.details)
-    this.setActiveTab(details.get('tabId'))
+    const details = this.mediaRequest.details
+    const immutableDetails = Immutable.fromJS(details)
+    this.setActiveTab(immutableDetails.get('tabId'))
 
     if (type === 'twitch') {
-      this.processTwitchData(key, xhr, type, details.toJS())
+      this.processTwitchData(key, xhr, type, details)
       return
     }
 
-    this.setState(this.ledger.onMediaRequest(this.state, xhr, type, Immutable.fromJS(details)))
+    this.setState(this.ledger.onMediaRequest(this.state, xhr, type, immutableDetails))
   }
 }
 
