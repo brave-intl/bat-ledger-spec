@@ -60,14 +60,6 @@ class JS extends Wallet {
     this.setStateFile()
   }
 
-  getInfo (state) {
-    return state.getIn(['ledger', 'info'])
-  }
-
-  setInfo (state, prop, value) {
-    return state.setIn(['ledger', 'info', prop], value)
-  }
-
   // To avoid snapshot inconsistencies, keeps the updateStamp constant
   modifyDateStamp () {
     this.setState(this.state

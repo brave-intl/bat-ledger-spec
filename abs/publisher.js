@@ -4,9 +4,9 @@
 
 'use strict'
 
-const Lib = require('./index')
+const Spec = require('../js/spec')
 
-class Publisher extends Lib {
+class Publisher extends Spec {
   initSynopsis () {
     throw new Error('Function initSynopsis is missing!')
   }

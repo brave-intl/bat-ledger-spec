@@ -4,23 +4,15 @@
 
 'use strict'
 
-const Lib = require('./index')
+const Spec = require('../js/spec')
 
-class Wallet extends Lib {
+class Wallet extends Spec {
   setStateFile () {
     throw new Error('Function setStateFile is missing!')
   }
 
   fallbackToPrevWallet () {
     throw new Error('Function fallbackToPrevWallet is missing!')
-  }
-
-  getInfo () {
-    throw new Error('Function getInfo is missing!')
-  }
-
-  setInfo () {
-    throw new Error('Function setInfo is missing!')
   }
 
   modifyDateStamp () {
