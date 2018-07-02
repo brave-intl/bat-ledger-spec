@@ -79,6 +79,7 @@ exports['publisher add manual single visit minimum 1'] = {
           }
         }
       ],
+      "weight": 100,
       "faviconURL": "data:image/png;base64,YnJhdmUuY29t"
     }
   }
@@ -151,9 +152,9 @@ exports['publisher pin pins 1'] = {
           }
         }
       ],
-      "faviconURL": "data:image/png;base64,YnJhdmUuY29t",
+      "weight": 100,
       "pinPercentage": 100,
-      "weight": 100
+      "faviconURL": "data:image/png;base64,YnJhdmUuY29t"
     }
   }
 }
@@ -200,9 +201,9 @@ exports['publisher pin pins multi 1'] = {
           }
         }
       ],
-      "faviconURL": "data:image/png;base64,YnJhdmUuY29t",
-      "pinPercentage": 53,
-      "weight": 52.5
+      "weight": 42.857142857142854,
+      "pinPercentage": 43,
+      "faviconURL": "data:image/png;base64,YnJhdmUuY29t"
     },
     "clifton.io": {
       "visits": 1,
@@ -223,9 +224,9 @@ exports['publisher pin pins multi 1'] = {
           }
         }
       ],
-      "faviconURL": "data:image/png;base64,Y2xpZnRvbi5pbw==",
-      "pinPercentage": 22,
-      "weight": 22.5
+      "weight": 32.14285714285714,
+      "pinPercentage": 32,
+      "faviconURL": "data:image/png;base64,Y2xpZnRvbi5pbw=="
     },
     "brianbondy.com": {
       "visits": 1,
@@ -246,9 +247,9 @@ exports['publisher pin pins multi 1'] = {
           }
         }
       ],
-      "faviconURL": "data:image/png;base64,YnJpYW5ib25keS5jb20=",
+      "weight": 25,
       "pinPercentage": 25,
-      "weight": 25
+      "faviconURL": "data:image/png;base64,YnJpYW5ib25keS5jb20="
     }
   }
 }
@@ -348,7 +349,8 @@ exports['publisher media youtube logs visit when minimum time is exceeded 1'] = 
       "faviconName": "Binging with Babish",
       "faviconURL": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAA",
       "publisherURL": "https://www.youtube.com/user/bgfilms/videos",
-      "providerName": "YouTube"
+      "providerName": "YouTube",
+      "weight": 100
     }
   }
 }

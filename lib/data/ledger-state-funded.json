@@ -1,0 +1,114 @@
+{
+  "personaId": "65ba48f6-591b-437c-ae74-219c8c5d4921",
+  "options": {
+    "debugP": false,
+    "loggingP": false,
+    "rulesTestP": false,
+    "verboseP": true,
+    "server": {
+      "protocol": "https:",
+      "slashes": true,
+      "auth": null,
+      "host": "ledger-staging.mercury.basicattentiontoken.org",
+      "port": null,
+      "hostname": "ledger-staging.mercury.basicattentiontoken.org",
+      "hash": null,
+      "search": null,
+      "query": null,
+      "pathname": "/",
+      "path": "/",
+      "href": "https://ledger-staging.mercury.basicattentiontoken.org/"
+    },
+    "version": "v2",
+    "environment": "staging",
+    "prefix": "/v2"
+  },
+  "ballots": [],
+  "batch": {},
+  "transactions": [],
+  "properties": {
+    "setting": "adFree",
+    "fee": {
+      "currency": "BAT",
+      "amount": 10
+    },
+    "days": 30,
+    "wallet": {
+      "keyinfo": {
+        "seed": {
+          "0": 225,
+          "1": 185,
+          "2": 109,
+          "3": 39,
+          "4": 199,
+          "5": 194,
+          "6": 113,
+          "7": 73,
+          "8": 255,
+          "9": 80,
+          "10": 230,
+          "11": 95,
+          "12": 2,
+          "13": 104,
+          "14": 149,
+          "15": 36,
+          "16": 239,
+          "17": 6,
+          "18": 242,
+          "19": 141,
+          "20": 203,
+          "21": 199,
+          "22": 8,
+          "23": 85,
+          "24": 100,
+          "25": 136,
+          "26": 152,
+          "27": 53,
+          "28": 160,
+          "29": 183,
+          "30": 208,
+          "31": 58
+        }
+      },
+      "paymentId": "6e28dcc1-ab78-4673-b47a-529d2fb69573",
+      "addresses": {
+        "BAT": "0xfF25E61B9b1fDe64940E5eD02cE5F7e19f7D811b",
+        "BTC": "misWhWTb9HyGJkGLcNGxFPAmSDvEYxSCSc",
+        "CARD_ID": "0d4bf50a-f562-41f4-bd25-9fd12087fdba",
+        "ETH": "0xfF25E61B9b1fDe64940E5eD02cE5F7e19f7D811b",
+        "LTC": "mktNyvqKeYh3eeoyHKyHnSpidKeEPTprnF"
+      }
+    }
+  },
+  "reconcileStamp": 11528948800000,
+  "memos": [
+    "{\"who\":\"sync\",\"what\":{\"reconcileStamp\":1428852991836,\"reconcileDate\":\"2018-06-13T01:23:11.836Z\"},\"when\":1527643391836}"
+  ],
+  "reconcileDate": "2018-06-29T01:23:15.497Z",
+  "persona": "{\"userId\":\"65ba48f6591b37cae74219c8c5d4921\",\"registrarVK\":\"==========ANONLOGIN_VK_BEG==========\\nx3EmZXFb2jD7OocZz6l7o638S45k2kKrX5BrWp1Ox+ ANJXSauJVPNHKl/mmakFwxbkwJkJzfXe+c9+jxFtuX6 1\\n5xMuqWE8J7HIHbW/UEJwFELYjTWRF10x7LMd7s46MVT 4DC6LqGM8zLz1pCsHA3qab48gkpeiQpNZAdb9owFvU6 1\\n1tADCD6LdrEDQQDhRy1ijjAfhV9uKwlKKuhD6xXyPAZ BLOzUy+ZZh48riPnAHnUGal+ceCclccZXmoXXx92WHW 1\\n7VRDst4U4iaT/9QNCwajEaqgRNtKPV1Dp5QuMjP019h HucbxBMGGAZBNLXGzfKsTlF+wAdmOFAvBRAo8i2Azd 1\\n5SLk8SphICEkF+CNhN5g7IX2ih+Tb6w14LLlwupKw7y 96ANsdHzg0pwo2DDWOyAh1YPnION196pIT9xwISFZTA 3ef5G5d2c8cctdK4LuaxlSeEf1OZ100Sy5un5EjuHJB 77yFnY61GM7PHd6q3TLs2QS6c9PfrXD2idxaFq2DMd 1 0\\n===========ANONLOGIN_VK_END==========\",\"masterUserToken\":\"==========ANONLOGIN_CRED_BEG==========\\n65ba48f6591b37cae74219c8c5d4921\\n6hmUqAP33JG10shEnh3fZxPyT1L0FMCwBuHgjoDNZW7\\nBLbRuAPSjPohhRgdRYX43FonfmUzOoQjpJ/6xIErsSB NXMZs0yVfC02BaZQOruBXVilgULT2e0PYp6/fYf5e8 1\\nF7sJfjbxzPp87iZpqRUSfuOUme0LgbsEREiD4edMgmN\\n57N8ZwwiyEfzl2+8HTxv/LIDVQ9st2/3jR8fyigaXEA\\n===========ANONLOGIN_CRED_END==========\"}",
+  "bootStamp": 1527643395497,
+  "bootDate": "2018-05-30T01:23:15.497Z",
+  
+  "ruleset": [
+    {
+      "condition": "/^[a-z][a-z].gov$/.test(SLD)",
+      "consequent": "QLD + '.' + SLD",
+      "description": "governmental sites"
+    },
+    {
+      "condition": "TLD === 'gov' || /^go.[a-z][a-z]$/.test(TLD) || /^gov.[a-z][a-z]$/.test(TLD)",
+      "consequent": "SLD",
+      "description": "governmental sites"
+    },
+    {
+      "condition": "SLD === 'keybase.pub'",
+      "consequent": "QLD + '.' + SLD",
+      "description": "keybase users"
+    },
+    {
+      "condition": true,
+      "consequent": "SLD",
+      "description": "the default rule"
+    }
+  ]
+}

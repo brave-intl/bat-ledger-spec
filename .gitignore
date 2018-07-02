@@ -9,4 +9,5 @@ node_modules
 *.swp
 .idea
 *.code-workspace
+.vscode
 .vscode/launch.json

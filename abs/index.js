@@ -7,7 +7,6 @@
 const Immutable = require('immutable')
 const sinon = require('sinon')
 const stubs = require('../lib/helpers/stubs')
-const {request} = require('../lib/util/request')
 const settings = require('../browser-laptop/js/constants/settings')
 
 class Lib {
@@ -18,7 +17,8 @@ class Lib {
       PAYMENTS_CONTRIBUTION_AMOUNT: 10,
       PAYMENTS_ENABLED: true,
       PAYMENTS_NOTIFICATION_TRY_PAYMENTS_DISMISSED: true,
-      PAYMENTS_SITES_AUTO_SUGGEST: true
+      PAYMENTS_SITES_AUTO_SUGGEST: true,
+      PAYMENTS_ALLOW_NON_VERIFIED: true
     }
     this.defaultAppState = Immutable.fromJS({
       cache: {
@@ -56,9 +56,6 @@ class Lib {
     mockery.registerMock('electron', fakeElectron)
     mockery.registerMock('level', fakeLevel)
     mockery.registerMock('ad-block', fakeAdBlock)
-    mockery.registerMock('../../../js/lib/request', {
-      request: request
-    })
     mockery.registerMock('../../../js/settings', {
       getSetting: (key) => {
         const keyP = Object.keys(settings).find((k) => settings[k] === key)
