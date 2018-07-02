@@ -44,7 +44,7 @@ describe('contribution (contribution tests run for approximately 15 seconds)', f
     snapshot(this.test.fullTitle(), result)
   })
 
-  it.skip('Tries to run contribution at reconcile with enough funds but not met browsing requirements', function () {
+  it('Tries to run contribution at reconcile with enough funds but not met browsing requirements', function () {
     const result = lib.contributionAdequateFundsReqNotMet()
     snapshot(this.test.fullTitle(), result)
   })
