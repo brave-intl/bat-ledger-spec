@@ -33,3 +33,5 @@ exports['contribution (contribution tests run for approximately 15 seconds) Trie
     "names": {}
   }
 ]
+
+exports['contribution (contribution tests run for approximately 15 seconds) Tries to run contribution at reconcile with enough funds but not met browsing requirements 1'] = []
