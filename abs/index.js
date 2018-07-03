@@ -5,10 +5,11 @@
 'use strict'
 
 class Lib {
+  /*
   before () {
     throw new Error('Function before is missing!')
   }
-
+  */
   beforeEach () {
     throw new Error('Function beforeEach is missing!')
   }
