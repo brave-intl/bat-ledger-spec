@@ -21,8 +21,7 @@ const msecs = {
 class JS extends Contribution {
   constructor () {
     super()
-    this.paymentEnabled = true
-    this.paymentsAllowNonVerified = true
+    this.funding = 'sufficientFunds'
   }
 
   runBefore (mockery) {
@@ -32,8 +31,7 @@ class JS extends Contribution {
   }
 
   beforeEach () {
-    this.paymentEnabled = true
-    this.paymentsAllowNonVerified = true
+    this.funding = 'sufficientFunds'
     sinon.useFakeTimers(now.getTime())
     this.setStateFile()
     this.ledgerStatuses = require('../browser-laptop/app/common/constants/ledgerStatuses')
@@ -56,6 +54,7 @@ class JS extends Contribution {
       this.ledger.setBreakRun(false)
     }
     this.ledger = null
+    this.paymentsContributionAmount = 10
   }
 
   clientSetup (reconcileStamp) {
@@ -112,7 +111,6 @@ class JS extends Contribution {
   }
 
   initWallet () {
-    this.paymentEnabled = true
     this.setState(clientHelper.clientInit(this.ledger, this.state))
     this.ledger.setBreakRun(true)
     this.setState(clientHelper.clientBoot(this.ledger, this.state, this.ledger.getClient()))
@@ -142,8 +140,14 @@ class JS extends Contribution {
   }
 
   contributionMinusFunds () {
-    this.paymentEnabled = true
-    return this.ledger.getSynopsis()
+    this.funding = 'insufficientFunds'
+    this.initWallet()
+    this.clientSetup(1528948800000)
+    this.addPublishersToLedger()
+    this.fuzzPublishers()
+    this.state = ledgerState.setInfoProp(this.state, 'reconcileStamp', 1528948800000)
+    this.ledger.run(this.state, 0)
+    return ledgerState.getInfoProp(this.state, 'transactions') || []
   }
 
   contributionAdequateFundsReqMet () {

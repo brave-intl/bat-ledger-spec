@@ -39,7 +39,8 @@ describe('contribution (contribution tests run for approximately 15 seconds)', f
     snapshot(this.test.fullTitle(), result)
   })
 
-  it.skip('Tries to run contribution at reconcile with not enough funds', function () {
+  it('Tries to run contribution at reconcile with not enough funds', function () {
+    lib.changeSetting('PAYMENTS_CONTRIBUTION_AMOUNT', 100)
     const result = lib.contributionMinusFunds()
     snapshot(this.test.fullTitle(), result)
   })

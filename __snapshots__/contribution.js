@@ -26,12 +26,14 @@ exports['contribution (contribution tests run for approximately 15 seconds) Trie
     "votes": 58,
     "count": 58,
     "ballots": {
-      "clifton.io": 13,
+      "brianbondy.com": 19,
       "bumpsmack.com": 26,
-      "brianbondy.com": 19
+      "clifton.io": 13
     },
     "names": {}
   }
 ]
+
+exports['contribution (contribution tests run for approximately 15 seconds) Tries to run contribution at reconcile with not enough funds 1'] = []
 
 exports['contribution (contribution tests run for approximately 15 seconds) Tries to run contribution at reconcile with enough funds but not met browsing requirements 1'] = []
