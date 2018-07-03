@@ -1,5 +1,7 @@
 exports['contribution (contribution tests run for approximately 15 seconds) Tries to run contribution before time to reconcile 1'] = []
 
+exports['contribution (contribution tests run for approximately 15 seconds) Tries to run contribution at reconcile with enough funds but not met browsing requirements 1'] = []
+
 exports['contribution (contribution tests run for approximately 15 seconds) Tries to run contribution at reconcile with enough funds and met browsing requirements 1'] = [
   {
     "viewingId": "2c61e750-a08f-4098-bcd4-5006525ebb25",
@@ -33,5 +35,3 @@ exports['contribution (contribution tests run for approximately 15 seconds) Trie
     "names": {}
   }
 ]
-
-exports['contribution (contribution tests run for approximately 15 seconds) Tries to run contribution at reconcile with enough funds but not met browsing requirements 1'] = []

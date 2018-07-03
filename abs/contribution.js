@@ -4,10 +4,10 @@
 
 'use strict'
 
-const Lib = require('./index')
+const Spec = require('../js/spec')
 const err = require('../error/index')
 
-class Contribution extends Lib {
+class Contribution extends Spec {
   contributionBeforeTime () {
     err.setError('contributionBeforeTime')
   }
