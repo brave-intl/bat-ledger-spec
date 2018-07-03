@@ -20,7 +20,8 @@ class Spec extends Lib {
       PAYMENTS_CONTRIBUTION_AMOUNT: 10,
       PAYMENTS_ENABLED: true,
       PAYMENTS_NOTIFICATION_TRY_PAYMENTS_DISMISSED: true,
-      PAYMENTS_SITES_AUTO_SUGGEST: true
+      PAYMENTS_SITES_AUTO_SUGGEST: true,
+      PAYMENTS_ALLOW_NON_VERIFIED: true
     }
     this.defaultAppState = Immutable.fromJS({
       cache: {

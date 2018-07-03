@@ -26,6 +26,11 @@ class JS extends Publisher {
     this.loadStubs(['publisher'])
   }
 
+  runBeforeEach (mockery) {
+    this.beforeEach(mockery)
+    this.changeSetting('PAYMENTS_ALLOW_NON_VERIFIED', false)
+  }
+
   runAfterEach (mockery) {
     this.afterEach(mockery)
     this.currentVisitTime = null

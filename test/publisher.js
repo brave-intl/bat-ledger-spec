@@ -18,7 +18,7 @@ describe('publisher', function () {
   })
 
   beforeEach(function () {
-    lib.beforeEach(mockery)
+    lib.runBeforeEach(mockery)
   })
 
   after(function () {
