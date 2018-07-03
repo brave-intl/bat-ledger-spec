@@ -27,7 +27,7 @@ describe('wallet', function () {
   })
 
   afterEach(function () {
-    lib.afterEach(mockery)
+    lib.runAfterEach(mockery)
   })
 
   it('create', function () {
