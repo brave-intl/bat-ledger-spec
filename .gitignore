@@ -10,4 +10,3 @@ node_modules
 .idea
 *.code-workspace
 .vscode
-.vscode/launch.json
