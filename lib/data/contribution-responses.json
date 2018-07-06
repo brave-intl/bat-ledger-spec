@@ -16,62 +16,115 @@
     "registrarVK": "==========ANONLOGIN_VK_BEG==========\nx3EmZXFb2jD7OocZz6l7o638S45k2kKrX5BrWp1Ox+ ANJXSauJVPNHKl/mmakFwxbkwJkJzfXe+c9+jxFtuX6 1\n5xMuqWE8J7HIHbW/UEJwFELYjTWRF10x7LMd7s46MVT 4DC6LqGM8zLz1pCsHA3qab48gkpeiQpNZAdb9owFvU6 1\n1tADCD6LdrEDQQDhRy1ijjAfhV9uKwlKKuhD6xXyPAZ BLOzUy+ZZh48riPnAHnUGal+ceCclccZXmoXXx92WHW 1\n7VRDst4U4iaT/9QNCwajEaqgRNtKPV1Dp5QuMjP019h HucbxBMGGAZBNLXGzfKsTlF+wAdmOFAvBRAo8i2Azd 1\n5SLk8SphICEkF+CNhN5g7IX2ih+Tb6w14LLlwupKw7y 96ANsdHzg0pwo2DDWOyAh1YPnION196pIT9xwISFZTA 3ef5G5d2c8cctdK4LuaxlSeEf1OZ100Sy5un5EjuHJB 77yFnY61GM7PHd6q3TLs2QS6c9PfrXD2idxaFq2DMd 1 0\n===========ANONLOGIN_VK_END=========="
   },
   "reconcileWalletQueryResp": {
-    "altcurrency": "BAT",
-    "paymentStamp": 1529786805757,
-    "rates": {
-      "BTC": 0.00004514,
-      "ETH": 0.0005365421680470907,
-      "XRP": 0.5155155155155156,
-      "BCH": 0.00033478155925657733,
-      "LTC": 0.0029730119786404966,
-      "DASH": 0.00102477365436275,
-      "BTG": 0.009849390389672483,
-      "USD": 0.25554448620000003,
-      "EUR": 0.2190412601894385
-    },
-    "addresses": {
-      "BAT": "0x627d2C33665A71cc692B6abE8e6aDE80Bc16975d",
-      "BTC": "mjJbWWcQFD26fiR1aSV85u1DrYuZechnNg",
-      "CARD_ID": "0f77f855-97ec-4ec7-a79e-bf45bba8a79c",
-      "ETH": "0x627d2C33665A71cc692B6abE8e6aDE80Bc16975d",
-      "LTC": "msVfLgGqfFvKpb2PcNF6H2WYiwV1GLhEkX"
-    },
-    "parameters": {
-      "adFree": {
-        "currency": "BAT",
-        "fee": {
-          "BAT": 20
+    "sufficientFunds": {
+      "altcurrency": "BAT",
+      "paymentStamp": 1529786805757,
+      "rates": {
+        "BTC": 0.00004514,
+        "ETH": 0.0005365421680470907,
+        "XRP": 0.5155155155155156,
+        "BCH": 0.00033478155925657733,
+        "LTC": 0.0029730119786404966,
+        "DASH": 0.00102477365436275,
+        "BTG": 0.009849390389672483,
+        "USD": 0.25554448620000003,
+        "EUR": 0.2190412601894385
+      },
+      "addresses": {
+        "BAT": "0x627d2C33665A71cc692B6abE8e6aDE80Bc16975d",
+        "BTC": "mjJbWWcQFD26fiR1aSV85u1DrYuZechnNg",
+        "CARD_ID": "0f77f855-97ec-4ec7-a79e-bf45bba8a79c",
+        "ETH": "0x627d2C33665A71cc692B6abE8e6aDE80Bc16975d",
+        "LTC": "msVfLgGqfFvKpb2PcNF6H2WYiwV1GLhEkX"
+      },
+      "parameters": {
+        "adFree": {
+          "currency": "BAT",
+          "fee": {
+            "BAT": 20
+          },
+          "choices": {
+            "BAT": [
+              10,
+              15,
+              20,
+              30,
+              50,
+              100
+            ]
+          },
+          "range": {
+            "BAT": [
+              10,
+              100
+            ]
+          },
+          "days": 30
+        }
+      },
+      "grants": [],
+      "probi": "15000000000000000000",
+      "balance": "25.0000",
+      "unconfirmed": "0.0000",
+      "requestType": "httpSignature",
+      "unsignedTx": {
+        "denomination": {
+          "amount": "10",
+          "currency": "BAT"
         },
-        "choices": {
-          "BAT": [
-            10,
-            15,
-            20,
-            30,
-            50,
-            100
-          ]
-        },
-        "range": {
-          "BAT": [
-            10,
-            100
-          ]
-        },
-        "days": 30
+        "destination": "6654ecb0-6079-4f6c-ba58-791cc890a561"
       }
     },
-    "grants": [],
-    "probi": "15000000000000000000",
-    "balance": "15.0000",
-    "unconfirmed": "0.0000",
-    "requestType": "httpSignature",
-    "unsignedTx": {
-      "denomination": {
-        "amount": "10",
-        "currency": "BAT"
+    "insufficientFunds": {
+      "altcurrency": "BAT",
+      "paymentStamp": 1529786805757,
+      "rates": {
+        "BTC": 0.00004514,
+        "ETH": 0.0005365421680470907,
+        "XRP": 0.5155155155155156,
+        "BCH": 0.00033478155925657733,
+        "LTC": 0.0029730119786404966,
+        "DASH": 0.00102477365436275,
+        "BTG": 0.009849390389672483,
+        "USD": 0.25554448620000003,
+        "EUR": 0.2190412601894385
       },
-      "destination": "6654ecb0-6079-4f6c-ba58-791cc890a561"
+      "addresses": {
+        "BAT": "0x627d2C33665A71cc692B6abE8e6aDE80Bc16975d",
+        "BTC": "mjJbWWcQFD26fiR1aSV85u1DrYuZechnNg",
+        "CARD_ID": "0f77f855-97ec-4ec7-a79e-bf45bba8a79c",
+        "ETH": "0x627d2C33665A71cc692B6abE8e6aDE80Bc16975d",
+        "LTC": "msVfLgGqfFvKpb2PcNF6H2WYiwV1GLhEkX"
+      },
+      "parameters": {
+        "adFree": {
+          "currency": "BAT",
+          "fee": {
+            "BAT": 20
+          },
+          "choices": {
+            "BAT": [
+              10,
+              15,
+              20,
+              30,
+              50,
+              100
+            ]
+          },
+          "range": {
+            "BAT": [
+              10,
+              100
+            ]
+          },
+          "days": 30
+        }
+      },
+      "grants": [],
+      "probi": "15000000000000000000",
+      "balance": "15.0000",
+      "unconfirmed": "0.0000"
     }
   },
   "reconcileWalletPUTResp": {
