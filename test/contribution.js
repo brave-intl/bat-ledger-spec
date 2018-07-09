@@ -7,6 +7,7 @@
 /* global describe, before, beforeEach, after, afterEach, it */
 
 const helper = require('../helper')
+const contributionHelper = require('../lib/helpers/snapshotContributionStatics')
 const snapshot = require('snap-shot-it')
 const mockery = require('mockery')
 
@@ -30,23 +31,27 @@ describe('contribution (contribution tests run for approximately 15 seconds)', f
   })
 
   it('Tries to run contribution before time to reconcile', async function () {
-    const result = lib.contributionBeforeTime()
+    let result = lib.contributionBeforeTime()
+    result = contributionHelper.staticizeState(result)
     snapshot(this.test.fullTitle(), result)
   })
 
   it('Tries to run contribution at reconcile with enough funds and met browsing requirements', function () {
-    const result = lib.contributionAdequateFundsReqMet()
+    let result = lib.contributionAdequateFundsReqMet()
+    result = contributionHelper.staticizeState(result)
     snapshot(this.test.fullTitle(), result)
   })
 
   it('Tries to run contribution at reconcile with not enough funds', function () {
     lib.changeSetting('PAYMENTS_CONTRIBUTION_AMOUNT', 100)
-    const result = lib.contributionMinusFunds()
+    let result = lib.contributionMinusFunds()
+    result = contributionHelper.staticizeState(result)
     snapshot(this.test.fullTitle(), result)
   })
 
   it('Tries to run contribution at reconcile with enough funds but not met browsing requirements', function () {
-    const result = lib.contributionAdequateFundsReqNotMet()
+    let result = lib.contributionAdequateFundsReqNotMet()
+    result = contributionHelper.staticizeState(result)
     snapshot(this.test.fullTitle(), result)
   })
 })

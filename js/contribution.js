@@ -117,14 +117,6 @@ class JS extends Contribution {
     this.ledger.setBreakRun(false)
   }
 
-  staticizeBallots () {
-    let transaction = this.state.getIn(['ledger', 'info', 'transactions']).toJS()
-    transaction[0].ballots['brianbondy.com'] = 19
-    transaction[0].ballots['bumpsmack.com'] = 26
-    transaction[0].ballots['clifton.io'] = 13
-    this.state = this.state.setIn(['ledger', 'info', 'transactions'], transaction)
-  }
-
   createWallet () {
     this.setState(this.ledger.enable(this.state))
   }
@@ -136,7 +128,7 @@ class JS extends Contribution {
     this.fuzzPublishers()
     this.state = ledgerState.setInfoProp(this.state, 'reconcileStamp', 1719633600000) // 06/29/2024
     this.ledger.run(this.state, 0)
-    return ledgerState.getInfoProp(this.state, 'transactions') || []
+    return this.getInfo(this.state) || {}
   }
 
   contributionMinusFunds () {
@@ -147,7 +139,7 @@ class JS extends Contribution {
     this.fuzzPublishers()
     this.state = ledgerState.setInfoProp(this.state, 'reconcileStamp', 1528948800000)
     this.ledger.run(this.state, 0)
-    return ledgerState.getInfoProp(this.state, 'transactions') || []
+    return this.getInfo(this.state) || {}
   }
 
   contributionAdequateFundsReqMet () {
@@ -157,8 +149,7 @@ class JS extends Contribution {
     this.fuzzPublishers()
     this.state = ledgerState.setInfoProp(this.state, 'reconcileStamp', 1528948800000)
     this.ledger.run(this.state, 0)
-    this.staticizeBallots()
-    return ledgerState.getInfoProp(this.state, 'transactions') || []
+    return this.getInfo(this.state) || {}
   }
 
   contributionAdequateFundsReqNotMet () {
@@ -167,7 +158,7 @@ class JS extends Contribution {
     this.addPublishersToLedger()
     this.state = ledgerState.setInfoProp(this.state, 'reconcileStamp', 1528948800000)
     this.ledger.run(this.state, 0)
-    return ledgerState.getInfoProp(this.state, 'transactions') || []
+    return this.getInfo(this.state) || {}
   }
 }
 
