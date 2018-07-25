@@ -1,6 +1,6 @@
 {
   "name": "bat-ledger-spec",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Spec for bat ledger",
   "scripts": {
     "setup": "git submodule init && git submodule update && npm run install-bl",
